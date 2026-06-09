@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - Boss 直聘反爬对抗：PUA 字体编码解密实录</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg" />
+    <style>
+        /* ============================================================
+           blog-post – Boss 直聘 PUA 字体编码反爬解密
+           color: purple #b388e8 / #9c5cd8
+           ============================================================ */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.8;
+        }
+
+        /* ---- layout ---- */
+        .blog-post {
+            max-width: 800px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- back link ---- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8888aa;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.25s, transform 0.2s;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            color: #b388e8;
+            transform: translateX(-2px);
+        }
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ---- post header ---- */
+        .post-header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(179, 136, 232, 0.12);
+            padding-bottom: 28px;
+        }
+        .post-header .post-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f0f0f8;
+            margin: 0 0 12px;
+            line-height: 1.3;
+        }
+        .post-header .post-title .accent {
+            background: linear-gradient(135deg, #b388e8, #9c5cd8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .post-header .post-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            font-size: 14px;
+            color: #8888aa;
+        }
+        .post-header .post-meta .dot {
+            color: #555577;
+        }
+        .post-header .post-meta .category {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(179, 136, 232, 0.1);
+            color: #b388e8;
+            border: 1px solid rgba(179, 136, 232, 0.2);
+        }
+        .post-header .post-meta .reading-time {
+            color: #7777aa;
+        }
+
+        /* ---- post content ---- */
+        .post-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e6e0f0;
+            margin: 36px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(179, 136, 232, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .post-content h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #b388e8, #9c5cd8);
+            flex-shrink: 0;
+        }
+        .post-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d8d0ec;
+            margin: 28px 0 12px;
+        }
+        .post-content p {
+            font-size: 15.5px;
+            color: #d0d0e0;
+            margin: 0 0 16px;
+            line-height: 1.85;
+        }
+        .post-content p strong {
+            color: #c8a8f0;
+            font-weight: 600;
+        }
+        .post-content p code {
+            background: rgba(179, 136, 232, 0.1);
+            color: #c8a8f0;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+        }
+        .post-content ul, .post-content ol {
+            margin: 0 0 16px;
+            padding-left: 24px;
+            color: #d0d0e0;
+            font-size: 15.5px;
+            line-height: 1.85;
+        }
+        .post-content ul li {
+            margin-bottom: 6px;
+        }
+        .post-content ul li::marker {
+            color: #b388e8;
+        }
+        .post-content ol li {
+            margin-bottom: 6px;
+        }
+        .post-content ol li::marker {
+            color: #b388e8;
+            font-weight: 600;
+        }
+
+        /* ---- code block ---- */
+        .post-content pre {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(179, 136, 232, 0.12);
+            border-left: 3px solid #b388e8;
+            border-radius: 10px;
+            padding: 18px 22px;
+            margin: 0 0 20px;
+            overflow-x: auto;
+            font-size: 13.5px;
+            line-height: 1.7;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            color: #d0c8e8;
+        }
+        .post-content pre .comment {
+            color: #6a6a8a;
+            font-style: italic;
+        }
+        .post-content pre .keyword {
+            color: #b388e8;
+            font-weight: 600;
+        }
+        .post-content pre .string {
+            color: #9ccc6c;
+        }
+        .post-content pre .func {
+            color: #7cc8e8;
+        }
+        .post-content pre .number {
+            color: #e8b878;
+        }
+
+        /* ---- blockquote ---- */
+        .post-content blockquote {
+            margin: 0 0 20px;
+            padding: 16px 20px;
+            border-left: 3px solid #b388e8;
+            background: rgba(179, 136, 232, 0.04);
+            border-radius: 0 10px 10px 0;
+            color: #b8b0d0;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+        .post-content blockquote strong {
+            color: #c8a8f0;
+        }
+
+        /* ---- info box ---- */
+        .post-content .info-box {
+            background: rgba(179, 136, 232, 0.04);
+            border: 1px solid rgba(179, 136, 232, 0.12);
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin: 0 0 20px;
+        }
+        .post-content .info-box .info-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #b388e8;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .post-content .info-box p {
+            font-size: 14.5px;
+            margin: 0;
+            color: #c0b8d8;
+        }
+
+        /* ---- tag list ---- */
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 36px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(179, 136, 232, 0.08);
+        }
+        .post-tags .tag {
+            display: inline-block;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #b388e8;
+            background: rgba(179, 136, 232, 0.06);
+            border: 1px solid rgba(179, 136, 232, 0.14);
+            transition: background 0.2s, border-color 0.2s;
+            text-decoration: none;
+        }
+        .post-tags .tag:hover {
+            background: rgba(179, 136, 232, 0.14);
+            border-color: rgba(179, 136, 232, 0.3);
+        }
+
+        /* ---- related posts ---- */
+        .related-posts {
+            margin-top: 48px;
+            padding-top: 28px;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .related-posts h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #b0b0d0;
+            margin: 0 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .related-posts .related-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        .related-posts .related-card {
+            display: block;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(179, 136, 232, 0.06);
+            border-radius: 12px;
+            padding: 18px 16px;
+            text-decoration: none;
+            transition: border-color 0.25s, background 0.25s, transform 0.2s;
+        }
+        .related-posts .related-card:hover {
+            border-color: rgba(179, 136, 232, 0.2);
+            background: rgba(179, 136, 232, 0.04);
+            transform: translateY(-2px);
+        }
+        .related-posts .related-card .r-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #d8d0ec;
+            margin-bottom: 4px;
+            line-height: 1.4;
+        }
+        .related-posts .related-card .r-date {
+            font-size: 12px;
+            color: #7777aa;
+        }
+
+        /* ---- github button ---- */
+        .post-github {
+            text-align: center;
+            margin-top: 40px;
+        }
+        .post-github .gh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 28px;
+            background: rgba(179, 136, 232, 0.06);
+            border: 1px solid rgba(179, 136, 232, 0.15);
+            border-radius: 10px;
+            color: #b388e8;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.25s, border-color 0.25s, transform 0.2s;
+        }
+        .post-github .gh-btn:hover {
+            background: rgba(179, 136, 232, 0.14);
+            border-color: rgba(179, 136, 232, 0.3);
+            transform: translateY(-2px);
+        }
+        .post-github .gh-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ---- responsive ---- */
+        @media (max-width: 768px) {
+            .blog-post {
+                padding: 0 16px;
+            }
+            .post-header .post-title {
+                font-size: 24px;
+            }
+            .post-content h2 {
+                font-size: 19px;
+            }
+            .post-content h3 {
+                font-size: 16px;
+            }
+            .post-content p {
+                font-size: 15px;
+            }
+            .related-posts .related-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 480px) {
+            .post-header .post-title {
+                font-size: 20px;
+            }
+            .post-content pre {
+                padding: 12px 14px;
+                font-size: 12.5px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- ============================================================
+         Blog Post
+         ============================================================ -->
+    <div class="blog-post">
+
+        <!-- ← back -->
+        <a href="./blog.html" class="back-link">
+            <svg viewBox="0 0 16 16"><path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z"/></svg>
+            返回博客
+        </a>
+
+        <!-- ===== Post Header ===== -->
+        <div class="post-header">
+            <h1 class="post-title">
+                <span class="accent">Boss 直聘反爬对抗：</span>PUA 字体编码解密实录
+            </h1>
+            <div class="post-meta">
+                <span>2026-05-20</span>
+                <span class="dot">·</span>
+                <span class="category">Python/爬虫</span>
+                <span class="dot">·</span>
+                <span class="reading-time">约 12 分钟</span>
+            </div>
+        </div>
+
+        <!-- ===== Post Content ===== -->
+        <div class="post-content">
+
+            <h2>背景</h2>
+            <p>
+                今年年初我启动了 <strong>JobBot</strong> 项目——一个自动化的招聘信息采集与投递辅助系统。项目的初期目标很简单：定时抓取 Boss 直聘上目标岗位的薪资、技能要求和职位描述，做数据分析和岗位匹配。然而在实际开发中，第一个遇到的障碍并不是 API 签名校验或 IP 频率限制，而是一个看起来更「底层」的问题——页面上显示的是乱码。
+            </p>
+            <p>
+                打开 Chrome DevTools 查看元素，薪资字段显示的是 <code>&#xE001;&#xE002;&#xE003;</code> 这样的 Unicode 私有使用区字符。普通爬虫用 requests 库拿到的 HTML 里，这些字段就是一堆不可读的 PUA 编码，根本无法从中提取有效数据。这就是 Boss 直聘采用的 <strong>PUA 字体编码反爬</strong>机制。
+            </p>
+
+            <div class="info-box">
+                <div class="info-label">🔍 现场实录</div>
+                <p>
+                    首次发现该问题时，我以为是编码设置错了。试了 UTF-8、GBK、Latin-1 —— 全都不行。直到在 Network 面板里看到字体文件请求 <code>boss.woff</code>，才意识到这不是编码问题，而是字体层面的加密。
+                </p>
+            </div>
+
+            <h2>什么是 PUA 字体编码</h2>
+            <p>
+                <strong>PUA</strong>（Private Use Areas，私有使用区）是 Unicode 标准中保留给<strong>自定义字符</strong>的码位范围。主要的几个区间是：
+            </p>
+            <ul>
+                <li><strong>U+E000 – U+F8FF</strong>（BMP 私有使用区，6,400 个码位）</li>
+                <li><strong>U+F0000 – U+FFFFD</strong>（第一补充私有使用区）</li>
+                <li><strong>U+100000 – U+10FFFD</strong>（第二补充私有使用区）</li>
+            </ul>
+            <p>
+                字体厂商可以用这些码位来存放自定义图标（如 FontAwesome 的图标字符）。但 Boss 直聘的做法是：把数字 <code>0123456789</code> 和常用单位字符（如 <code>K</code>、<code>万</code>、<code>·</code> 等）映射到 PUA 区域的码位上，然后通过自定义字体文件（WOFF）将 PUA 码位渲染为对应的数字图形。这样用户看到的是正常的数字，但浏览器 DOM 和爬虫拿到的是乱码。
+            </p>
+
+            <blockquote>
+                举个例子：<strong>U+E001</strong> 可能对应数字 <strong>"1"</strong>，<strong>U+E002</strong> 对应 <strong>"2"</strong>，<strong>U+E00A</strong> 对应 <strong>"K"</strong>。<br>
+                页面上的 <code>&#xE001;&#xE002;K</code> 看起来是 <strong>"12K"</strong> 但 DOM 里全是乱码。
+            </blockquote>
+
+            <p>
+                这种方案的精妙之处在于：</p>
+            <ul>
+                <li><strong>不依赖 JavaScript</strong>——字体是 CSS 层面渲染的，即使是服务端渲染的页面也得用字体才能正确显示</li>
+                <li><strong>字符映射可以动态变化</strong>——每次请求返回的字体文件中，PUA 码位到实际字符的映射可能是不同的</li>
+                <li><strong>对浏览器完全透明</strong>——用户看到的是正常内容，完全无感知</li>
+            </ul>
+
+            <h2>解密思路</h2>
+            <p>
+                破解的关键在于建立 PUA 编码到真实字符的映射关系。整体的解密流程分为三个步骤：
+            </p>
+
+            <h3>1. 下载自定义字体文件</h3>
+            <p>
+                打开 Boss 直聘的职位详情页，在 Network 面板中过滤 <code>.woff</code> 请求，可以看到页面加载了一个自定义字体文件。URL 通常是这样的：
+            </p>
+            <pre><span class="comment"># 字体文件 URL 示例</span>
+https://img.bosszhipin.com/static/static/font/<span class="string">"xxxxx"</span>.woff
+</pre>
+            <p>
+                现代反爬方案可能使用 <strong>WOFF2</strong> 格式，并且 URL 中带有时间戳或一次性 Token 防止缓存。使用 Camoufox 浏览器渲染页面时，字体文件会自动加载，我们可以通过拦截响应来获取字体文件内容。
+            </p>
+
+            <h3>2. 解析字体映射表</h3>
+            <p>
+                下载到 WOFF 文件后，我们需要解析字体内部的 <strong>CMAP 表</strong>（Character-to-Glyph Index Mapping Table）。CMAP 表记录了从 Unicode 码位到字形索引的映射关系。这里要注意：PUA 码位映射到的字形，是 Boss 直聘自定义绘制的，而不是标准的数字字形。
+            </p>
+            <p>
+                使用 <code>fonttools</code> 库（Python）可以轻松读取 WOFF 字体文件：
+            </p>
+            <pre><span class="keyword">from</span> fontTools.ttLib <span class="keyword">import</span> TTFont
+<span class="keyword">import</span> requests
+
+<span class="comment"># 下载字体文件</span>
+font_url = <span class="string">"https://img.bosszhipin.com/static/static/font/xxxxx.woff"</span>
+resp = requests.get(font_url, headers=headers)
+<span class="keyword">with</span> <span class="func">open</span>(<span class="string">"boss.woff"</span>, <span class="string">"wb"</span>) <span class="keyword">as</span> f:
+    f.write(resp.content)
+
+<span class="comment"># 解析 CMAP 表</span>
+font = TTFont(<span class="string">"boss.woff"</span>)
+cmap = font.getBestCmap()
+<span class="func">print</span>(cmap)
+<span class="comment"># 输出：{0xe001: 1, 0xe002: 2, 0xe003: 3, ...}</span>
+</pre>
+            <p>
+                这里 cmap 的输出中，key 是 PUA 码位的十进制值，value 是字形索引。但是字形索引 <strong>并不直接等于真实字符</strong>！字形索引只是字体内部的一个编号。要得到真实字符，需要将字体渲染为图像，然后用 OCR 识别每个字形对应的数字——或者更巧妙的方法：利用已知的「参考字符」做一一映射。
+            </p>
+
+            <p>
+                一个更高效的方案是：从字体中提取每个字形的轮廓（Glyph）数据，通过比对字形轮廓的<strong>哈希值</strong>来确定它对应哪个数字。因为数字 <code>0-9</code> 的字形轮廓是固定的，不同字体文件只是码位映射不同，但同一数字的字形轮廓是相同的。
+            </p>
+
+            <pre><span class="keyword">from</span> fontTools.pens.t2Pen <span class="keyword">import</span> T2Pen
+<span class="keyword">import</span> hashlib
+
+glyph_hash_map = {}
+<span class="keyword">for</span> cmap_code, glyph_name <span class="keyword">in</span> cmap.items():
+    glyph = font.getGlyphSet()[glyph_name]
+    <span class="comment"># 提取轮廓数据并计算哈希</span>
+    pen = T2Pen(glyph)
+    glyph.draw(pen)
+    h = hashlib.md5(str(pen.points).encode()).hexdigest()
+    glyph_hash_map[cmap_code] = h
+
+<span class="comment"># 与已知数字轮廓哈希对照表匹配</span>
+known_digit_hashes = load_known_digit_hashes()
+mapping = {}
+<span class="keyword">for</span> code, h <span class="keyword">in</span> glyph_hash_map.items():
+    <span class="keyword">if</span> h <span class="keyword">in</span> known_digit_hashes:
+        mapping[chr(code)] = known_digit_hashes[h]
+</pre>
+
+            <h3>3. DOM 层面替换加密文本</h3>
+            <p>
+                拿到 PUA → 真实字符的映射表后，在浏览器环境中遍历 DOM 树，找到包含加密文本的节点，进行替换：
+            </p>
+            <pre><span class="comment">// 在页面中执行替换</span>
+<span class="keyword">function</span> <span class="func">decryptText</span>(node, mapping) {
+    <span class="keyword">if</span> (node.nodeType === Node.TEXT_NODE) {
+        <span class="keyword">let</span> text = node.textContent;
+        <span class="keyword">let</span> decrypted = <span class="string">""</span>;
+        <span class="keyword">for</span> (<span class="keyword">let</span> char <span class="keyword">of</span> text) {
+            decrypted += mapping[char] || char;
+        }
+        <span class="keyword">if</span> (decrypted !== text) {
+            node.textContent = decrypted;
+        }
+    }
+    node.childNodes.forEach(child => <span class="func">decryptText</span>(child, mapping));
+}
+</pre>
+            <p>
+                这套方案在 JobBot 中经过两个月的实际运行验证，解密成功率达到 <strong>99.5%</strong> 以上。少数失败的 case 是字体文件加载超时或映射表变化导致临时未命中。
+            </p>
+
+            <h2>Camoufox 反检测方案</h2>
+            <p>
+                字体解密只是第一步。Boss 直聘的反爬体系远不止字体编码。在实际运行中，还需要对抗浏览器指纹检测、IP 频率限制、Cookie 合法性校验等多层防护。我们使用了基于 <strong>Camoufox</strong> 的自动化浏览器方案：
+            </p>
+
+            <h3>WebGL / Canvas / 字体指纹模拟</h3>
+            <p>
+                Camoufox 是一个专门的<strong>反指纹检测浏览器</strong>，它通过以下方式来模拟真实浏览器环境：
+            </p>
+            <ul>
+                <li><strong>WebGL 指纹模拟</strong>：替换 WebGL 渲染器的 vendor/renderer 信息，使用真实设备的 GPU 参数，避免被检测为 headless 浏览器</li>
+                <li><strong>Canvas 指纹随机化</strong>：Canvas 图像渲染结果在不同浏览器中会有微小的像素级差异，Camoufox 可以模拟这些差异</li>
+                <li><strong>字体指纹模拟</strong>：浏览器可用的字体列表也是一个重要的指纹特征，headless 浏览器的字体列表往往比真实用户少得多</li>
+            </ul>
+
+            <h3>Cookie 持久化与会话恢复</h3>
+            <p>
+                Boss 直聘会对会话进行<strong>滑动窗口校验</strong>。如果检测到某个会话的访问频率异常，或者 Cookie 中缺少某些关键的校验字段（如 <code>__zp_seo</code>、<code>__lr</code> 等），就会弹出滑块验证码。
+            </p>
+            <p>
+                我们的方案是：
+            </p>
+            <ul>
+                <li>首次启动时手动完成验证码，保存完整的 Cookie 存档</li>
+                <li>后续启动自动加载 Cookie，模拟正常用户的会话续期行为</li>
+                <li>Cookie 过期前主动刷新（通过访问首页刷新过期时间）</li>
+            </ul>
+
+            <h3>滑动窗口频率控制</h3>
+            <p>
+                即使有最完美的指纹模拟，请求频率过高依然会被封杀。我们实现了一个 <strong>自适应频率控制器</strong>：
+            </p>
+            <pre><span class="keyword">class</span> <span class="func">RateController</span>:
+    <span class="keyword">def</span> <span class="func">__init__</span>(self):
+        self.base_interval = <span class="number">5</span>  <span class="comment"># 基础间隔（秒）</span>
+        self.window_size = <span class="number">60</span>   <span class="comment"># 滑动窗口（秒）</span>
+        self.max_requests = <span class="number">10</span>   <span class="comment"># 窗口内最大请求数</span>
+        self.timestamps = []
+
+    <span class="keyword">def</span> <span class="func">wait_if_needed</span>(self):
+        now = time.time()
+        <span class="comment"># 清理过期的时间戳</span>
+        self.timestamps = [t <span class="keyword">for</span> t <span class="keyword">in</span> self.timestamps
+                          <span class="keyword">if</span> now - t < self.window_size]
+        <span class="keyword">if</span> len(self.timestamps) >= self.max_requests:
+            sleep_time = self.timestamps[<span class="number">0</span>] + self.window_size - now
+            <span class="keyword">if</span> sleep_time > <span class="number">0</span>:
+                time.sleep(sleep_time)
+        self.timestamps.append(time.time())
+</pre>
+            <p>
+                这套控制器不仅限制了请求速率，还加入了<strong>随机抖动</strong>（±20% 的间隔波动）和<strong>节假日感知</strong>功能——在工作日的非工作时间段自动降低频率，在周末使用更慢的速率，模拟真实用户的浏览行为。
+            </p>
+
+            <blockquote>
+                <strong>💡 经验之谈：</strong>反爬对抗中最容易被忽略的是「行为模式」层面的检测。大多数网站的反爬系统已经不再是简单的 IP 频率限制，而是通过机器学习模型分析用户的行为序列。如果你的程序访问页面总是按照固定顺序、固定间隔，即使指纹伪装得再好，也很容易被判定为爬虫。
+            </blockquote>
+
+            <h2>字体编码反爬的演进与防御思路</h2>
+            <p>
+                研究过程中，我注意到 Boss 直聘的字体编码方案也在不断迭代：
+            </p>
+            <ul>
+                <li><strong>V1 阶段</strong>：固定映射表，同一个字体文件可以被复用，破解后永久生效</li>
+                <li><strong>V2 阶段</strong>：每次请求动态生成字体文件，PUA 码位映射<strong>每次都变</strong>，必须实时解析</li>
+                <li><strong>V3 阶段</strong>：在字体中加入大量「噪声字形」——这些字形在页面中并未使用，但被包含在字体文件中，增加解析难度</li>
+                <li><strong>V4 阶段</strong>（推测）：结合 CSS 子集化 + 字体分段加载，部分敏感数据使用 Canvas 渲染而非字体渲染</li>
+            </ul>
+            <p>
+                针对这些演进，我们的解密方案也需要持续升级。目前 V3 阶段的噪声字形可以通过「交叉引用未在 DOM 中出现的码位」来过滤——页面中实际使用的 PUA 码位是有限的，不在 DOM 中的码位大概率是噪声。
+            </p>
+
+            <h2>总结</h2>
+            <p>
+                字体编码反爬是目前较为<strong>高级且隐蔽</strong>的反爬手段之一。它不同于传统的 IP 封禁、User-Agent 校验或 JS 混淆，而是在浏览器最基础的渲染环节——字体层——进行加密。这使得大多数基于 HTTP 库的爬虫完全无法读取数据。
+            </p>
+            <p>
+                破解这一机制的核心思路是：</p>
+            <ol>
+                <li>理解 PUA 字体编码的原理——将数字字符映射到 Unicode 私有使用区</li>
+                <li>通过字体解析工具（fonttools）建立 PUA 码位到真实字符的映射</li>
+                <li>结合自动化浏览器（Camoufox）在 DOM 层面实时替换加密文本</li>
+                <li>辅以完整的反指纹检测策略，确保浏览器环境不被识别</li>
+            </ol>
+            <p>
+                最终，JobBot 的 Boss 直聘适配模块运行稳定，每天定时抓取目标岗位数据，解密成功率维持在 <strong>99% 以上</strong>。这一整套方案不仅适用于 Boss 直聘，对其他使用字体编码反爬的网站（如部分招聘平台、电商平台的价格加密等）也有参考价值。
+            </p>
+
+            <p>
+                当然，反爬技术是一把双刃剑。作为开发者，在对抗反爬机制的同时，我们也应当遵守网站的 <code>robots.txt</code> 相关规则，控制合理的数据采集频率，<strong>不要对目标服务造成压力</strong>。技术无罪，但使用技术的方式决定了它的价值。
+            </p>
+
+            <div class="info-box">
+                <div class="info-label">🔗 相关资源</div>
+                <p>
+                    ● fonttools 官方文档：<code>https://github.com/fonttools/fonttools</code><br>
+                    ● Camoufox 反检测浏览器：<code>https://github.com/daijro/camoufox</code><br>
+                    ● Unicode PUA 规范：<code>https://unicode.org/faq/private_use.html</code>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- ===== Tags ===== -->
+        <div class="post-tags">
+            <span class="tag">反爬</span>
+            <span class="tag">PUA 字体</span>
+            <span class="tag">Python</span>
+            <span class="tag">Camoufox</span>
+            <span class="tag">Web 安全</span>
+            <span class="tag">爬虫</span>
+        </div>
+
+        <!-- ===== Related Posts ===== -->
+        <div class="related-posts">
+            <h3>📖 相关文章</h3>
+            <div class="related-grid">
+                <a href="./blog.html" class="related-card">
+                    <div class="r-title">IAP 在线升级库设计：可移植的嵌入式 OTA 方案</div>
+                    <div class="r-date">2026-05-30</div>
+                </a>
+                <a href="./blog.html" class="related-card">
+                    <div class="r-title">从嵌入式到 AI 应用开发者的学习路线</div>
+                    <div class="r-date">2026-05-15</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- ===== GitHub button ===== -->
+        <div class="post-github">
+            <a href="https://github.com/p79463" target="_blank" class="gh-btn">
+                <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                查看 GitHub
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

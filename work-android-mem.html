@@ -9,7 +9,7 @@
     <style>
         /* ---- work-detail layout ---- */
         .work-detail {
-            max-width: 900px;
+            max-width: 960px;
             margin: 40px auto 60px;
             padding: 0 24px;
         }
@@ -26,53 +26,364 @@
         .work-detail .back-link:hover {
             color: #E8E8F6;
         }
-        .work-detail-header {
-            margin-bottom: 40px;
+
+        /* ---- Hero ---- */
+        .hero-section {
+            margin-bottom: 48px;
         }
-        .work-detail-header h1 {
-            font-size: 32px;
+        .hero-section h1 {
+            font-size: 36px;
             font-weight: 700;
             color: #E8E8F6;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            background: linear-gradient(135deg, #E8E8F6 0%, #7ec8e3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .work-detail-header .tag-row {
+        .hero-section .subtitle {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #b0b0cc;
+            margin-bottom: 16px;
+            max-width: 700px;
+        }
+        .hero-section .tag-row {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 16px;
         }
-        .work-detail-header .tag-row .tag {
+        .hero-section .tag-row .tag {
             display: inline-block;
             padding: 2px 12px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 500;
             letter-spacing: 0.5px;
-            background: rgba(120, 120, 160, 0.15);
-            color: #b0b0cc;
-            border: 1px solid rgba(120, 120, 160, 0.2);
+            background: rgba(74, 158, 255, 0.1);
+            color: #7cb8ff;
+            border: 1px solid rgba(74, 158, 255, 0.2);
         }
-        .work-detail-header .tech-stack {
+        .hero-section .tech-stack {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 12px;
         }
-        .work-detail-header .tech-stack .tech-badge {
+        .hero-section .tech-stack .tech-badge {
             display: inline-block;
             padding: 4px 14px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 500;
-            background: rgba(100, 200, 255, 0.08);
-            color: #7ec8e3;
-            border: 1px solid rgba(100, 200, 255, 0.18);
+            background: rgba(74, 158, 255, 0.07);
+            color: #7cb8ff;
+            border: 1px solid rgba(74, 158, 255, 0.15);
         }
-        .work-detail-body {
+
+        /* ---- Data Cards ---- */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 48px;
+        }
+        .data-card {
+            background: rgba(74, 158, 255, 0.04);
+            border: 1px solid rgba(74, 158, 255, 0.12);
+            border-radius: 12px;
+            padding: 20px 18px;
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
+            cursor: default;
+        }
+        .data-card:hover {
+            border-color: rgba(74, 158, 255, 0.35);
+            background: rgba(74, 158, 255, 0.07);
+            transform: translateY(-2px);
+        }
+        .data-card .card-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+            display: block;
+        }
+        .data-card .card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 6px;
+        }
+        .data-card .card-desc {
+            font-size: 12px;
+            line-height: 1.6;
+            color: #9898b4;
+        }
+        .data-card .card-stat {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4a9eff;
+            margin-bottom: 4px;
+        }
+
+        /* ---- Architecture Diagram ---- */
+        .arch-section {
+            background: rgba(74, 158, 255, 0.03);
+            border: 1px solid rgba(74, 158, 255, 0.1);
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-bottom: 48px;
+        }
+        .arch-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .arch-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: #4a9eff;
+        }
+        .arch-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .arch-layer {
             display: flex;
             flex-direction: column;
-            gap: 36px;
+            align-items: center;
+            background: rgba(74, 158, 255, 0.06);
+            border: 1px solid rgba(74, 158, 255, 0.15);
+            border-radius: 10px;
+            padding: 14px 18px;
+            min-width: 120px;
+            text-align: center;
         }
+        .arch-layer .layer-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #4a9eff;
+            margin-bottom: 4px;
+        }
+        .arch-layer .layer-desc {
+            font-size: 11px;
+            color: #9898b4;
+            line-height: 1.4;
+        }
+        .arch-layer .layer-tech {
+            font-size: 10px;
+            color: #6a6a8a;
+            margin-top: 4px;
+            background: rgba(74, 158, 255, 0.06);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .arch-arrow {
+            font-size: 22px;
+            color: #4a9eff;
+            opacity: 0.6;
+            flex-shrink: 0;
+        }
+
+        /* ---- Two-column Responsibilities ---- */
+        .resp-section {
+            margin-bottom: 48px;
+        }
+        .resp-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .resp-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: #4a9eff;
+        }
+        .resp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .resp-col {
+            background: rgba(74, 158, 255, 0.03);
+            border: 1px solid rgba(74, 158, 255, 0.1);
+            border-radius: 12px;
+            padding: 22px 24px;
+        }
+        .resp-col h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #4a9eff;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resp-col ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .resp-col li {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #c4c4dc;
+            padding: 5px 0 5px 18px;
+            position: relative;
+        }
+        .resp-col li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #4a9eff;
+            font-size: 12px;
+        }
+
+        /* ---- Tech Stack Grid ---- */
+        .techgrid-section {
+            margin-bottom: 48px;
+        }
+        .techgrid-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .techgrid-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: #4a9eff;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+        .tech-item {
+            background: rgba(74, 158, 255, 0.04);
+            border: 1px solid rgba(74, 158, 255, 0.1);
+            border-radius: 10px;
+            padding: 16px 10px;
+            text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .tech-item:hover {
+            border-color: rgba(74, 158, 255, 0.3);
+            background: rgba(74, 158, 255, 0.07);
+        }
+        .tech-item .tech-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 3px;
+        }
+        .tech-item .tech-cat {
+            font-size: 10px;
+            color: #6a6a8a;
+        }
+
+        /* ---- Results / Highlights ---- */
+        .results-section {
+            margin-bottom: 48px;
+        }
+        .results-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .results-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: #4a9eff;
+        }
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        .result-card {
+            background: rgba(74, 158, 255, 0.03);
+            border: 1px solid rgba(74, 158, 255, 0.1);
+            border-radius: 10px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .result-card .result-icon {
+            font-size: 18px;
+            color: #4a9eff;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        .result-card .result-text {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #c4c4dc;
+        }
+
+        /* ---- GitHub Button ---- */
+        .github-row {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #4a9eff, #3078d0);
+            border: none;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .github-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 20px rgba(74, 158, 255, 0.3);
+        }
+        .github-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: #fff;
+        }
+
+        /* ---- work-section (fallback) ---- */
         .work-section {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.04);
@@ -94,63 +405,60 @@
             width: 4px;
             height: 20px;
             border-radius: 2px;
-            background: linear-gradient(180deg, #7ec8e3, #5a7dca);
+            background: #4a9eff;
         }
         .work-section p {
             font-size: 14px;
             line-height: 1.8;
             color: #b8b8d0;
         }
-        .work-section ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .work-section li {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #c4c4dc;
-            padding: 6px 0 6px 20px;
-            position: relative;
-        }
-        .work-section li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #7ec8e3;
-            font-size: 13px;
-        }
-        .work-section .description-text {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #b8b8d0;
-        }
-        .work-tech-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        .work-tech-list .item {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
-            background: rgba(100, 200, 255, 0.06);
-            color: #8ec8e3;
-            border: 1px solid rgba(100, 200, 255, 0.12);
+
+        /* ---- Responsive ---- */
+        @media screen and (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .resp-grid {
+                grid-template-columns: 1fr;
+            }
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
         @media screen and (max-width: 768px) {
             .work-detail {
                 padding: 0 16px;
                 margin: 24px auto 40px;
             }
-            .work-detail-header h1 {
-                font-size: 24px;
+            .hero-section h1 {
+                font-size: 26px;
             }
-            .work-section {
-                padding: 20px 18px;
+            .arch-diagram {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .arch-arrow {
+                transform: rotate(90deg);
+            }
+            .arch-layer {
+                min-width: 200px;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media screen and (max-width: 480px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            .tech-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
     </style>
@@ -187,8 +495,12 @@
     <div class="work-detail">
         <a href="./work.html" class="back-link">← 返回作品集</a>
 
-        <div class="work-detail-header">
+        <!-- Hero -->
+        <div class="hero-section">
             <h1>Android 内存分析与可视化工具</h1>
+            <p class="subtitle">
+                在 Android Root 环境下，从 Lua 脚本起步，逐步演进至 Native C/C++ + ImGui + Vulkan 的独立二进制程序，集成 Linux 内核模块实现系统级内存读写与图形化数据呈现。
+            </p>
             <div class="tag-row">
                 <span class="tag">Android</span>
                 <span class="tag">Root</span>
@@ -206,52 +518,163 @@
             </div>
         </div>
 
-        <div class="work-detail-body">
-            <!-- 项目简介 -->
-            <div class="work-section">
-                <h2>项目简介</h2>
-                <p>
-                    在 Android Root 环境下，独立开发了集内存分析、数据可视化于一体的系统级工具，
-                    从脚本开发到 Native 二进制程序，逐步深入系统底层技术栈。
-                </p>
+        <!-- Data Cards -->
+        <div class="cards-grid">
+            <div class="data-card">
+                <span class="card-icon">🔄</span>
+                <div class="card-title">Lua → C/C++ 演进</div>
+                <div class="card-desc">从脚本语言到编译型 Native 二进制，彻底脱离第三方工具链依赖</div>
             </div>
+            <div class="data-card">
+                <span class="card-icon">🖼️</span>
+                <div class="card-title">ImGui + Vulkan</div>
+                <div class="card-desc">即时模式 UI 框架结合 Vulkan/OpenGL 后端，实现 GPU 加速可视化</div>
+            </div>
+            <div class="data-card">
+                <span class="card-icon">🧩</span>
+                <div class="card-title">内核模块对接</div>
+                <div class="card-desc">对接 Linux 内核模块(KO)驱动，突破用户态权限限制实现系统级内存读写</div>
+            </div>
+            <div class="data-card">
+                <span class="card-icon">🛡️</span>
+                <div class="card-title">TouchManager 过检测</div>
+                <div class="card-desc">自研触摸库，解决 uinput 事件注入冲突，稳定通过设备检测</div>
+            </div>
+        </div>
 
-            <!-- 技术栈 -->
-            <div class="work-section">
-                <h2>技术栈</h2>
-                <div class="work-tech-list">
-                    <span class="item">C/C++</span>
-                    <span class="item">Lua</span>
-                    <span class="item">ImGui</span>
-                    <span class="item">OpenGL</span>
-                    <span class="item">Vulkan</span>
-                    <span class="item">Linux内核模块</span>
+        <!-- Architecture -->
+        <div class="arch-section">
+            <h2>系统架构</h2>
+            <div class="arch-diagram">
+                <div class="arch-layer">
+                    <div class="layer-title">Lua 脚本层</div>
+                    <div class="layer-desc">内存扫描 · 特征识别<br>数据过滤 · 逻辑编排</div>
+                    <div class="layer-tech">GG修改器框架</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-layer">
+                    <div class="layer-title">Native C/C++ 层</div>
+                    <div class="layer-desc">进程间通信 · 内存读写<br>算法封装 · 性能优化</div>
+                    <div class="layer-tech">NDK / JNI</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-layer">
+                    <div class="layer-title">ImGui 渲染层</div>
+                    <div class="layer-desc">即时模式 UI<br>数据仪表盘 · 交互面板</div>
+                    <div class="layer-tech">OpenGL / Vulkan</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-layer">
+                    <div class="layer-title">Linux 内核模块</div>
+                    <div class="layer-desc">系统级内存访问<br>驱动对接 · 权限穿透</div>
+                    <div class="layer-tech">KO / Root</div>
                 </div>
             </div>
+        </div>
 
-            <!-- 项目职责 -->
-            <div class="work-section">
-                <h2>项目职责</h2>
-                <ul>
-                    <li>使用 Lua 编写内存分析脚本，基于 GG 修改器框架实现进程内存扫描、数据特征识别与批量处理</li>
-                    <li>设计内存读写逻辑，实现数据类型判断、条件过滤、循环遍历等复杂业务逻辑</li>
-                    <li>使用 C/C++ 重构为 Native 二进制程序，脱离第三方工具依赖</li>
-                    <li>集成 ImGui 即时模式 UI 框架，结合 OpenGL/Vulkan 图形 API 实现数据可视化界面</li>
-                    <li>对接 Linux 内核模块(KO)驱动，实现系统级内存读写</li>
-                    <li>设计 TouchManager 过检测触摸库，解决设备触摸事件注入的 uinput 冲突问题</li>
-                </ul>
+        <!-- Responsibilities -->
+        <div class="resp-section">
+            <h2>职责分工</h2>
+            <div class="resp-grid">
+                <div class="resp-col">
+                    <h3>📜 脚本开发</h3>
+                    <ul>
+                        <li>使用 Lua 编写内存分析脚本，基于 GG 修改器框架实现进程内存扫描</li>
+                        <li>设计数据类型判断、条件过滤、循环遍历等复杂业务逻辑</li>
+                        <li>实现数据特征识别与批量处理管线</li>
+                        <li>编写自动化测试脚本验证内存读写一致性</li>
+                    </ul>
+                </div>
+                <div class="resp-col">
+                    <h3>⚙️ 系统底层</h3>
+                    <ul>
+                        <li>使用 C/C++ 重构为 Native 二进制程序，脱离第三方工具依赖</li>
+                        <li>集成 ImGui 即时模式 UI 框架，结合 OpenGL/Vulkan 实现可视化</li>
+                        <li>对接 Linux 内核模块(KO)驱动，实现系统级内存读写</li>
+                        <li>设计 TouchManager 过检测触摸库，解决 uinput 冲突</li>
+                    </ul>
+                </div>
             </div>
+        </div>
 
-            <!-- 项目成果 -->
-            <div class="work-section">
-                <h2>项目成果</h2>
-                <ul>
-                    <li>完成了从脚本语言到编译型语言、从依赖工具到独立程序的技术演进</li>
-                    <li>深入理解 Android 系统内存管理机制、进程权限模型和 Root 环境下的系统级操作</li>
-                    <li>掌握了 ImGui 与图形 API 的集成方案，具备跨平台 GUI 开发能力</li>
-                    <li>积累了 Linux 内核模块对接经验</li>
-                </ul>
+        <!-- Tech Stack Grid -->
+        <div class="techgrid-section">
+            <h2>技术栈</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-name">C/C++</div>
+                    <div class="tech-cat">编程语言</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">Lua</div>
+                    <div class="tech-cat">脚本语言</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">ImGui</div>
+                    <div class="tech-cat">UI 框架</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">OpenGL</div>
+                    <div class="tech-cat">图形 API</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">Vulkan</div>
+                    <div class="tech-cat">图形 API</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">NDK</div>
+                    <div class="tech-cat">开发工具</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">JNI</div>
+                    <div class="tech-cat">桥接层</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">Linux KO</div>
+                    <div class="tech-cat">内核模块</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">GG 修改器</div>
+                    <div class="tech-cat">工具框架</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">uinput</div>
+                    <div class="tech-cat">输入子系统</div>
+                </div>
             </div>
+        </div>
+
+        <!-- Results / Highlights -->
+        <div class="results-section">
+            <h2>成果高亮</h2>
+            <div class="results-grid">
+                <div class="result-card">
+                    <span class="result-icon">✦</span>
+                    <div class="result-text">完成了从脚本语言到编译型语言、从依赖工具到独立程序的技术演进</div>
+                </div>
+                <div class="result-card">
+                    <span class="result-icon">✦</span>
+                    <div class="result-text">深入理解 Android 系统内存管理机制、进程权限模型和 Root 环境下的系统级操作</div>
+                </div>
+                <div class="result-card">
+                    <span class="result-icon">✦</span>
+                    <div class="result-text">掌握了 ImGui 与图形 API 的集成方案，具备跨平台 GUI 开发能力</div>
+                </div>
+                <div class="result-card">
+                    <span class="result-icon">✦</span>
+                    <div class="result-text">积累了 Linux 内核模块对接经验，打通用户态与内核态数据通路</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GitHub Button -->
+        <div class="github-row">
+            <a href="https://github.com/p79463" target="_blank" class="github-btn">
+                <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                </svg>
+                GitHub
+            </a>
         </div>
     </div>
 

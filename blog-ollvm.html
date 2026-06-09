@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - OLLVM 混淆 Pass 移植 LLVM 19 踩坑记</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg" />
+    <style>
+        /* ---- blog-post layout ---- */
+        .blog-post {
+            max-width: 800px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b8ba7;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-bottom: 32px;
+        }
+        .back-link:hover { color: #E8E8F6; }
+
+        /* ---- Blog Hero ---- */
+        .blog-hero {
+            margin-bottom: 40px;
+        }
+        .blog-hero h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: #E8E8F6;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+        }
+        .blog-hero .blog-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: #a0a0b8;
+            margin-bottom: 14px;
+        }
+        .blog-hero .blog-meta .blog-date {
+            color: #a89aff;
+        }
+        .blog-hero .blog-meta .blog-category {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            background: rgba(168, 154, 255, 0.10);
+            color: #a89aff;
+            border: 1px solid rgba(168, 154, 255, 0.20);
+        }
+        .blog-hero .blog-meta .blog-divider {
+            color: #4a4a5e;
+        }
+
+        /* ---- Blog Content ---- */
+        .blog-content {
+            background: rgba(255,255,255,0.015);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 36px 40px;
+        }
+        .blog-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #D0C8FF;
+            margin: 36px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(168, 154, 255, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .blog-content h2:first-of-type {
+            margin-top: 0;
+        }
+        .blog-content h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 22px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #a89aff, #7c6cf0);
+            flex-shrink: 0;
+        }
+        .blog-content h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #C8C0F0;
+            margin: 28px 0 12px;
+        }
+        .blog-content p {
+            font-size: 14.5px;
+            line-height: 1.85;
+            color: #c4c4dc;
+            margin: 0 0 14px;
+        }
+        .blog-content ul, .blog-content ol {
+            margin: 0 0 14px;
+            padding: 0 0 0 22px;
+        }
+        .blog-content li {
+            font-size: 14.5px;
+            line-height: 1.8;
+            color: #c4c4dc;
+            margin-bottom: 6px;
+        }
+        .blog-content li strong {
+            color: #a89aff;
+            font-weight: 600;
+        }
+        .blog-content strong {
+            color: #b8b0e8;
+        }
+        .blog-content .blog-code-block {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(168, 154, 255, 0.08);
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 16px 0 20px;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #d0c8f0;
+            overflow-x: auto;
+        }
+        .blog-content .blog-code-block .keyword {
+            color: #a89aff;
+        }
+        .blog-content .blog-code-block .comment {
+            color: #6a6a88;
+            font-style: italic;
+        }
+        .blog-content .blog-code-block .string {
+            color: #8fca9a;
+        }
+        .blog-content .blog-code-block .type {
+            color: #7fc1ff;
+        }
+        .blog-content .blog-tip {
+            background: rgba(168, 154, 255, 0.06);
+            border: 1px solid rgba(168, 154, 255, 0.12);
+            border-left: 3px solid #a89aff;
+            border-radius: 8px;
+            padding: 14px 18px;
+            margin: 18px 0;
+            font-size: 13.5px;
+            line-height: 1.7;
+            color: #c8c0e8;
+        }
+        .blog-content .blog-tip::before {
+            content: '💡 ';
+            font-weight: 600;
+            color: #a89aff;
+        }
+        .blog-content .blog-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(168, 154, 255, 0.15), transparent);
+            margin: 32px 0;
+        }
+
+        /* ---- Blog Footer / Tag ---- */
+        .blog-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(168, 154, 255, 0.10);
+        }
+        .blog-tags .blog-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            background: rgba(168, 154, 255, 0.08);
+            color: #a89aff;
+            border: 1px solid rgba(168, 154, 255, 0.15);
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .blog-tags .blog-tag:hover {
+            background: rgba(168, 154, 255, 0.15);
+            border-color: rgba(168, 154, 255, 0.30);
+        }
+
+        /* ---- Responsive ---- */
+        @media screen and (max-width: 768px) {
+            .blog-post { padding: 0 16px; margin: 24px auto 40px; }
+            .blog-hero h1 { font-size: 24px; }
+            .blog-content { padding: 24px 20px; }
+            .blog-content h2 { font-size: 19px; }
+            .blog-content h3 { font-size: 15px; }
+        }
+        @media screen and (max-width: 480px) {
+            .blog-content { padding: 18px 14px; }
+            .blog-hero h1 { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- Blog Post -->
+    <div class="blog-post">
+        <a href="./blog.html" class="back-link">← 返回博客</a>
+
+        <div class="blog-hero">
+            <h1>OLLVM 混淆 Pass 移植 LLVM 19 踩坑记</h1>
+            <div class="blog-meta">
+                <span class="blog-date">2026-06-05</span>
+                <span class="blog-divider">|</span>
+                <span class="blog-category">编译器</span>
+            </div>
+        </div>
+
+        <div class="blog-content">
+
+            <h2>背景</h2>
+            <p>
+                OLLVM（Obfuscator-LLVM）是一个基于 LLVM 的代码混淆工具，通过 LLVM Pass 在编译阶段对程序进行混淆变换。
+                原始版本基于 LLVM 4.0，后续社区维护了 LLVM 14 版本。本项目的目标是将 OLLVM 移植到 LLVM 19。
+            </p>
+
+            <h2>移植路线</h2>
+            <p>
+                从 LLVM 14 → 17 → 19 逐步迁移。选择这条路线是因为 LLVM 的 API 在各个大版本之间变化较大，
+                跨度过大的直接迁移会导致大量编译错误难以排查。通过逐版本升级，可以更清晰地定位每个 API 变更点。
+            </p>
+
+            <h2>主要挑战</h2>
+
+            <h3>1. Pass Manager 重构 (LegacyPM → NewPM)</h3>
+            <p>
+                LLVM 17 之后，Legacy Pass Manager 被彻底移除。OLLVM 的 Pass 继承自 <code>llvm::FunctionPass</code>，
+                需要改为继承 <code>llvm::PassInfoMixin</code> 并实现 <code>run</code> 方法。
+            </p>
+            <div class="blog-code-block">
+                <span class="comment">// LegacyPM (LLVM 14)</span>
+                <span class="keyword">struct</span> HelloWorld : <span class="keyword">public</span> FunctionPass {<br>
+                &nbsp;&nbsp;<span class="keyword">bool</span> runOnFunction(Function &F) <span class="keyword">override</span> {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// ...</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> <span class="keyword">false</span>;<br>
+                &nbsp;&nbsp;}<br>
+                };<br><br>
+                <span class="comment">// NewPM (LLVM 19)</span>
+                <span class="keyword">struct</span> HelloWorld : PassInfoMixin&lt;HelloWorld&gt; {<br>
+                &nbsp;&nbsp;PreservedAnalyses run(Function &F, FunctionAnalysisManager &AM) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="comment">// ...</span><br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">return</span> PreservedAnalyses::none();<br>
+                &nbsp;&nbsp;}<br>
+                };
+            </div>
+            <p>
+                这个变化影响深远：<strong>runOnFunction</strong> 的返回值从 <code>bool</code> 变为 <code>PreservedAnalyses</code>，
+                Pass 注册方式从 <code>INITIALIZE_PASS</code> 宏变为 <code>llvm::PassPluginLibraryInfo</code> 或 ToolRun 模式。
+            </p>
+
+            <h3>2. API 变更</h3>
+            <ul>
+                <li><strong>CreateMessage 被替换</strong> — LLVM 移除了旧的 CreateMessage API，需要改用新的 IRBuilder 接口或直接构造指令。</li>
+                <li><strong>模块 Pass 注册机制变更</strong> — 从 <code>PassManagerBuilder</code> 回调方式变为 <code>PassBuilder::addPass</code> 链式注册。</li>
+                <li><strong>AnalysisManager 的获取方式变化</strong> — 不再通过 <code>getAnalysis&lt;T&gt;()</code> 获取分析结果，而是从 <code>FunctionAnalysisManager</code> 参数中通过 <code>getResult&lt;T&gt;(F)</code> 获取。</li>
+                <li><strong>LLVMContext 和 Module 的接口变化</strong> — 部分 LLVM IR 类的 getter/setter 被 const 化或改名。</li>
+            </ul>
+
+            <div class="blog-tip">
+                迁移过程中最大的陷阱是 <strong>Pass Registration</strong>。LLVM 19 要求显式声明 Pass 的依赖分析和 preserve 集合，
+                否则 Pass 链可能被优化器跳过或导致运行时断言失败。
+            </div>
+
+            <h3>3. 控制流扁平化的实现</h3>
+            <p>
+                基本原理：识别原始函数的控制流图，将所有基本块放入一个 switch-case 结构，通过 dispatcher 变量控制执行顺序。
+            </p>
+            <div class="blog-code-block">
+                <span class="comment">// 混淆前</span><br>
+                <span class="keyword">int</span> foo(<span class="keyword">int</span> x) {<br>
+                &nbsp;&nbsp;<span class="keyword">if</span> (x &gt; 0) <span class="keyword">return</span> x + 1;<br>
+                &nbsp;&nbsp;<span class="keyword">else</span> <span class="keyword">return</span> x - 1;<br>
+                }<br><br>
+                <span class="comment">// 混淆后（扁平化）</span><br>
+                <span class="keyword">int</span> foo(<span class="keyword">int</span> x) {<br>
+                &nbsp;&nbsp;<span class="keyword">int</span> state = 0;<br>
+                &nbsp;&nbsp;<span class="keyword">while</span> (1) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">switch</span> (state) {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">case</span> 0: <span class="keyword">if</span> (x &gt; 0) state = 1; <span class="keyword">else</span> state = 2; <span class="keyword">break</span>;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">case</span> 1: <span class="keyword">return</span> x + 1;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">case</span> 2: <span class="keyword">return</span> x - 1;<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;}<br>
+                }
+            </div>
+            <p>
+                在 LLVM IR 层面，这个变换需要：创建 switch 指令、将原基本块分裂成 case 块、插入 dispatcher 变量并确保 PHI 节点正确处理。
+                LLVM 19 中 <code>SwitchInst</code> 的 API 与旧版本兼容，但 <code>SplitBlockAndInsertIfThen</code> 等辅助函数的签名略有变化。
+            </p>
+
+            <h3>4. 虚假控制流 Pass</h3>
+            <p>
+                在原始基本块之间插入不可达的基本块，增加反编译器的分析难度。核心思路是在每个原始基本块前插入一个 opaque predicate，
+                使得静态分析工具无法确定哪些基本块是可达的。
+            </p>
+            <p>
+                实现时需要在基本块之间插入一条永真条件的分支，然后添加一个永远不会被执行到的虚假分支。
+                为了避免优化器删除这些不可达代码，需要确保虚假分支中的指令对编译器来说是"不可证明"的。
+                常用的技巧包括：基于指针运算的复杂表达式、基于浮点运算的比较、或者通过内联汇编引入 barrier。
+            </p>
+
+            <h2>测试与验证</h2>
+            <p>
+                使用 <code>test_ollvm</code> 脚本验证编译产物是否包含混淆特征。验证方法包括：
+            </p>
+            <ul>
+                <li><strong>静态分析</strong> — 使用 objdump / IDA Pro 检查编译产物的控制流图复杂度。</li>
+                <li><strong>符号特征检测</strong> — 检查二进制中是否包含 LLVM 混淆 Pass 的特征字符串（可选的调试信息）。</li>
+                <li><strong>运行时行为对比</strong> — 混淆前后的程序对相同输入应产生完全相同的输出。</li>
+                <li><strong>反编译器退化测试</strong> — 使用 Ghidra / IDA 反编译混淆后的二进制，评估反编译结果的可读性。</li>
+            </ul>
+
+            <div class="blog-divider"></div>
+
+            <h2>总结</h2>
+            <p>
+                LLVM 新版本的 API 变化很大，但配合官方文档和社区经验可以完成迁移。
+                从 LLVM 14 到 19 的跨越需要重点关注 <strong>Pass Manager</strong> 重构、<strong>AnalysisManager</strong> 的使用方式、
+                以及 <strong>IRBuilder</strong> 和 <strong>指令构造 API</strong> 的变更。
+            </p>
+            <p>
+                掌握 LLVM Pass 开发对于代码安全领域非常有价值。
+                混淆技术本身是一把双刃剑——既能保护知识产权和核心算法，也可能被用于恶意代码混淆。
+                理解其原理有助于在攻防两端都做出更明智的技术决策。
+            </p>
+
+            <!-- Tags -->
+            <div class="blog-tags">
+                <span class="blog-tag">LLVM</span>
+                <span class="blog-tag">OLLVM</span>
+                <span class="blog-tag">混淆</span>
+                <span class="blog-tag">编译器</span>
+                <span class="blog-tag">Pass Manager</span>
+                <span class="blog-tag">LLVM 19</span>
+                <span class="blog-tag">代码安全</span>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

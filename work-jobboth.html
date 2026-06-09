@@ -6,6 +6,417 @@
     <title>Ruox - JobBot 智能招聘自动化</title>
     <link rel="stylesheet" href="./css/style.min.css">
     <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ===== Base ===== */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.7;
+        }
+
+        .detail-page {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ===== Green Accent ===== */
+        :root {
+            --green: #5ec8a0;
+            --green-dark: #3aa87c;
+            --green-glow: rgba(94, 200, 160, 0.15);
+            --green-border: rgba(94, 200, 160, 0.25);
+        }
+
+        /* ===== Back Link ===== */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8888aa;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.25s;
+            cursor: pointer;
+        }
+        .back-link:hover { color: var(--green); }
+        .back-link svg { width: 16px; height: 16px; }
+
+        /* ===== Hero ===== */
+        .detail-hero {
+            margin-bottom: 48px;
+        }
+        .detail-hero .project-title {
+            font-size: 36px;
+            font-weight: 800;
+            color: #f0f0f8;
+            margin: 0 0 8px;
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+        }
+        .detail-hero .project-title .highlight {
+            background: linear-gradient(135deg, var(--green), #7adbb5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .detail-hero .project-sub {
+            font-size: 16px;
+            color: #9999bb;
+            margin: 0 0 24px;
+            max-width: 680px;
+            line-height: 1.7;
+        }
+        .detail-hero .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .detail-hero .tag-row .tag {
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            color: #7adbb5;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        /* ===== Data Cards ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 48px;
+        }
+        .data-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 22px 18px;
+            text-align: center;
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
+        }
+        .data-card:hover {
+            border-color: var(--green-border);
+            background: rgba(94,200,160,0.05);
+            transform: translateY(-2px);
+        }
+        .data-card .data-num {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+        .data-card .data-num .sm {
+            font-size: 16px;
+            font-weight: 400;
+            color: #8888aa;
+        }
+        .data-card .data-label {
+            font-size: 14px;
+            color: #b0b0cc;
+            line-height: 1.5;
+        }
+        .data-card .data-icon {
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        /* ===== Section ===== */
+        .detail-section {
+            margin-bottom: 40px;
+        }
+        .detail-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #d0d0e8;
+            margin: 0 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--green-border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .detail-section h2 .sec-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--green-glow);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .detail-section p {
+            font-size: 15px;
+            color: #c8c8dd;
+            margin: 0 0 12px;
+            line-height: 1.8;
+        }
+
+        /* ===== Architecture Diagram ===== */
+        .arch-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding: 24px 0;
+        }
+        .arch-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .arch-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 10px;
+            padding: 14px 20px;
+            text-align: center;
+            min-width: 100px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .arch-box:hover {
+            border-color: var(--green-border);
+            background: rgba(94,200,160,0.06);
+        }
+        .arch-box .arch-label {
+            font-size: 12px;
+            color: #7777aa;
+            margin-bottom: 4px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .arch-box .arch-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e0e0f0;
+        }
+        .arch-box .arch-name.green {
+            color: var(--green);
+        }
+        .arch-box .arch-sub {
+            font-size: 12px;
+            color: #8888aa;
+            margin-top: 3px;
+        }
+        .arch-box.sub-box {
+            min-width: 80px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.02);
+            border-color: rgba(255,255,255,0.05);
+        }
+        .arch-box.sub-box .arch-name {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .arch-arrow {
+            color: #555577;
+            font-size: 18px;
+            font-weight: 300;
+            padding: 0 2px;
+        }
+        .arch-branch {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .arch-join {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .arch-vertical {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+        .arch-vertical .vline {
+            width: 1px;
+            height: 16px;
+            background: rgba(255,255,255,0.08);
+        }
+        .arch-vertical .vline.green {
+            background: var(--green-border);
+        }
+        .arch-connector {
+            display: flex;
+            align-items: center;
+            color: #555577;
+            font-size: 14px;
+            padding: 4px 0;
+            gap: 4px;
+        }
+
+        /* ===== Two-column Responsibilities ===== */
+        .resp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .resp-col {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 24px 22px;
+        }
+        .resp-col .resp-col-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--green);
+            margin: 0 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resp-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .resp-col ul li {
+            position: relative;
+            padding: 9px 0 9px 22px;
+            font-size: 14px;
+            color: #c8c8dd;
+            line-height: 1.7;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .resp-col ul li:last-child { border-bottom: none; }
+        .resp-col ul li::before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 17px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--green);
+            opacity: 0.5;
+        }
+        .resp-col ul li strong {
+            color: #d0d0f0;
+            font-weight: 600;
+        }
+
+        /* ===== Tech Grid ===== */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .tech-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 10px;
+            padding: 16px 14px;
+            text-align: center;
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
+        }
+        .tech-item:hover {
+            border-color: var(--green-border);
+            background: rgba(94,200,160,0.05);
+            transform: translateY(-1px);
+        }
+        .tech-item .tech-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e0e0f0;
+        }
+        .tech-item .tech-desc {
+            font-size: 12px;
+            color: #8888aa;
+            margin-top: 3px;
+        }
+
+        /* ===== Results ===== */
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 4px;
+        }
+        .result-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 22px 18px;
+            transition: border-color 0.3s, background 0.3s;
+        }
+        .result-card:hover {
+            border-color: var(--green-border);
+            background: rgba(94,200,160,0.05);
+        }
+        .result-card .num {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--green);
+            margin-bottom: 8px;
+            line-height: 1;
+        }
+        .result-card .label {
+            font-size: 14px;
+            color: #b0b0cc;
+            line-height: 1.5;
+        }
+
+        /* ===== GitHub Button ===== */
+        .gh-actions {
+            display: flex;
+            gap: 14px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+        .gh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 22px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s;
+            background: var(--green-glow);
+            border: 1px solid var(--green-border);
+            color: var(--green);
+        }
+        .gh-btn:hover {
+            background: rgba(94,200,160,0.2);
+            border-color: var(--green);
+            transform: translateY(-1px);
+        }
+        .gh-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .data-grid { grid-template-columns: repeat(2, 1fr); }
+            .resp-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .result-grid { grid-template-columns: 1fr; }
+            .detail-hero .project-title { font-size: 28px; }
+        }
+        @media (max-width: 480px) {
+            .data-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr; }
+            .detail-page { padding: 0 16px; }
+        }
+    </style>
 </head>
 <body>
     <canvas class="fireworks"></canvas>
@@ -32,56 +443,208 @@
         </div>
         <blockquote><img src="./assets/public/logo.svg"></blockquote>
     </div>
-    <div class="work-detail">
-        <div class="detail-container">
-            <a href="./work.html" class="back-link magical">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                ← 返回作品集
-            </a>
 
-            <div class="detail-header">
-                <div class="detail-title-area">
-                    <h1 class="detail-title">JobBot 智能招聘自动化</h1>
-                    <span class="detail-tag">Python</span>
+    <div class="detail-page">
+        <!-- ← 返回 -->
+        <a href="./work.html" class="back-link">
+            <svg viewBox="0 0 16 16"><path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z"/></svg>
+            ← 返回作品集
+        </a>
+
+        <!-- ===== Hero ===== -->
+        <div class="detail-hero">
+            <h1 class="project-title"><span class="highlight">JobBot</span> 智能招聘自动化</h1>
+            <p class="project-sub">基于 Python + Camoufox 反检测浏览器的多平台招聘网站自动投递系统，覆盖 Boss直聘和智联招聘，实现多关键词搜索 → 多维过滤 → 无人值守投递全流程自动化。</p>
+            <div class="tag-row">
+                <span class="tag">Python</span>
+                <span class="tag">Camoufox</span>
+                <span class="tag">Playwright</span>
+                <span class="tag">反爬对抗</span>
+                <span class="tag">Web 自动化</span>
+                <span class="tag">YAML 配置</span>
+            </div>
+        </div>
+
+        <!-- ===== Data Cards ===== -->
+        <div class="data-grid">
+            <div class="data-card">
+                <div class="data-icon">📡</div>
+                <div class="data-num">2 <span class="sm">平台</span></div>
+                <div class="data-label">Boss直聘 · 智联招聘 全覆盖</div>
+            </div>
+            <div class="data-card">
+                <div class="data-icon">🔤</div>
+                <div class="data-num">PUA</div>
+                <div class="data-label">字体编码破解 · DOM 解码</div>
+            </div>
+            <div class="data-card">
+                <div class="data-icon">🔐</div>
+                <div class="data-num">7 <span class="sm">天</span></div>
+                <div class="data-label">Cookie 持久化 · 免登錄自動恢復</div>
+            </div>
+            <div class="data-card">
+                <div class="data-icon">🔄</div>
+                <div class="data-num">∞</div>
+                <div class="data-label">指數退避重試 · 滑動窗口頻率控制</div>
+            </div>
+        </div>
+
+        <!-- ===== System Architecture ===== -->
+        <div class="detail-section">
+            <h2><span class="sec-icon">🏗️</span> 系统架构</h2>
+            <div class="arch-diagram">
+                <!-- Row 1: Camoufox -->
+                <div class="arch-row">
+                    <div class="arch-box">
+                        <div class="arch-label">反检测层</div>
+                        <div class="arch-name green">Camoufox</div>
+                        <div class="arch-sub">WebGL / Canvas / 字体指纹模拟</div>
+                    </div>
                 </div>
-                <p class="detail-subtitle">基于 Python + Camoufox 反检测浏览器的多平台招聘网站自动投递系统，覆盖 Boss直聘和智联招聘，实现多关键词搜索 → 多维过滤 → 无人值守投递全流程自动化。</p>
-            </div>
 
-            <div class="detail-section">
-                <h2 class="section-title">技术栈</h2>
-                <div class="tech-stack">
-                    <span class="tech-item">Python</span>
-                    <span class="tech-item">Camoufox</span>
-                    <span class="tech-item">Playwright</span>
-                    <span class="tech-item">PyYAML</span>
-                    <span class="tech-item">JSON 持久化</span>
-                    <span class="tech-item">subprocess 隔离</span>
+                <div class="arch-connector">⬇</div>
+
+                <!-- Row 2: PlatformBase -->
+                <div class="arch-row">
+                    <div class="arch-box">
+                        <div class="arch-label">抽象基类</div>
+                        <div class="arch-name green">PlatformBase</div>
+                        <div class="arch-sub">统一接口 · Cookie 管理 · 会话调度</div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">
+                    <span>╱</span><span style="margin:0 16px;color:#555577">——</span><span>╲</span>
+                </div>
+
+                <!-- Row 3: Boss & 智联 -->
+                <div class="arch-row">
+                    <div class="arch-box sub-box">
+                        <div class="arch-label">平台实现</div>
+                        <div class="arch-name">Boss直聘</div>
+                        <div class="arch-sub">PUA 字体破解 · 实时搜索</div>
+                    </div>
+                    <div class="arch-box sub-box">
+                        <div class="arch-label">平台实现</div>
+                        <div class="arch-name">智联招聘</div>
+                        <div class="arch-sub">标准 DOM · 批量投递</div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">⬇</div>
+
+                <!-- Row 4: Filter Engine -->
+                <div class="arch-row">
+                    <div class="arch-box">
+                        <div class="arch-label">决策层</div>
+                        <div class="arch-name green">多维过滤引擎</div>
+                        <div class="arch-sub">薪资区间 · 学历要求 · 关键词 YAML 配置</div>
+                    </div>
+                </div>
+
+                <div class="arch-connector">⬇</div>
+
+                <!-- Row 5: Delivery Engine -->
+                <div class="arch-row">
+                    <div class="arch-box">
+                        <div class="arch-label">执行层</div>
+                        <div class="arch-name green">自动投递引擎</div>
+                        <div class="arch-sub">滑动窗口 · 指数退避 · 投递记录持久化</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Project Responsibilities ===== -->
+        <div class="detail-section">
+            <h2><span class="sec-icon">⚡</span> 项目职责</h2>
+            <div class="resp-grid">
+                <!-- 反检测对抗 -->
+                <div class="resp-col">
+                    <div class="resp-col-title">🛡️ 反检测对抗</div>
+                    <ul>
+                        <li>集成 <strong>Camoufox</strong> 反检测浏览器，对抗网站风控系统（WebGL/Canvas/字体指纹模拟）</li>
+                        <li>攻克 Boss直聘 <strong>PUA 字体编码</strong> 反爬机制，实现在 DOM 层面解码薪资等加密数据</li>
+                        <li>实现 <strong>Cookie 持久化</strong> 机制与扫码登录调度，支持 7 天免登录自动恢复会话</li>
+                        <li>设计 <strong>滑動窗口頻率控制器</strong> 与指数退避重试机制，规避请求频率检测</li>
+                    </ul>
+                </div>
+                <!-- 工程架构 -->
+                <div class="resp-col">
+                    <div class="resp-col-title">🧩 工程架构</div>
+                    <ul>
+                        <li>设计多平台自动投递引擎核心架构，抽象 <strong>PlatformBase</strong> 基类统一 Boss 与智联的业务差异</li>
+                        <li>设计 <strong>YAML 配置驱动</strong> 的多维过滤系统，支持薪资区间、学历要求等灵活过滤规则</li>
+                        <li>实现 <strong>CLI 交互菜单</strong> + subprocess 隔离架构，主程序与浏览器进程安全解耦</li>
+                        <li>设计 <strong>数据持久化</strong> 方案，自动记录已投递岗位、搜索历史、投递结果汇总</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Tech Stack Grid ===== -->
+        <div class="detail-section">
+            <h2><span class="sec-icon">🔧</span> 技术栈</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-name">Python 3.10+</div>
+                    <div class="tech-desc">核心开发语言</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">Camoufox</div>
+                    <div class="tech-desc">反检测浏览器</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">Playwright</div>
+                    <div class="tech-desc">浏览器自动化</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">PyYAML</div>
+                    <div class="tech-desc">配置驱动</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">JSON</div>
+                    <div class="tech-desc">数据持久化</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">subprocess</div>
+                    <div class="tech-desc">进程隔离</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">Cookie 注入</div>
+                    <div class="tech-desc">会话恢复</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-name">PUA 破解</div>
+                    <div class="tech-desc">字体反爬对抗</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== Results ===== -->
+        <div class="detail-section">
+            <h2><span class="sec-icon">🏆</span> 项目成果</h2>
+            <div class="result-grid">
+                <div class="result-card">
+                    <div class="num">⚡</div>
+                    <div class="label">实现无人值守的自动投递闭环，显著提升求职效率</div>
+                </div>
+                <div class="result-card">
+                    <div class="num">🧠</div>
+                    <div class="label">掌握反检测浏览器的深度应用与 Web 自动化工程化实践</div>
+                </div>
+                <div class="result-card">
+                    <div class="num">🛡️</div>
+                    <div class="label">积累反爬对抗、Cookie 注入、会话恢复、频率控制等关键经验</div>
                 </div>
             </div>
 
-            <div class="detail-section">
-                <h2 class="section-title">项目职责</h2>
-                <ul class="detail-list">
-                    <li>设计多平台自动投递引擎核心架构，抽象 PlatformBase 基类统一 Boss直聘与智联招聘的业务差异</li>
-                    <li>集成 Camoufox 反检测浏览器，对抗网站风控系统（WebGL/Canvas/字体指纹模拟）</li>
-                    <li>攻克 Boss直聘 PUA 字体编码反爬机制，实现在 DOM 层面解码薪资等加密数据</li>
-                    <li>设计 YAML 配置驱动的多维过滤系统，支持薪资区间、学历要求等灵活过滤规则</li>
-                    <li>实现 Cookie 持久化机制与扫码登录调度，支持 7 天免登录自动恢复会话</li>
-                    <li>设计滑动窗口频率控制器与指数退避重试机制</li>
-                    <li>实现 CLI 交互菜单 + subprocess 隔离架构</li>
-                    <li>设计数据持久化方案，自动记录已投递岗位、搜索历史、投递结果汇总</li>
-                </ul>
-            </div>
-
-            <div class="detail-section">
-                <h2 class="section-title">项目成果</h2>
-                <ul class="detail-list highlight-list">
-                    <li>实现无人值守的自动投递闭环，显著提升求职效率</li>
-                    <li>掌握反检测浏览器的深度应用与 Web 自动化工程化实践</li>
-                    <li>积累了反爬对抗、Cookie 注入、会话恢复、频率控制等关键经验</li>
-                </ul>
+            <!-- GitHub -->
+            <div class="gh-actions">
+                <a href="https://github.com/p79463/job-bot" target="_blank" class="gh-btn">
+                    <svg viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    查看源代码
+                </a>
             </div>
         </div>
     </div>
@@ -111,152 +674,6 @@
         </div>
         <div class="shape-earth"></div>
     </div>
-
-    <style>
-        .work-detail {
-            max-width: 860px;
-            margin: 0 auto;
-            padding: 60px 24px 100px;
-            color: #B3B3C1;
-        }
-        .detail-container {
-            position: relative;
-            z-index: 1;
-        }
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            color: #80808E;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-            margin-bottom: 40px;
-            padding: 8px 16px;
-            border: 1px solid rgba(255,255,255,0.06);
-            border-radius: 8px;
-            background: rgba(255,255,255,0.03);
-        }
-        .back-link:hover {
-            color: #fff;
-            border-color: rgba(255,255,255,0.15);
-            background: rgba(255,255,255,0.06);
-        }
-        .detail-header {
-            margin-bottom: 48px;
-        }
-        .detail-title-area {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            flex-wrap: wrap;
-            margin-bottom: 16px;
-        }
-        .detail-title {
-            font-size: 32px;
-            font-weight: 700;
-            color: #fff;
-            margin: 0;
-            line-height: 1.3;
-        }
-        .detail-tag {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 500;
-            background: rgba(99,102,241,0.15);
-            color: #818cf8;
-            border: 1px solid rgba(99,102,241,0.25);
-        }
-        .detail-subtitle {
-            font-size: 16px;
-            line-height: 1.7;
-            color: #9E9EAF;
-            margin: 0;
-        }
-        .detail-section {
-            margin-bottom: 40px;
-            padding: 28px 32px;
-            border-radius: 12px;
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.06);
-            backdrop-filter: blur(4px);
-        }
-        .section-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #E0E0EC;
-            margin: 0 0 20px;
-            padding-bottom: 12px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .tech-stack {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .tech-item {
-            display: inline-block;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            font-weight: 500;
-            background: rgba(255,255,255,0.05);
-            color: #B3B3C1;
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: all 0.3s;
-        }
-        .tech-item:hover {
-            background: rgba(99,102,241,0.12);
-            border-color: rgba(99,102,241,0.3);
-            color: #818cf8;
-        }
-        .detail-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-        .detail-list li {
-            position: relative;
-            padding: 10px 0 10px 24px;
-            font-size: 15px;
-            line-height: 1.7;
-            color: #B3B3C1;
-        }
-        .detail-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 18px;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: rgba(99,102,241,0.5);
-            border: 1px solid rgba(99,102,241,0.3);
-        }
-        .detail-list li + li {
-            border-top: 1px solid rgba(255,255,255,0.04);
-        }
-        .highlight-list li {
-            color: #C8C8D8;
-        }
-        .highlight-list li::before {
-            background: rgba(52,211,153,0.5);
-            border-color: rgba(52,211,153,0.3);
-        }
-        @media (max-width: 640px) {
-            .work-detail {
-                padding: 32px 16px 80px;
-            }
-            .detail-title {
-                font-size: 24px;
-            }
-            .detail-section {
-                padding: 20px 18px;
-            }
-        }
-    </style>
 </body>
 <script>
     window.addEventListener("mousemove", function (e) {

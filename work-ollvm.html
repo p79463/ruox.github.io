@@ -9,11 +9,11 @@
     <style>
         /* ---- work-detail layout ---- */
         .work-detail {
-            max-width: 900px;
+            max-width: 960px;
             margin: 40px auto 60px;
             padding: 0 24px;
         }
-        .work-detail .back-link {
+        .back-link {
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -23,59 +23,100 @@
             transition: color 0.2s;
             margin-bottom: 32px;
         }
-        .work-detail .back-link:hover {
-            color: #E8E8F6;
-        }
-        .work-detail-header {
+        .back-link:hover { color: #E8E8F6; }
+
+        /* ---- Hero ---- */
+        .hero {
             margin-bottom: 40px;
         }
-        .work-detail-header h1 {
-            font-size: 32px;
-            font-weight: 700;
+        .hero h1 {
+            font-size: 38px;
+            font-weight: 800;
             color: #E8E8F6;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
         }
-        .work-detail-header .tag-row {
+        .hero .subtitle {
+            font-size: 15px;
+            color: #a0a0b8;
+            margin-bottom: 18px;
+            line-height: 1.6;
+        }
+        .hero .tag-row {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 14px;
         }
-        .work-detail-header .tag-row .tag {
+        .hero .tag-row .tag {
             display: inline-block;
-            padding: 2px 12px;
+            padding: 3px 14px;
             border-radius: 20px;
             font-size: 11px;
             font-weight: 500;
             letter-spacing: 0.5px;
-            background: rgba(120, 120, 160, 0.15);
-            color: #b0b0cc;
-            border: 1px solid rgba(120, 120, 160, 0.2);
+            background: rgba(240, 160, 64, 0.10);
+            color: #f0a040;
+            border: 1px solid rgba(240, 160, 64, 0.20);
         }
-        .work-detail-header .tech-stack {
+        .hero .tech-stack {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 12px;
         }
-        .work-detail-header .tech-stack .tech-badge {
+        .hero .tech-stack .badge {
             display: inline-block;
             padding: 4px 14px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 500;
-            background: rgba(124, 108, 240, 0.08);
-            color: #a89aff;
-            border: 1px solid rgba(124, 108, 240, 0.18);
+            background: rgba(240, 160, 64, 0.07);
+            color: #e89838;
+            border: 1px solid rgba(240, 160, 64, 0.15);
         }
+
+        /* ---- Data cards ---- */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 14px;
+            margin-bottom: 36px;
+        }
+        .stat-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(240,160,64,0.10);
+            border-radius: 12px;
+            padding: 20px 16px;
+            text-align: center;
+        }
+        .stat-card .num {
+            font-size: 28px;
+            font-weight: 800;
+            color: #f0a040;
+            margin-bottom: 4px;
+            line-height: 1.1;
+        }
+        .stat-card .num small {
+            font-size: 14px;
+            font-weight: 500;
+            color: #d08030;
+        }
+        .stat-card .label {
+            font-size: 12px;
+            color: #a0a0b8;
+            line-height: 1.4;
+        }
+
+        /* ---- Section common ---- */
         .work-detail-body {
             display: flex;
             flex-direction: column;
-            gap: 36px;
+            gap: 32px;
         }
         .work-section {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
             border-radius: 12px;
             padding: 28px 32px;
         }
@@ -94,9 +135,9 @@
             width: 4px;
             height: 20px;
             border-radius: 2px;
-            background: linear-gradient(180deg, #a89aff, #7c6cf0);
+            background: linear-gradient(180deg, #f0a040, #d08030);
         }
-        .work-section p {
+        .work-section .desc {
             font-size: 14px;
             line-height: 1.8;
             color: #b8b8d0;
@@ -110,48 +151,204 @@
             font-size: 14px;
             line-height: 1.7;
             color: #c4c4dc;
-            padding: 6px 0 6px 20px;
+            padding: 5px 0 5px 20px;
             position: relative;
         }
         .work-section li::before {
             content: '▸';
             position: absolute;
             left: 0;
-            color: #a89aff;
+            color: #f0a040;
             font-size: 13px;
         }
-        .work-section .description-text {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #b8b8d0;
+        .work-section li strong {
+            color: #f0a040;
         }
-        .work-tech-list {
+
+        /* ---- Architecture diagram ---- */
+        .arch-flow {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
+            align-items: center;
+            justify-content: center;
+            gap: 10px 6px;
+            margin: 8px 0 4px;
+            padding: 20px 16px;
+            background: rgba(0,0,0,0.18);
+            border-radius: 10px;
+            border: 1px solid rgba(240,160,64,0.08);
         }
-        .work-tech-list .item {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 6px;
+        .arch-flow .node {
+            background: rgba(240,160,64,0.08);
+            border: 1px solid rgba(240,160,64,0.18);
+            border-radius: 8px;
+            padding: 10px 14px;
             font-size: 12px;
-            font-weight: 500;
-            background: rgba(124, 108, 240, 0.06);
-            color: #a89aff;
-            border: 1px solid rgba(124, 108, 240, 0.12);
+            color: #e0d0b0;
+            text-align: center;
+            min-width: 70px;
+            line-height: 1.4;
         }
+        .arch-flow .node .sub {
+            display: block;
+            font-size: 10px;
+            color: #a09070;
+            margin-top: 3px;
+        }
+        .arch-flow .node.pass {
+            background: rgba(208,128,48,0.12);
+            border-color: rgba(208,128,48,0.25);
+        }
+        .arch-flow .arrow {
+            color: #d08030;
+            font-size: 18px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .arch-flow .label-row {
+            width: 100%;
+            text-align: center;
+            font-size: 11px;
+            color: #d08030;
+            letter-spacing: 1px;
+            margin-top: 4px;
+        }
+
+        /* ---- 2-col grid ---- */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .two-col .col {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 10px;
+            padding: 20px 22px;
+        }
+        .two-col .col h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #f0a040;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .two-col .col li {
+            font-size: 13px;
+            padding: 4px 0 4px 18px;
+        }
+        .two-col .col li::before {
+            content: '▸';
+            color: #d08030;
+        }
+
+        /* ---- Tech grid ---- */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4,1fr);
+            gap: 12px;
+        }
+        .tech-grid .card {
+            background: rgba(240,160,64,0.04);
+            border: 1px solid rgba(240,160,64,0.10);
+            border-radius: 10px;
+            padding: 16px 14px;
+            text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .tech-grid .card:hover {
+            border-color: rgba(240,160,64,0.30);
+            background: rgba(240,160,64,0.08);
+        }
+        .tech-grid .card .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #e0d0b0;
+            margin-bottom: 3px;
+        }
+        .tech-grid .card .detail {
+            font-size: 11px;
+            color: #908070;
+            line-height: 1.4;
+        }
+
+        /* ---- Highlight card ---- */
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(240,160,64,0.06), rgba(208,128,48,0.10));
+            border: 1px solid rgba(240,160,64,0.18);
+            border-radius: 12px;
+            padding: 24px 28px;
+        }
+        .highlight-card h2 {
+            margin-bottom: 10px;
+        }
+        .highlight-card .highlight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .highlight-card .highlight-item {
+            background: rgba(0,0,0,0.15);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+        .highlight-card .highlight-item .hl-label {
+            font-size: 11px;
+            color: #d08030;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+        .highlight-card .highlight-item .hl-text {
+            font-size: 13px;
+            color: #d0c8b8;
+            line-height: 1.5;
+        }
+
+        /* ---- GitHub button ---- */
+        .github-btn-wrap {
+            text-align: center;
+            margin-top: 8px;
+        }
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 28px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            background: rgba(240,160,64,0.10);
+            color: #f0a040;
+            border: 1px solid rgba(240,160,64,0.20);
+            text-decoration: none;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        .github-btn:hover {
+            background: rgba(240,160,64,0.18);
+            border-color: rgba(240,160,64,0.35);
+        }
+        .github-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: #f0a040;
+        }
+
         @media screen and (max-width: 768px) {
-            .work-detail {
-                padding: 0 16px;
-                margin: 24px auto 40px;
-            }
-            .work-detail-header h1 {
-                font-size: 24px;
-            }
-            .work-section {
-                padding: 20px 18px;
-            }
+            .work-detail { padding: 0 16px; margin: 24px auto 40px; }
+            .hero h1 { font-size: 26px; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .two-col { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: repeat(2,1fr); }
+            .highlight-card .highlight-grid { grid-template-columns: 1fr; }
+            .work-section { padding: 20px 18px; }
+            .arch-flow .arrow { font-size: 14px; }
+        }
+        @media screen and (max-width: 480px) {
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .tech-grid { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
@@ -187,8 +384,12 @@
     <div class="work-detail">
         <a href="./work.html" class="back-link">← 返回作品集</a>
 
-        <div class="work-detail-header">
+        <!-- Hero -->
+        <div class="hero">
             <h1>OLLVM 代码混淆工具链</h1>
+            <p class="subtitle">
+                基于 LLVM 19 移植并工程化的全栈混淆方案 —— 从 Pass 实现到 NDK 交叉编译，为 Android Native 代码提供多层防护
+            </p>
             <div class="tag-row">
                 <span class="tag">LLVM</span>
                 <span class="tag">混淆</span>
@@ -197,61 +398,151 @@
                 <span class="tag">NDK</span>
             </div>
             <div class="tech-stack">
-                <span class="tech-badge">LLVM 19</span>
-                <span class="tech-badge">Clang</span>
-                <span class="tech-badge">C++</span>
-                <span class="tech-badge">CMake</span>
-                <span class="tech-badge">Android NDK r28c</span>
-                <span class="tech-badge">ARM64</span>
+                <span class="badge">LLVM 19</span>
+                <span class="badge">Clang</span>
+                <span class="badge">C++17</span>
+                <span class="badge">CMake</span>
+                <span class="badge">Android NDK r28c</span>
+                <span class="badge">ARM64</span>
+                <span class="badge">LLVM Pass Manager</span>
+            </div>
+        </div>
+
+        <!-- Data stats -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="num">4 <small>级</small></div>
+                <div class="label">混淆模式<br>OFF / BASIC / MEDIUM / FULL</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">14→19</div>
+                <div class="label">LLVM 移植跨度<br>全面适配 API 与 Pass Manager</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">3 <small>种</small></div>
+                <div class="label">Pass 实现<br>Flattening / Substitution / BogusCF</div>
+            </div>
+            <div class="stat-card">
+                <div class="num">4 <small>层</small></div>
+                <div class="label">多层防护<br>字符串加密 · 反调试 · 花指令 · 调用混淆</div>
             </div>
         </div>
 
         <div class="work-detail-body">
-            <!-- 项目描述 -->
+            <!-- 系统架构 -->
             <div class="work-section">
-                <h2>项目描述</h2>
-                <p>
-                    基于 OLLVM 开源项目，在 LLVM 19 版本上独立完成代码混淆 Pass 的移植、集成与工程化。
-                    实现<strong>控制流扁平化（Flattening）</strong>、<strong>虚假控制流（BogusControlFlow）</strong>、
-                    <strong>指令替换（Substitution）</strong>等 LLVM Pass，并集成到 Android NDK 交叉编译工具链中。
+                <h2>系统架构</h2>
+                <p class="desc" style="margin-bottom:12px;">
+                    LLVM Pass 编译流程：源文件经过 Clang 前端解析，经 OLLVM 混淆 Pass 链变换，
+                    最终生成混淆加固后的二进制产物。CMake per-file 属性实现分层混淆策略。
                 </p>
-            </div>
-
-            <!-- 技术栈 -->
-            <div class="work-section">
-                <h2>技术栈</h2>
-                <div class="work-tech-list">
-                    <span class="item">LLVM 19</span>
-                    <span class="item">Clang</span>
-                    <span class="item">C++</span>
-                    <span class="item">CMake</span>
-                    <span class="item">Android NDK r28c</span>
-                    <span class="item">ARM64 Cross-Compilation</span>
+                <div class="arch-flow">
+                    <span class="node">源文件<br><span class="sub">.c / .cpp</span></span>
+                    <span class="arrow">→</span>
+                    <span class="node">Clang 前端<br><span class="sub">词法 / 语法 / 语义分析</span></span>
+                    <span class="arrow">→</span>
+                    <span class="node pass">OLLVM Passes<br><span class="sub">-fla / -sub / -bcf</span></span>
+                    <span class="arrow">→</span>
+                    <span class="node">LLVM IR<br><span class="sub">混淆变换</span></span>
+                    <span class="arrow">→</span>
+                    <span class="node">后端<br><span class="sub">ARM64 机器码</span></span>
+                    <div class="label-row">▼ CMake per-file 分层策略：核心模块 FULL · 驱动模块 SUB · 工具模块 OFF</div>
                 </div>
             </div>
 
-            <!-- 项目职责 -->
+            <!-- 职责两栏 -->
             <div class="work-section">
                 <h2>项目职责</h2>
-                <ul>
-                    <li>完成 OLLVM 混淆 Pass 从 LLVM 14 到 LLVM 19 的移植适配，涉及 API 变更适配、Pass Manager 重构与调试</li>
-                    <li>实现<strong>控制流扁平化 Pass（Flattening）</strong>，将循环+分支结构压平为 switch-case+dispatcher</li>
-                    <li>实现<strong>指令替换 Pass（Substitution）</strong>，将标准算术/逻辑运算替换为等价的复杂指令序列（如 a+b → (a^b)+2*(a&b)）</li>
-                    <li>实现<strong>虚假控制流 Pass（BogusControlFlow）</strong>，在原始控制流中插入不可达基本块增加 CFG 复杂度</li>
-                    <li>设计四级混淆模式（OFF/BASIC/MEDIUM/FULL），通过 CMake per-file 属性精细控制不同源文件的混淆策略</li>
-                    <li>集成分层混淆策略：核心代码全量保护（控制流扁平化+虚假控制流+指令替换），驱动模块仅指令替换</li>
-                    <li>集成<strong>字符串编译期加密</strong>、<strong>反调试</strong>、<strong>ARM64 花指令</strong>、<strong>调用混淆</strong>等多层防护</li>
-                </ul>
+                <div class="two-col">
+                    <div class="col">
+                        <h3>⚙ Pass 实现</h3>
+                        <ul>
+                            <li>完成 OLLVM 混淆 Pass 从 LLVM 14 到 LLVM 19 的完整移植，涉及 API 变更适配、Legacy → New Pass Manager 重构与调试</li>
+                            <li>实现 <strong>控制流扁平化 Pass（Flattening）</strong>，将循环+分支结构压平为 switch-case + dispatcher 模式</li>
+                            <li>实现 <strong>指令替换 Pass（Substitution）</strong>，将标准算术/逻辑运算替换为等价的复杂指令序列（如 a+b → (a^b)+2*(a&b)）</li>
+                            <li>实现 <strong>虚假控制流 Pass（BogusControlFlow）</strong>，在原始控制流中插入不可达基本块，大幅增加 CFG 复杂度</li>
+                        </ul>
+                    </div>
+                    <div class="col">
+                        <h3>🔧 工程化</h3>
+                        <ul>
+                            <li>设计 <strong>四级混淆模式</strong>（OFF / BASIC / MEDIUM / FULL），通过 CMake per-file 属性精细控制不同源文件的混淆策略</li>
+                            <li>集成 <strong>分层混淆策略</strong>：核心模块全量保护（FULL），驱动模块仅指令替换（SUB），工具模块关闭（OFF）</li>
+                            <li>集成 <strong>字符串编译期加密</strong>、<strong>反调试</strong>、<strong>ARM64 花指令</strong>、<strong>调用混淆</strong>等多层防护</li>
+                            <li>对接 Android NDK r28c 交叉编译工具链，实现 ARM64 产物一键构建</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
 
-            <!-- 项目成果 -->
+            <!-- 技术栈网格 -->
             <div class="work-section">
+                <h2>技术栈</h2>
+                <div class="tech-grid">
+                    <div class="card">
+                        <div class="name">LLVM 19</div>
+                        <div class="detail">编译器基础设施<br>Pass Manager 2.0</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">Clang</div>
+                        <div class="detail">C/C++ 前端<br>编译驱动</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">C++17</div>
+                        <div class="detail">LLVM IR 操作<br>模板元编程</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">CMake</div>
+                        <div class="detail">per-file 属性<br>分层混淆控制</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">Android NDK</div>
+                        <div class="detail">r28c<br>交叉编译</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">ARM64</div>
+                        <div class="detail">AArch64 指令集<br>花指令 / 内联汇编</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">LLVM IR</div>
+                        <div class="detail">中间表示<br>Pass 变换管道</div>
+                    </div>
+                    <div class="card">
+                        <div class="name">Git</div>
+                        <div class="detail">版本控制<br>CI 集成</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 成果高亮 -->
+            <div class="highlight-card">
                 <h2>项目成果</h2>
-                <ul>
-                    <li>完成 LLVM 19 版本完整混淆工具链，稳定支撑 Android Native 程序的生产编译</li>
-                    <li>深入了解 LLVM 编译器体系架构、Pass 机制和代码优化/变换原理</li>
-                    <li>掌握 LLVM 新版本（17→19）API 演进与迁移经验，具备编译器工具链工程化能力</li>
-                </ul>
+                <div class="highlight-grid">
+                    <div class="highlight-item">
+                        <div class="hl-label">✅ 工具链交付</div>
+                        <div class="hl-text">完成 LLVM 19 版本完整混淆工具链，稳定支撑 Android Native 程序的生产编译</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="hl-label">📚 深入理解</div>
+                        <div class="hl-text">深入掌握 LLVM 编译器体系架构、Pass 机制、IR 操作和代码优化/变换原理</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="hl-label">🔁 跨版本迁移</div>
+                        <div class="hl-text">积累 LLVM 14→19 的 API 演进与迁移经验，具备编译器工具链工程化能力</div>
+                    </div>
+                    <div class="highlight-item">
+                        <div class="hl-label">🛡 多层防护体系</div>
+                        <div class="hl-text">集成混淆 + 字符串加密 + 反调试 + 花指令 + 调用混淆的全栈加固方案</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GitHub -->
+            <div class="github-btn-wrap">
+                <a href="https://github.com/p79463/ollvm" target="_blank" class="github-btn">
+                    <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+                    View on GitHub
+                </a>
             </div>
         </div>
     </div>

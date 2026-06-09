@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - WSL 交叉编译环境搭建与 Android NDK 配置</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg" />
+    <style>
+        /* ---- blog-detail layout ---- */
+        .blog-detail {
+            max-width: 860px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b8ba7;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-bottom: 32px;
+        }
+        .back-link:hover { color: #E8E8F6; }
+        .back-link .arrow {
+            color: #a89aff;
+        }
+
+        /* ---- Blog Header ---- */
+        .blog-header {
+            margin-bottom: 36px;
+        }
+        .blog-header h1 {
+            font-size: 34px;
+            font-weight: 800;
+            color: #E8E8F6;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+        }
+        .blog-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 20px;
+            font-size: 13px;
+            color: #a0a0b8;
+            margin-bottom: 8px;
+        }
+        .blog-meta .date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .blog-meta .category {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 14px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+            background: rgba(168, 154, 255, 0.10);
+            color: #a89aff;
+            border: 1px solid rgba(168, 154, 255, 0.20);
+        }
+        .blog-meta .reading-time {
+            color: #7878a0;
+        }
+
+        /* ---- Blog Body ---- */
+        .blog-body {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 36px 40px;
+        }
+
+        /* ---- Blog Content ---- */
+        .blog-content article {
+            font-size: 15px;
+            line-height: 1.85;
+            color: #c8c8e0;
+        }
+        .blog-content article h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #E8E8F6;
+            margin: 36px 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .blog-content article h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 22px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #a89aff, #7c6cf0);
+            flex-shrink: 0;
+        }
+        .blog-content article h3 {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ddd8f6;
+            margin: 28px 0 12px;
+        }
+        .blog-content article p {
+            margin: 0 0 14px;
+            color: #c4c4dc;
+        }
+        .blog-content article strong {
+            color: #a89aff;
+        }
+        .blog-content article code {
+            background: rgba(168, 154, 255, 0.08);
+            border: 1px solid rgba(168, 154, 255, 0.12);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+            color: #c0b8f0;
+        }
+        .blog-content article pre {
+            background: rgba(0,0,0,0.25);
+            border: 1px solid rgba(168, 154, 255, 0.08);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 16px 0 20px;
+            overflow-x: auto;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #d0c8f0;
+            font-family: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', monospace;
+        }
+        .blog-content article ul, .blog-content article ol {
+            margin: 0 0 14px;
+            padding: 0 0 0 22px;
+        }
+        .blog-content article li {
+            margin-bottom: 6px;
+            color: #c0c0d8;
+        }
+        .blog-content article li strong {
+            color: #a89aff;
+        }
+        .blog-content article blockquote {
+            border-left: 3px solid #7c6cf0;
+            background: rgba(124, 108, 240, 0.06);
+            margin: 16px 0 20px;
+            padding: 14px 18px;
+            border-radius: 0 8px 8px 0;
+            color: #b0a8d8;
+            font-style: italic;
+        }
+        .blog-content article .tip-box {
+            background: rgba(168, 154, 255, 0.06);
+            border: 1px solid rgba(168, 154, 255, 0.12);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin: 16px 0 20px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .blog-content article .tip-box .tip-icon {
+            color: #a89aff;
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+        .blog-content article .tip-box .tip-text {
+            font-size: 14px;
+            color: #b8b0e0;
+        }
+        .blog-content article .tip-box .tip-text strong {
+            color: #a89aff;
+        }
+        .blog-content article table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0 20px;
+            font-size: 13px;
+        }
+        .blog-content article table th {
+            background: rgba(168, 154, 255, 0.08);
+            color: #c0b8f0;
+            font-weight: 600;
+            padding: 10px 14px;
+            text-align: left;
+            border: 1px solid rgba(168, 154, 255, 0.10);
+        }
+        .blog-content article table td {
+            padding: 8px 14px;
+            border: 1px solid rgba(168, 154, 255, 0.06);
+            color: #c0c0d8;
+        }
+        .blog-content article table tr:nth-child(even) td {
+            background: rgba(168, 154, 255, 0.02);
+        }
+        .blog-content article hr {
+            border: none;
+            border-top: 1px solid rgba(168, 154, 255, 0.10);
+            margin: 32px 0;
+        }
+
+        /* ---- Blog Footer ---- */
+        .blog-footer {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(168, 154, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .blog-footer .nav-links {
+            display: flex;
+            gap: 16px;
+        }
+        .blog-footer .nav-links a {
+            color: #a89aff;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
+        }
+        .blog-footer .nav-links a:hover {
+            color: #c8c0ff;
+        }
+        .blog-footer .share-link {
+            color: #8b8ba7;
+            font-size: 13px;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .blog-footer .share-link:hover {
+            color: #a89aff;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 640px) {
+            .blog-detail { padding: 0 16px; }
+            .blog-body { padding: 20px 18px; }
+            .blog-header h1 { font-size: 26px; }
+            .blog-content article { font-size: 14px; }
+            .blog-content article h2 { font-size: 19px; }
+            .blog-content article pre { padding: 12px 14px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <div class="blog-detail">
+        <!-- 返回链接 -->
+        <a href="./blog.html" class="back-link">
+            <span class="arrow">←</span> 返回博客
+        </a>
+
+        <!-- 文章头部 -->
+        <div class="blog-header">
+            <h1>WSL 交叉编译环境搭建与 Android NDK 配置</h1>
+            <div class="blog-meta">
+                <span class="date">📅 2026-06-08</span>
+                <span class="category">工具链</span>
+                <span class="reading-time">📖 约 15 分钟</span>
+            </div>
+        </div>
+
+        <!-- 正文 -->
+        <div class="blog-body">
+            <div class="blog-content">
+                <article>
+
+<h2>环境概述</h2>
+
+<p>
+在 Windows 环境下进行 Android Native 开发（NDK）时，传统的做法是在 Windows 上安装 Cygwin 或 MSYS2，或者直接使用虚拟机运行 Linux。但这些方案各有痛点：Cygwin 的 POSIX 兼容性有限，MSYS2 的库依赖繁琐，虚拟机则存在资源开销大、文件共享不便等问题。
+</p>
+
+<p>
+WSL（Windows Subsystem for Linux）的出现彻底改变了这一局面。它让开发者可以在 Windows 上直接运行一个完整的 Linux 内核接口，无需虚拟机开销，且文件系统与 Windows 原生互通。本文将基于 WSL Debian 发行版，详细记录搭建 Android NDK r28c 交叉编译环境的完整过程，涵盖 apt 换源加速、USB 设备挂载、交叉编译工具链配置、防火墙规则设置等关键环节。
+</p>
+
+<div class="tip-box">
+    <span class="tip-icon">💡</span>
+    <div class="tip-text"><strong>前置条件：</strong>Windows 11（或 Windows 10 22H2+），已启用 WSL2 功能。建议至少分配 8GB 内存给 WSL，磁盘空间预留 20GB 以上。</div>
+</div>
+
+<hr>
+
+<h2>1. WSL 基础配置</h2>
+
+<h3>1.1 apt 换源</h3>
+
+<p>
+Debian 官方源在国内下载速度通常较慢，尤其对于大型工具链包（如 gcc、llvm、cmake 等），慢速的网络会严重影响开发效率。因此第一步就是对 apt 进行换源，替换为国内镜像源。
+</p>
+
+<p>
+以清华镜像源为例，编辑 <code>/etc/apt/sources.list</code>：
+</p>
+
+<pre>
+# 备份原配置
+sudo cp /etc/apt/sources.list /etc/apt/sources.list.bak
+
+# 替换为清华源
+sudo sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/g' /etc/apt/sources.list
+sudo sed -i 's/security.debian.org/mirrors.tuna.tsinghua.edu.cn\/debian-security/g' /etc/apt/sources.list
+
+# 更新
+sudo apt update && sudo apt upgrade -y
+</pre>
+
+<p>
+除了清华源，中科大镜像源（<code>mirrors.ustc.edu.cn</code>）也是一个不错的选择，延迟和带宽表现同样优秀。建议在两个源之间根据实际测速结果选择。
+</p>
+
+<h3>1.2 apt-fast 并行加速</h3>
+
+<p>
+apt 默认是单线程下载，当需要安装大量依赖包时，串行下载的瓶颈非常明显。<code>apt-fast</code> 通过 aria2c 或 axel 实现多线程并行下载，实测拉取依赖包的速度可以提升 3–5 倍。
+</p>
+
+<pre>
+# 安装 apt-fast
+sudo apt install aria2  # 先安装 aria2 作为后端
+sudo wget -O /usr/local/bin/apt-fast https://raw.githubusercontent.com/ilikenwf/apt-fast/master/apt-fast
+sudo chmod +x /usr/local/bin/apt-fast
+
+# 配置最大连接数
+sudo tee -a /etc/apt-fast.conf <<'EOF'
+MIRRORS=( 'mirrors.tuna.tsinghua.edu.cn, mirrors.ustc.edu.cn' )
+_MAXNUM=5
+EOF
+</pre>
+
+<p>
+之后便可以用 <code>sudo apt-fast install</code> 替代 <code>sudo apt install</code>，享受并行下载带来的速度提升。
+</p>
+
+<div class="tip-box">
+    <span class="tip-icon">⚡</span>
+    <div class="tip-text">apt-fast 在安装 <strong>build-essential</strong>、<strong>cmake</strong>、<strong>llvm</strong> 等大型依赖包时效果尤为明显。如果网络状况良好，5 个并行连接基本能跑满千兆带宽。</div>
+</div>
+
+<hr>
+
+<h2>2. Android NDK 配置</h2>
+
+<h3>2.1 NDK r28c 下载与解压</h3>
+
+<p>
+Android NDK r28c 是 2026 年初发布的稳定版本，使用 LLVM 19 作为默认工具链。可以从 GitHub Releases 或国内镜像下载。
+</p>
+
+<pre>
+# 方式一：从 GitHub 下载（可能需要代理）
+wget https://github.com/android/ndk/releases/download/r28c/android-ndk-r28c-linux.zip
+
+# 方式二：从国内镜像下载（推荐）
+wget https://mirrors.tuna.tsinghua.edu.cn/android/ndk/r28c/android-ndk-r28c-linux.zip
+
+# 解压到 ~/ 目录
+unzip android-ndk-r28c-linux.zip -d ~/
+</pre>
+
+<p>
+解压完成后，NDK 的目录结构如下：
+</p>
+
+<ul>
+    <li><strong>toolchains/llvm/prebuilt/linux-x86_64/</strong> — LLVM 19 工具链（clang/clang++、lld、llvm-ar 等）</li>
+    <li><strong>build/</strong> — NDK 构建系统的 cmake 工具链文件</li>
+    <li><strong>platforms/</strong> — 各 Android API level 的系统库与头文件</li>
+    <li><strong>sources/</strong> — C++ STL 实现（libc++）和其他运行时源码</li>
+</ul>
+
+<h3>2.2 环境变量设置</h3>
+
+<p>
+将 NDK 路径添加到 <code>~/.bashrc</code> 中，以便在每次登录时自动加载：
+</p>
+
+<pre>
+# ~/.bashrc 追加
+export ANDROID_NDK_HOME=$HOME/android-ndk-r28c
+export PATH=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
+
+# 立即生效
+source ~/.bashrc
+</pre>
+
+<p>
+验证配置是否正确：
+</p>
+
+<pre>
+# 检查 NDK 路径
+echo $ANDROID_NDK_HOME
+# 输出: /home/ruox/android-ndk-r28c
+
+# 检查交叉编译器
+aarch64-linux-android31-clang++ --version
+# 输出: Android (12345678, based on r522817) clang version 19.0.0 ...
+</pre>
+
+<h3>2.3 交叉编译工具链详解</h3>
+
+<p>
+NDK r28c 使用 LLVM 19 工具链，所有交叉编译器都是通过 clang/clang++ 加 target 参数实现的。常见的交叉编译 target 包括：
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>目标架构</th>
+            <th>最小 API</th>
+            <th>编译器命令</th>
+            <th>常见用途</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ARM64 (aarch64)</td>
+            <td>21 / 31</td>
+            <td>aarch64-linux-android31-clang++</td>
+            <td>现代 Android 设备（64 位）</td>
+        </tr>
+        <tr>
+            <td>ARMv7 (arm)</td>
+            <td>16 / 21</td>
+            <td>armv7a-linux-androideabi21-clang++</td>
+            <td>旧设备或 32 位兼容</td>
+        </tr>
+        <tr>
+            <td>x86_64</td>
+            <td>21</td>
+            <td>x86_64-linux-android21-clang++</td>
+            <td>x86 模拟器</td>
+        </tr>
+        <tr>
+            <td>x86</td>
+            <td>16</td>
+            <td>i686-linux-android16-clang++</td>
+            <td>旧版 x86 模拟器</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+以 CMake 项目为例，使用 NDK 的交叉编译工具链文件（toolchain file）是最推荐的方式：
+</p>
+
+<pre>
+cmake -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
+      -DANDROID_ABI=arm64-v8a \
+      -DANDROID_PLATFORM=android-31 \
+      -DANDROID_STL=c++_shared \
+      -DCMAKE_BUILD_TYPE=Release \
+      -B build
+</pre>
+
+<div class="tip-box">
+    <span class="tip-icon">🔍</span>
+    <div class="tip-text"><strong>API Level 选择建议：</strong>对于 2026 年的新项目，建议使用 <code>android-31</code>（Android 12）作为最低 API Level，兼顾了覆盖率和新特性支持。如果需要在 Android 5–7 的旧设备上运行，可以使用 <code>android-21</code>。</div>
+</div>
+
+<hr>
+
+<h2>3. USB 设备挂载</h2>
+
+<h3>3.1 usbipd-win 方案</h3>
+
+<p>
+WSL 原生不支持 USB 设备直通。要在 WSL 中使用 USB 设备（例如通过 USB 连接的 Android 手机用于 adb 调试），需要借助 <strong>usbipd-win</strong> 工具链。
+</p>
+
+<p>
+首先在 <strong>Windows 宿主机</strong> 上安装 usbipd-win：
+</p>
+
+<pre>
+# 在 Windows PowerShell（管理员）中执行
+winget install usbipd
+</pre>
+
+<p>
+然后在 WSL Debian 中安装 usbipd 客户端和必要的内核模块：
+</p>
+
+<pre>
+# 安装 usbipd 客户端
+sudo apt install usbip linux-tools-generic hwdata
+
+# 启动 usbipd 服务（Windows 端，管理员 PowerShell）
+usbipd list   # 列出可用 USB 设备
+usbipd bind --busid 1-2   # 绑定 Android 设备
+</pre>
+
+<h3>3.2 在 WSL 中挂载</h3>
+
+<p>
+在 Windows 端完成绑定后，在 WSL 中执行挂载操作：
+</p>
+
+<pre>
+# 查看可用的 USB 设备
+sudo usbip list -r 127.0.0.1
+
+# 挂载设备
+sudo usbip attach -r 127.0.0.1 -b 1-2
+
+# 验证设备是否已挂载
+lsusb
+# 应该能看到类似 "Google Inc. Android" 的设备
+
+# 然后就可以使用 adb 进行调试了
+adb devices
+</pre>
+
+<div class="tip-box">
+    <span class="tip-icon">⚠️</span>
+    <div class="tip-text"><strong>注意事项：</strong>每次重启 WSL 或 Windows 后需要重新执行绑定和挂载操作。建议编写一个简单的 shell 脚本（<code>~/scripts/mount-android.sh</code>）来自动化这个过程，避免重复劳动。</div>
+</div>
+
+<hr>
+
+<h2>4. 防火墙配置</h2>
+
+<h3>4.1 WSL 网络模式设置</h3>
+
+<p>
+WSL2 默认使用 NAT 网络模式，这意味着 WSL 内部的服务无法直接从宿主机的外部网络访问。如果需要从局域网设备（如手机、平板）访问 WSL 中运行的 server，或者需要让 adb 通过 TCP/IP 连接，就需要调整 WSL 的网络配置。
+</p>
+
+<p>
+推荐将 WSL 的网络模式设置为 <strong>镜像模式（Mirrored Networking）</strong>，这样 WSL 与 Windows 共享 IP 地址，且所有端口自动互通。
+</p>
+
+<p>
+在 <code>%UserProfile%\.wslconfig</code> 中配置：
+</p>
+
+<pre>
+[wsl2]
+networkingMode=mirrored
+dnsTunneling=true
+firewall=false
+autoProxy=true
+</pre>
+
+<p>
+保存后重启 WSL 使配置生效：
+</p>
+
+<pre>
+# 在 Windows PowerShell 中执行
+wsl --shutdown
+wsl
+</pre>
+
+<h3>4.2 Windows 防火墙放行规则</h3>
+
+<p>
+即使开启了镜像模式，Windows 防火墙仍可能拦截来自外部网络的连接。需要手动添加放行规则：
+</p>
+
+<pre>
+# 在 Windows PowerShell（管理员）中执行
+# 放行 adb 端口（5037）
+New-NetFirewallRule -DisplayName "WSL adb" -Direction Inbound -Protocol TCP -LocalPort 5037 -Action Allow
+
+# 放行常用开发端口
+New-NetFirewallRule -DisplayName "WSL Dev Ports" -Direction Inbound -Protocol TCP -LocalPort 3000,8080,8443,9000 -Action Allow
+</pre>
+
+<p>
+也可以使用 <code>netsh</code> 命令实现同样的效果，但 PowerShell 的 <code>NetFirewallRule</code> 模块更加现代化且容易管理。
+</p>
+
+<hr>
+
+<h2>5. 常见问题与排错</h2>
+
+<h3>5.1 "error: cannot find -lstdc++"</h3>
+
+<p>
+这个错误通常是因为链接器找不到 C++ 标准库。NDK r28c 使用 <strong>libc++</strong> 作为默认 STL，而不是 GNU 的 libstdc++。解决方案：
+</p>
+
+<ul>
+    <li>在 CMake 中显式指定 <code>-DANDROID_STL=c++_shared</code>（或 <code>c++_static</code>）</li>
+    <li>确保 NDK 的 <code>toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/</code> 目录下存在 <code>libc++_shared.so</code></li>
+    <li>如果项目代码中硬编码了 <code>-lstdc++</code>，需要替换为 <code>-lc++</code></li>
+</ul>
+
+<h3>5.2 "error: unknown target triple"</h3>
+
+<p>
+编译器收到了不认识的 target 三元组。这个错误通常发生在自定义 Makefile 中手动调用了 clang 但传入了错误的 <code>--target</code> 参数时。检查点：
+</p>
+
+<ul>
+    <li>target 格式是否正确？例如 <code>aarch64-linux-android31</code>（注意不是 <code>aarch64-linux-android-31</code>，版本号直接跟在 android 后面）</li>
+    <li>是否使用了 NDK 提供的包装器脚本（如 <code>aarch64-linux-android31-clang++</code>）而非直接调用 clang？</li>
+    <li>NDK r28c 的 LLVM 版本是 19，确保 <code>clang --version</code> 显示的是 LLVM 19</li>
+</ul>
+
+<h3>5.3 "Permission denied"</h3>
+
+<p>
+在 WSL 中编译生成的 ARM64 可执行文件如果无法执行，首先检查权限：
+</p>
+
+<pre>
+# 给交叉编译产物添加执行权限
+chmod +x my_android_binary
+
+# 使用 file 命令检查文件格式
+file my_android_binary
+# 预期输出: ELF 64-bit LSB shared object, ARM aarch64, ...
+</pre>
+
+<p>
+注意：WSL 无法直接运行 ARM64 编译产物（除非使用 QEMU 用户态模拟），需要在 Android 设备或模拟器上进行测试。
+</p>
+
+<h3>5.4 "No such file or directory" when running adb</h3>
+
+<p>
+如果在 WSL 中运行 <code>adb</code> 提示 "No such file or directory"，通常是因为 udev 规则未配置或 USB 设备未正确挂载：
+</p>
+
+<pre>
+# 配置 udev 规则
+echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="18d1", MODE="0666", GROUP="plugdev"' | \
+    sudo tee /etc/udev/rules.d/51-android.rules
+sudo udevadm control --reload-rules
+sudo udevadm trigger
+
+# 重新挂载 USB 设备
+sudo usbip attach -r 127.0.0.1 -b 1-2
+</pre>
+
+<h3>5.5 CMake 找不到 NDK 工具链文件</h3>
+
+<p>
+如果 CMake 提示找不到 <code>android.toolchain.cmake</code>，最常见的原因是 <code>ANDROID_NDK_HOME</code> 环境变量未正确设置：
+</p>
+
+<pre>
+# 检查环境变量
+echo $ANDROID_NDK_HOME
+# 如果为空，在 ~/.bashrc 中重新添加后 source
+
+# 或者直接在 CMake 中显式指定路径
+cmake -DCMAKE_TOOLCHAIN_FILE=$HOME/android-ndk-r28c/build/cmake/android.toolchain.cmake ...
+</pre>
+
+<hr>
+
+<h2>总结</h2>
+
+<p>
+WSL 作为 Windows 下嵌入式开发和 Android Native 开发的最佳方案之一，其生态在 2025–2026 年间已经非常成熟。通过本文的配置，我们完成了从零搭建 WSL 交叉编译环境的全部步骤：
+</p>
+
+<ul>
+    <li><strong>基础优化</strong>：apt 国内源换源 + apt-fast 并行加速，让后续安装工具链变得飞快</li>
+    <li><strong>NDK 配置</strong>：下载解压 NDK r28c，设置环境变量，掌握 LLVM 19 交叉编译工具链的使用方法</li>
+    <li><strong>USB 直通</strong>：通过 usbipd-win 实现 WSL 下的 Android USB 设备直连，支持 adb 调试</li>
+    <li><strong>网络配置</strong>：镜像模式 + 防火墙规则放行，让 WSL 服务对局域网可见</li>
+    <li><strong>常见排错</strong>：整理了交叉编译过程中最常遇到的 5 类问题及其解决方案</li>
+</ul>
+
+<p>
+这套环境可以稳定支撑日常的 Android Native 开发工作，配合 NDK 的 CMake 工具链，可以高效地完成 ARM64 二进制产物的交叉编译与调试。后续还可以在此基础上集成 OLLVM 代码混淆、字符串加密、反调试等安全加固方案，构建更加完整的 Android Native 安全开发工作流。
+</p>
+
+<p>
+如果在搭建过程中遇到本文未覆盖的问题，欢迎在评论区交流讨论。
+</p>
+
+                </article>
+
+                <!-- 底部导航 -->
+                <div class="blog-footer">
+                    <div class="nav-links">
+                        <a href="./blog.html">← 返回博客列表</a>
+                    </div>
+                    <a href="#" class="share-link" onclick="alert('复制链接: ' + window.location.href); return false;">🔗 复制链接</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

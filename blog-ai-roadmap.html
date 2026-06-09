@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - 从嵌入式到 AI 应用开发者的学习路线</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ============================================================
+           blog-ai-roadmap – 从嵌入式到 AI 应用开发者的学习路线
+           color: purple #b388ff / #8c6ff7
+           ============================================================ */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.8;
+        }
+
+        /* ---- layout ---- */
+        .blog-detail {
+            max-width: 820px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- back link ---- */
+        .blog-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8888aa;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.25s, transform 0.2s;
+            cursor: pointer;
+        }
+        .blog-back-link:hover {
+            color: #b388ff;
+            transform: translateX(-2px);
+        }
+        .blog-back-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ---- article header ---- */
+        .blog-header {
+            margin-bottom: 40px;
+        }
+        .blog-header .blog-title {
+            font-size: 34px;
+            font-weight: 700;
+            color: #f0f0f8;
+            margin: 0 0 12px;
+            line-height: 1.25;
+        }
+        .blog-header .blog-title .accent {
+            background: linear-gradient(135deg, #b388ff, #8c6ff7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .blog-header .blog-meta {
+            font-size: 14px;
+            color: #8888aa;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .blog-header .blog-meta .blog-date {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .blog-header .blog-meta .blog-category {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(179, 136, 255, 0.1);
+            color: #b388ff;
+            border: 1px solid rgba(179, 136, 255, 0.2);
+        }
+        .blog-header .blog-meta .blog-readtime {
+            color: #7a7a9a;
+        }
+
+        /* ---- article content ---- */
+        .blog-content {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 36px 32px;
+        }
+        .blog-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e8e0f8;
+            margin: 32px 0 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(179, 136, 255, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .blog-content h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #b388ff, #8c6ff7);
+            flex-shrink: 0;
+        }
+        .blog-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d8d0f0;
+            margin: 24px 0 12px;
+            padding-left: 0;
+        }
+        .blog-content p {
+            font-size: 15px;
+            color: #d0d0e0;
+            margin: 0 0 16px;
+            line-height: 1.85;
+        }
+        .blog-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 18px;
+        }
+        .blog-content ul li {
+            font-size: 14.5px;
+            color: #c8c8dc;
+            line-height: 1.7;
+            padding: 6px 0 6px 22px;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .blog-content ul li:last-child { border-bottom: none; }
+        .blog-content ul li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            top: 6px;
+            color: #b388ff;
+            opacity: 0.7;
+            font-size: 13px;
+        }
+        .blog-content ul li strong {
+            color: #c8aaff;
+            font-weight: 600;
+        }
+        .blog-content .blog-highlight {
+            background: rgba(179, 136, 255, 0.06);
+            border-left: 3px solid #b388ff;
+            border-radius: 0 8px 8px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 14.5px;
+            color: #d0c8e8;
+            line-height: 1.7;
+        }
+        .blog-content .blog-highlight strong {
+            color: #c8aaff;
+        }
+
+        /* ---- stage cards ---- */
+        .blog-stage {
+            background: rgba(179, 136, 255, 0.04);
+            border: 1px solid rgba(179, 136, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 22px;
+            margin-bottom: 20px;
+            transition: border-color 0.25s, background 0.25s;
+        }
+        .blog-stage:hover {
+            border-color: rgba(179, 136, 255, 0.25);
+            background: rgba(179, 136, 255, 0.07);
+        }
+        .blog-stage .stage-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #d8c8ff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .blog-stage .stage-title .stage-icon {
+            font-size: 18px;
+        }
+        .blog-stage .stage-desc {
+            font-size: 14px;
+            color: #c0b8d8;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .blog-stage .stage-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .blog-stage .stage-tech .tech-tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            font-weight: 500;
+            background: rgba(179, 136, 255, 0.08);
+            color: #b388ff;
+            border: 1px solid rgba(179, 136, 255, 0.15);
+        }
+
+        /* ---- summary ---- */
+        .blog-summary {
+            margin-top: 32px;
+            background: linear-gradient(135deg, rgba(179, 136, 255, 0.06), rgba(140, 111, 247, 0.02));
+            border: 1px solid rgba(179, 136, 255, 0.12);
+            border-radius: 14px;
+            padding: 28px 24px;
+        }
+        .blog-summary h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e8e0f8;
+            margin: 0 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .blog-summary h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #b388ff, #8c6ff7);
+            flex-shrink: 0;
+        }
+        .blog-summary p {
+            font-size: 15px;
+            color: #d0c8e0;
+            line-height: 1.8;
+            margin: 0 0 10px;
+        }
+        .blog-summary .blog-advantage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        .blog-summary .adv-card {
+            background: rgba(179, 136, 255, 0.05);
+            border: 1px solid rgba(179, 136, 255, 0.08);
+            border-radius: 10px;
+            padding: 16px 14px;
+            text-align: center;
+            transition: border-color 0.25s, background 0.25s, transform 0.2s;
+        }
+        .blog-summary .adv-card:hover {
+            border-color: rgba(179, 136, 255, 0.3);
+            background: rgba(179, 136, 255, 0.09);
+            transform: translateY(-2px);
+        }
+        .blog-summary .adv-card .adv-icon {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .blog-summary .adv-card .adv-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #c8b8e8;
+        }
+        .blog-summary .adv-card .adv-desc {
+            font-size: 12px;
+            color: #a090c0;
+            margin-top: 3px;
+            line-height: 1.4;
+        }
+
+        /* ---- responsive ---- */
+        @media (max-width: 768px) {
+            .blog-header .blog-title { font-size: 26px; }
+            .blog-content { padding: 24px 18px; }
+            .blog-content h2 { font-size: 19px; }
+            .blog-summary .blog-advantage-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .blog-detail { padding: 0 14px; }
+            .blog-content { padding: 18px 14px; }
+            .blog-content p { font-size: 14px; }
+            .blog-stage { padding: 16px 16px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- ============================================================
+         Blog Detail
+         ============================================================ -->
+    <div class="blog-detail">
+
+        <!-- ← back -->
+        <a href="./blog.html" class="blog-back-link">
+            <svg viewBox="0 0 16 16"><path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z"/></svg>
+            返回博客
+        </a>
+
+        <!-- ===== Header ===== -->
+        <div class="blog-header">
+            <h1 class="blog-title">
+                从嵌入式到 <span class="accent">AI 应用开发者</span>的学习路线
+            </h1>
+            <div class="blog-meta">
+                <span class="blog-date">📅 2026-05-15</span>
+                <span class="blog-category">AI</span>
+                <span class="blog-readtime">📖 约 8 分钟</span>
+            </div>
+        </div>
+
+        <!-- ===== Content ===== -->
+        <div class="blog-content">
+
+            <h2>转型动机</h2>
+            <p>
+                在嵌入式软件开发领域摸爬滚打了 4 年之后，我对底层硬件、RTOS、驱动开发、总线协议早已驾轻就熟。
+                然而 2023 年以来，大语言模型浪潮以摧枯拉朽之势重塑了整个软件行业。眼看着 ChatGPT、Claude、文心一言等产品
+                一次次刷新认知边界，一个强烈的念头在心中萌芽：<strong>为什么不把自己的系统思维和底层功底，延伸到 AI 应用开发这个全新的领域？</strong>
+            </p>
+            <p>
+                嵌入式开发教会了我严谨的调试方法、资源受限下的优化思维、以及对系统全链路的理解——这些恰恰是 AI 应用开发中
+                最容易被忽视却又至关重要的能力。于是，我制定了一份系统性的学习路线，从 LLM 基础到工程化部署，
+                一步步完成从嵌入式工程师到 AI 应用开发者的转型。
+            </p>
+
+            <h2>第一阶段：LLM 基础</h2>
+            <p>
+                任何转型的第一步都是建立坚实的理论基础。对于嵌入式背景的开发者来说，理解大语言模型的核心原理，
+                是后续所有实践的前提。
+            </p>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🧠</span> 大语言模型原理</div>
+                <div class="stage-desc">
+                    从 Transformer 架构入手，理解 Self-Attention 机制、Multi-Head Attention、位置编码等核心概念。
+                    掌握预训练（Pre-training）与微调（Fine-tuning）的范式差异，了解 Instruct 模型的训练流程。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">Transformer</span>
+                    <span class="tech-tag">Self-Attention</span>
+                    <span class="tech-tag">预训练</span>
+                    <span class="tech-tag">微调</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">💬</span> Prompt Engineering</div>
+                <div class="stage-desc">
+                    学习如何设计高质量的 Prompt，掌握 Chain-of-Thought、Few-Shot、System Prompt 等技巧。
+                    理解 Token 限制、温度参数对输出的影响，为后续 Agent 开发打下基础。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">CoT</span>
+                    <span class="tech-tag">Few-Shot</span>
+                    <span class="tech-tag">System Prompt</span>
+                    <span class="tech-tag">Temperature</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🔌</span> API 调用与参数调优</div>
+                <div class="stage-desc">
+                    通过 OpenAI 兼容 API、硅基流动等平台调用大模型，实践参数调优（Top-P、Frequency Penalty、Max Tokens），
+                    掌握流式输出（Streaming）的实现方式。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">OpenAI API</span>
+                    <span class="tech-tag">硅基流动</span>
+                    <span class="tech-tag">Streaming</span>
+                    <span class="tech-tag">参数调优</span>
+                </div>
+            </div>
+
+            <h2>第二阶段：本地部署</h2>
+            <p>
+                作为嵌入式工程师，我对"本地运行"有着天然的亲近感。将大模型部署到本地环境，
+                不仅节省 API 成本，更能深入理解模型推理的全流程。
+            </p>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🦙</span> Ollama 本地运行开源模型</div>
+                <div class="stage-desc">
+                    使用 Ollama 在本地一键运行 Llama 3、Qwen 2、Mistral 等开源模型。
+                    体验不同规模模型（7B / 13B / 70B）在推理速度和质量上的差异，掌握 Modelfile 自定义配置。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">Ollama</span>
+                    <span class="tech-tag">Llama 3</span>
+                    <span class="tech-tag">Qwen 2</span>
+                    <span class="tech-tag">Modelfile</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">⚡</span> vLLM 推理加速</div>
+                <div class="stage-desc">
+                    学习 vLLM 的 PagedAttention 机制和 Continuous Batching 技术，掌握如何部署高性能推理服务。
+                    对比 Ollama 与 vLLM 在吞吐量和延迟上的差异。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">vLLM</span>
+                    <span class="tech-tag">PagedAttention</span>
+                    <span class="tech-tag">Continuous Batching</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🎮</span> CUDA GPU 部署</div>
+                <div class="stage-desc">
+                    配置 CUDA 环境、安装 GPU 驱动与 Docker 环境，掌握模型量化（GGUF、GPTQ、AWQ）技术，
+                    在有限显存下运行更大规模的模型。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">CUDA</span>
+                    <span class="tech-tag">GGUF</span>
+                    <span class="tech-tag">GPTQ</span>
+                    <span class="tech-tag">AWQ</span>
+                </div>
+            </div>
+
+            <h2>第三阶段：RAG 与 Agent</h2>
+            <p>
+                这是从"调用模型"到"构建智能应用"的质变阶段。RAG 让模型拥有"知识库"，
+                Agent 让模型拥有"行动力"。
+            </p>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🔗</span> LangChain 框架核心组件</div>
+                <div class="stage-desc">
+                    系统学习 LangChain 的六大核心组件：Models、Prompts、Chains、Memory、Indexes、Agents。
+                    掌握 LCEL（LangChain Expression Language）声明式编程范式。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">LangChain</span>
+                    <span class="tech-tag">LCEL</span>
+                    <span class="tech-tag">Chains</span>
+                    <span class="tech-tag">Memory</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🗂️</span> 向量数据库（FAISS）</div>
+                <div class="stage-desc">
+                    理解向量嵌入（Embedding）的原理，掌握 FAISS 向量数据库的索引构建与相似性搜索。
+                    结合 BM25 实现混合检索策略，提升中文场景的召回准确率。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">FAISS</span>
+                    <span class="tech-tag">Embedding</span>
+                    <span class="tech-tag">BM25</span>
+                    <span class="tech-tag">混合检索</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">📚</span> RAG 知识库构建</div>
+                <div class="stage-desc">
+                    实现完整的 RAG 流水线：文档加载（PDF/TXT/CSV/MD/DOCX）→ 文本分割 → 向量存储 → 语义检索。
+                    优化 Chunk Size 与 Overlap 参数，提升检索质量。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">文档加载</span>
+                    <span class="tech-tag">文本分割</span>
+                    <span class="tech-tag">语义检索</span>
+                    <span class="tech-tag">Chunk 优化</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🤖</span> ReAct Agent 开发</div>
+                <div class="stage-desc">
+                    基于 LangChain 的 ReAct 范式构建 Agent，实现 Reason + Act 的循环推理：
+                    意图识别 → 工具选择 → 参数填充 → 结果解析。集成天气查询、网络搜索、代码解释器等工具。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">ReAct</span>
+                    <span class="tech-tag">Tool Calling</span>
+                    <span class="tech-tag">Code Interpreter</span>
+                </div>
+            </div>
+
+            <h2>第四阶段：MCP 与多 Agent</h2>
+            <p>
+                当单 Agent 能力趋于成熟后，下一步是探索 Agent 之间的协作与标准化协议。
+                这是构建复杂 AI 系统的关键一步。
+            </p>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🔌</span> MCP 协议原理与实践</div>
+                <div class="stage-desc">
+                    学习 MCP（Model Context Protocol）标准化协议，理解其如何实现 Agent 工具的标准化接入与扩展。
+                    实践 MCP Server 的开发与集成。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">MCP</span>
+                    <span class="tech-tag">MCP Server</span>
+                    <span class="tech-tag">标准化协议</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🚀</span> Hermes Agent / CrewAI 框架</div>
+                <div class="stage-desc">
+                    探索 Hermes Agent 和 CrewAI 等多 Agent 框架的设计理念。理解 Agent Role、Task、
+                    Process 等核心概念，掌握多 Agent 协作任务的编排方式。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">Hermes Agent</span>
+                    <span class="tech-tag">CrewAI</span>
+                    <span class="tech-tag">多 Agent</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🤝</span> 多 Agent 协作</div>
+                <div class="stage-desc">
+                    设计多 Agent 协作场景：主管 Agent 负责任务分解与分发，专家 Agent 专注特定领域，
+                    实现 Agent 之间的消息传递、任务交接与结果聚合。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">任务编排</span>
+                    <span class="tech-tag">Agent 协作</span>
+                    <span class="tech-tag">结果聚合</span>
+                </div>
+            </div>
+
+            <h2>第五阶段：工程化</h2>
+            <p>
+                嵌入式背景让我深知：<strong>没有工程化的原型只是玩具</strong>。将 AI 应用真正部署上线，
+                需要完整的工程化能力。
+            </p>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">⚡</span> FastAPI 后端开发</div>
+                <div class="stage-desc">
+                    使用 FastAPI 构建高性能 RESTful 后端服务，实现对话接口、知识库管理、Agent 调用等 API。
+                    掌握异步处理、流式响应（SSE）、请求验证等高级特性。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">FastAPI</span>
+                    <span class="tech-tag">RESTful</span>
+                    <span class="tech-tag">SSE</span>
+                    <span class="tech-tag">异步处理</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🖥️</span> Streamlit Web UI</div>
+                <div class="stage-desc">
+                    使用 Streamlit 快速搭建 AI 应用的 Web 前端界面，实现对话交互、知识库配置、
+                    参数调节面板等功能。体验从 Python 脚本到 Web 应用的全流程。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">Streamlit</span>
+                    <span class="tech-tag">Web UI</span>
+                    <span class="tech-tag">交互界面</span>
+                </div>
+            </div>
+            <div class="blog-stage">
+                <div class="stage-title"><span class="stage-icon">🐳</span> Docker 部署</div>
+                <div class="stage-desc">
+                    编写 Dockerfile 和 docker-compose.yml，将 AI 应用容器化部署。
+                    掌握多阶段构建、GPU 透传、环境变量配置等生产级部署技巧。
+                </div>
+                <div class="stage-tech">
+                    <span class="tech-tag">Docker</span>
+                    <span class="tech-tag">docker-compose</span>
+                    <span class="tech-tag">GPU 透传</span>
+                    <span class="tech-tag">容器化</span>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="blog-summary">
+                <h2>总结：嵌入式背景的独特优势</h2>
+                <p>
+                    经过以上五个阶段的系统学习，从 LLM 基础到工程化部署，我深刻体会到
+                    <strong>嵌入式开发背景在 AI 应用开发中的独特价值</strong>。
+                    那些年在底层摸爬滚打积累下来的能力，不仅没有浪费，反而成为了差异化竞争力。
+                </p>
+                <div class="blog-advantage-grid">
+                    <div class="adv-card">
+                        <span class="adv-icon">🧩</span>
+                        <div class="adv-label">系统思维</div>
+                        <div class="adv-desc">从硬件到应用的全链路理解，能快速定位问题根因</div>
+                    </div>
+                    <div class="adv-card">
+                        <span class="adv-icon">🔧</span>
+                        <div class="adv-label">底层理解</div>
+                        <div class="adv-desc">对计算资源、内存管理、性能瓶颈有直觉判断</div>
+                    </div>
+                    <div class="adv-card">
+                        <span class="adv-icon">🎯</span>
+                        <div class="adv-label">调试能力</div>
+                        <div class="adv-desc">严谨的调试方法论，处理复杂系统异常游刃有余</div>
+                    </div>
+                </div>
+                <p style="margin-top: 16px;">
+                    AI 应用开发并不是一个全新的世界，而是已有技能的延伸与重构。
+                    对于嵌入式开发者来说，<strong>转型不是从零开始，而是站在已有的坚实基础上向上攀登</strong>。
+                    如果你也在考虑踏上这条路，希望这份路线图能给你一些启发。
+                </p>
+            </div>
+
+        </div><!-- /blog-content -->
+
+    </div><!-- /blog-detail -->
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

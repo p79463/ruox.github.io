@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - ImGui + OpenGL/Vulkan Android 集成实践</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ============================================================
+           blog-detail – ImGui + OpenGL/Vulkan Android 集成实践
+           color: purple #a855f7 / #7c3aed
+           ============================================================ */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.7;
+        }
+
+        /* ---- layout ---- */
+        .blog-detail {
+            max-width: 820px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- back link ---- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8888aa;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.25s, transform 0.2s;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            color: #a855f7;
+            transform: translateX(-2px);
+        }
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ---- article header ---- */
+        .article-header {
+            margin-bottom: 40px;
+        }
+        .article-header .article-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f0f0f8;
+            margin: 0 0 10px;
+            line-height: 1.25;
+        }
+        .article-header .article-title .accent {
+            background: linear-gradient(135deg, #a855f7, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .article-header .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            font-size: 14px;
+            color: #8888aa;
+            margin-bottom: 10px;
+        }
+        .article-header .article-meta .meta-dot {
+            color: #555;
+        }
+        .article-header .article-meta .category {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(168, 85, 247, 0.1);
+            color: #a78bfa;
+            border: 1px solid rgba(168, 85, 247, 0.2);
+        }
+        .article-header .article-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .article-header .article-tags .tag {
+            display: inline-block;
+            padding: 3px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(168, 85, 247, 0.06);
+            color: #a78bfa;
+            border: 1px solid rgba(168, 85, 247, 0.12);
+        }
+
+        /* ---- article content ---- */
+        .article-content {
+            color: #d0d0e0;
+            font-size: 15.5px;
+            line-height: 1.85;
+        }
+        .article-content h2 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #e8e0f8;
+            margin: 44px 0 18px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(168, 85, 247, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .article-content h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #a855f7, #7c3aed);
+            flex-shrink: 0;
+        }
+        .article-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #ddd0f0;
+            margin: 32px 0 12px;
+        }
+        .article-content p {
+            margin: 0 0 16px;
+            color: #c8c8dc;
+        }
+        .article-content p strong {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+        .article-content ul, .article-content ol {
+            margin: 0 0 16px;
+            padding-left: 24px;
+        }
+        .article-content li {
+            margin-bottom: 8px;
+            color: #c8c8dc;
+        }
+        .article-content li strong {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+        .article-content code {
+            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
+            font-size: 13.5px;
+            background: rgba(168, 85, 247, 0.08);
+            color: #c4a0ff;
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(168, 85, 247, 0.12);
+        }
+        .article-content pre {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(168, 85, 247, 0.08);
+            border-radius: 10px;
+            padding: 18px 20px;
+            overflow-x: auto;
+            margin: 0 0 20px;
+            font-size: 13.5px;
+            line-height: 1.6;
+        }
+        .article-content pre code {
+            background: none;
+            border: none;
+            padding: 0;
+            color: #d4d0e8;
+        }
+        .article-content blockquote {
+            margin: 0 0 20px;
+            padding: 14px 20px;
+            border-left: 3px solid #a855f7;
+            background: rgba(168, 85, 247, 0.05);
+            border-radius: 0 8px 8px 0;
+            color: #b8b0d8;
+        }
+        .article-content .note-box {
+            background: rgba(168, 85, 247, 0.06);
+            border: 1px solid rgba(168, 85, 247, 0.12);
+            border-radius: 10px;
+            padding: 18px 20px;
+            margin: 0 0 20px;
+        }
+        .article-content .note-box .note-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #a78bfa;
+            margin-bottom: 6px;
+        }
+        .article-content .table-wrap {
+            overflow-x: auto;
+            margin: 0 0 20px;
+        }
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        .article-content table th {
+            background: rgba(168, 85, 247, 0.08);
+            color: #d0c0e8;
+            font-weight: 600;
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 2px solid rgba(168, 85, 247, 0.15);
+        }
+        .article-content table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c8c8dc;
+        }
+        .article-content table tr:hover td {
+            background: rgba(168, 85, 247, 0.03);
+        }
+        .article-content .img-placeholder {
+            background: rgba(168, 85, 247, 0.05);
+            border: 1px solid rgba(168, 85, 247, 0.1);
+            border-radius: 10px;
+            padding: 40px 20px;
+            text-align: center;
+            color: #8888aa;
+            font-size: 14px;
+            margin: 0 0 20px;
+        }
+        .article-content .img-placeholder .img-icon {
+            font-size: 36px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* ---- article footer meta ---- */
+        .article-footer-meta {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(168, 85, 247, 0.08);
+        }
+        .article-footer-meta p {
+            font-size: 14px;
+            color: #8888aa;
+            margin: 0;
+        }
+
+        /* ---- responsive ---- */
+        @media (max-width: 768px) {
+            .blog-detail { padding: 0 16px; }
+            .article-header .article-title { font-size: 24px; }
+            .article-content { font-size: 15px; }
+            .article-content h2 { font-size: 19px; }
+        }
+        @media (max-width: 480px) {
+            .blog-detail { padding: 0 12px; }
+            .article-header .article-title { font-size: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- ============================================================
+         Blog Detail
+         ============================================================ -->
+    <div class="blog-detail">
+
+        <!-- ← back -->
+        <a href="./blog.html" class="back-link">
+            <svg viewBox="0 0 16 16"><path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z"/></svg>
+            返回博客
+        </a>
+
+        <!-- ===== Article Header ===== -->
+        <div class="article-header">
+            <div class="article-meta">
+                <span>2026-05-05</span>
+                <span class="meta-dot">·</span>
+                <span class="category">逆向工程</span>
+            </div>
+            <h1 class="article-title">
+                ImGui + <span class="accent">OpenGL/Vulkan</span> Android 集成实践
+            </h1>
+            <div class="article-tags">
+                <span class="tag">ImGui</span>
+                <span class="tag">OpenGL ES</span>
+                <span class="tag">Vulkan</span>
+                <span class="tag">Android</span>
+                <span class="tag">Root</span>
+                <span class="tag">Overlay</span>
+                <span class="tag">uinput</span>
+            </div>
+        </div>
+
+        <!-- ===== Article Content ===== -->
+        <div class="article-content">
+
+            <h2>背景</h2>
+            <p>
+                在 Android Root 环境下，很多时候我们需要在已有原生应用之上叠加一层调试或辅助信息。传统的 Toast / Snackbar 无法满足复杂交互需求，而编写完整 Android Activity 又过于臃肿。<strong>ImGui</strong>（Dear ImGui）作为一个轻量级即时模式 GUI 库，凭借其极低的集成成本和丰富的控件生态，成为这类场景的理想选择。
+            </p>
+            <p>
+                本文基于实际项目经验，记录将 ImGui 集成到 Android Native 二进制程序中的完整方案。我们的目标是在一个 <strong>su</strong> 启动的独立进程中运行 ImGui，通过图形 API 直接渲染到帧缓冲，同时捕获触摸事件实现交互。项目涉及三个核心模块：图形渲染后端、触摸输入适配、以及 Overlay 绘制层的生命周期管理。
+            </p>
+
+            <div class="note-box">
+                <div class="note-title">💡 适用场景</div>
+                <p style="margin:0">ROOT 设备上的游戏辅助信息叠加、性能监控浮层（FPS / 温度 / 内存）、调试控制台、以及自定义交互工具。代码基于 Android 12+ 测试，理论兼容 Android 8.0+。</p>
+            </div>
+
+            <h2>渲染后端</h2>
+            <p>
+                ImGui 官方提供了多个渲染后端实现（backends），在 Android 上我们主要关注两种图形 API：<strong>OpenGL ES 3.x</strong> 和 <strong>Vulkan 1.1+</strong>。两者各有优劣，选择取决于目标设备的 GPU 能力以及是否需要与其他图形栈共存。
+            </p>
+
+            <h3>OpenGL ES 集成方案</h3>
+            <p>
+                OpenGL ES 是 Android 上最广泛支持的图形接口。集成步骤相对成熟：
+            </p>
+            <ul>
+                <li>使用 <code>eglGetDisplay(EGL_DEFAULT_DISPLAY)</code> 获取默认显示连接</li>
+                <li>初始化 EGL，选择合适的 <strong>EGLConfig</strong>（RGBA8888 + 深度缓冲可选）</li>
+                <li>创建 <code>eglCreateWindowSurface</code> 或 <code>eglCreatePbufferSurface</code>——在无窗口环境（如纯 Native 二进制）中，使用 <strong>pbuffer</strong> 或直接绑定到帧缓冲对象（FBO）</li>
+                <li>加载 OpenGL ES 3.0 函数指针，初始化 ImGui 的 <code>ImGui_ImplOpenGL3_Init()</code></li>
+                <li>每帧调用 <code>ImGui_ImplOpenGL3_NewFrame()</code> → <code>ImGui::NewFrame()</code> → 渲染 → <code>ImGui_ImplOpenGL3_RenderDrawData()</code></li>
+                <li>通过 <code>eglSwapBuffers()</code> 提交帧</li>
+            </ul>
+            <p>
+                <strong>关键优化</strong>：在 Root 环境下，不建议使用 Android 的 <code>ANativeWindow</code> 来创建 Surface，这容易与前台 Activity 的 SurfaceFlinger 冲突。更稳健的做法是创建一个离屏 FBO，渲染完成后通过 <code>memcpy</code> 或 DMA-BUF 将像素数据推送到 Overlay 层。
+            </p>
+
+            <h3>Vulkan 集成方案</h3>
+            <p>
+                Vulkan 后端的集成复杂度更高，但带来了更好的多线程性能和更低的 CPU 开销：
+            </p>
+            <ul>
+                <li>创建 <code>VkInstance</code> 并启用必要的层（VK_LAYER_KHRONOS_validation 仅调试时启用）</li>
+                <li>枚举物理设备，选择支持 <strong>VK_KHR_swapchain</strong> 且具备图形队列族的设备</li>
+                <li>创建逻辑设备、图形队列、VkSwapchain（或直接渲染到 VkImage）</li>
+                <li>初始化 ImGui 的 <code>ImGui_ImplVulkan_Init()</code>，传入 <code>VkRenderPass</code> 和队列族索引</li>
+                <li>每帧调用 <code>ImGui_ImplVulkan_NewFrame()</code> → <code>ImGui::NewFrame()</code> → 录制 Command Buffer → 提交到队列</li>
+            </ul>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>对比维度</th>
+                            <th>OpenGL ES</th>
+                            <th>Vulkan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>集成难度</strong></td>
+                            <td>低，代码量 ~200 行</td>
+                            <td>中高，代码量 ~500 行</td>
+                        </tr>
+                        <tr>
+                            <td><strong>兼容性</strong></td>
+                            <td>Android 4.0+ 全覆盖</td>
+                            <td>Android 7.0+（部分低端设备不支持）</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CPU 开销</strong></td>
+                            <td>中等</td>
+                            <td>较低，多线程友好</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Overlay 协作</strong></td>
+                            <td>FBO + 像素拷贝</td>
+                            <td>直接导出 VkImage</td>
+                        </tr>
+                        <tr>
+                            <td><strong>调试工具</strong></td>
+                            <td>RenderDoc, APITrace</td>
+                            <td>RenderDoc, Vulkan Validation Layers</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>双后端选择策略</h3>
+            <p>
+                我们采用了运行时策略：启动时尝试初始化 Vulkan，若失败（设备不支持或驱动不稳定）自动回退到 OpenGL ES。这一策略在测试覆盖的 20+ 款设备上实现了 <strong>100% 兼容</strong>。
+            </p>
+            <pre><code>// 伪代码：双后端自动选择
+bool InitRenderer() {
+    if (TryInitVulkan()) {
+        g_Backend = BACKEND_VULKAN;
+        return true;
+    }
+    LOGW("Vulkan init failed, falling back to OpenGL ES");
+    if (TryInitOpenGLES()) {
+        g_Backend = BACKEND_OPENGL;
+        return true;
+    }
+    LOGE("All render backends failed");
+    return false;
+}</code></pre>
+
+            <h2>触摸输入适配</h2>
+            <p>
+                输入是集成过程中最具挑战性的环节。ImGui 需要鼠标/触摸位置和点击状态，但在 Root 环境下的独立进程中，我们无法直接使用 Android 的 <code>InputDispatcher</code> 或 <code>MotionEvent</code>。解决方案是使用 <strong>/dev/uinput</strong> 配合 <strong>/dev/input/eventX</strong> 来劫持和转发触摸事件。
+            </p>
+
+            <h3>TouchManager 过检测库设计</h3>
+            <p>
+                我们设计了一个名为 TouchManager 的模块，负责三件事：
+            </p>
+            <ul>
+                <li><strong>事件捕获</strong>：通过轮询 <code>/dev/input/event*</code> 获取原始触摸事件（ABS_MT_POSITION_X/Y、BTN_TOUCH 等）</li>
+                <li><strong>事件注入</strong>：若需要模拟触摸操作，通过 <code>/dev/uinput</code> 构造并写入 <code>input_event</code> 结构体</li>
+                <li><strong>状态映射</strong>：将触摸点坐标映射到 ImGui 的 <code>io.MousePos</code> 和 <code>io.MouseDown</code></li>
+            </ul>
+            <p>
+                为了防止应用层检测（例如游戏反作弊系统扫描 <code>/dev/uinput</code> 设备），我们在 TouchManager 中实现了过检测策略：
+            </p>
+            <ul>
+                <li>使用 <strong>EVIOCGNAME</strong> ioctl 获取每个 input 设备名称，过滤掉可疑的 uinput 设备</li>
+                <li>随机化 uinput 设备名和厂商 ID，降低特征匹配风险</li>
+                <li>仅在需要注入时打开 uinput，空闲时关闭文件描述符</li>
+            </ul>
+
+            <h3>uinput 设备冲突问题</h3>
+            <p>
+                一个常见的坑点是：当系统中有多个 uinput 设备时（例如某些 ROM 自带的虚拟键盘或手势导航），我们的 uinput 设备可能与其他服务竞争事件流。表现为触摸事件重复、坐标漂移或点击不响应。
+            </p>
+            <p>
+                <strong>解决方案</strong>：在 TouchManager 初始化时，通过 <code>EVIOCGNAME</code> 遍历所有 <code>/dev/input/event*</code>，建立一个白名单。只监听非 uinput 的真实触摸设备（通常含有 "touch"、"synaptics"、"fts" 等特征字符串）。注入时则创建一个独立的 uinput 设备，其 <code>input_id</code> 模拟常见触摸控制器的 Vendor/Product ID。
+            </p>
+
+            <div class="note-box">
+                <div class="note-title">⚠️ 注意</div>
+                <p style="margin:0">部分游戏（如《和平精英》、《原神》）会通过检查 <code>/proc/bus/input/devices</code> 来探测异常输入设备。建议在注入操作完成后立即销毁 uinput 设备，减少暴露窗口。</p>
+            </div>
+
+            <h3>EVIOCGNAME 设备检测</h3>
+            <p>
+                核心代码片段，展示如何通过 EVIOCGNAME 获取设备名称并分类：
+            </p>
+            <pre><code>#include &lt;linux/input.h&gt;
+#include &lt;sys/ioctl.h&gt;
+#include &lt;fcntl.h&gt;
+
+bool IsTouchDevice(const char* path) {
+    int fd = open(path, O_RDONLY | O_NONBLOCK);
+    if (fd &lt; 0) return false;
+
+    char name[256] = {0};
+    if (ioctl(fd, EVIOCGNAME(sizeof(name) - 1), name) &lt; 0) {
+        close(fd);
+        return false;
+    }
+    close(fd);
+
+    // 触摸设备通常包含这些关键词
+    const char* keywords[] = {
+        "touch", "synaptics", "fts", "goodix",
+        "elan", "msg", "melfas", "raydium"
+    };
+    for (auto& kw : keywords) {
+        if (strcasestr(name, kw)) return true;
+    }
+    return false;
+}</code></pre>
+
+            <h2>Overlay 绘制</h2>
+            <p>
+                Overlay 层负责将 ImGui 渲染结果展示到屏幕最顶层。在 Root 设备上，有几种主流方案：
+            </p>
+            <ul>
+                <li><strong>SurfaceFlinger 直接提交</strong>：通过 <code>SurfaceComposerClient</code> 创建一个 overlay Surface，设置 z-order 为最高。需要 <code>android.hardware.graphics.composer</code> 权限</li>
+                <li><strong>/dev/dri/card0 直接渲染</strong>：通过 DRM/KMS 直接在显示控制器上叠加一个 framebuffer。兼容性好，但需要适配不同显示驱动</li>
+                <li><strong>FBO → memcpy → SurfaceFlinger</strong>：离屏渲染到 FBO，然后通过 <code>ANativeWindow</code> 将像素数据传回 SurfaceFlinger</li>
+            </ul>
+            <p>
+                在我们的实践中，<strong>DRM/KMS 方案</strong>表现最稳定。它绕过了 Android 的图形栈理解问题，直接与显示硬件交互。关键步骤：
+            </p>
+            <pre><code>// DRM Overlay 简化流程
+int drm_fd = open("/dev/dri/card0", O_RDWR);
+drmModeRes* res = drmModeGetResources(drm_fd);
+
+// 创建一个 dumb buffer 作为叠加层
+struct drm_mode_create_dumb dumb = {0};
+dumb.width = screen_w;
+dumb.height = screen_h;
+dumb.bpp = 32;
+ioctl(drm_fd, DRM_IOCTL_MODE_CREATE_DUMB, &dumb);
+
+// 将 ImGui 渲染的像素数据 mmap 并 memcpy
+struct drm_mode_map_dumb map = {0};
+map.handle = dumb.handle;
+ioctl(drm_fd, DRM_IOCTL_MODE_MAP_DUMB, &map);
+
+uint32_t* fb_data = (uint32_t*)mmap(0, dumb.size,
+    PROT_READ | PROT_WRITE, MAP_SHARED,
+    drm_fd, map.offset);
+
+// 每帧拷贝 ImGui 渲染结果
+memcpy(fb_data, imgui_pixels, screen_w * screen_h * 4);</code></pre>
+
+            <h2>常见坑点</h2>
+
+            <h3>首次启动触摸不工作</h3>
+            <p>
+                这是一个让很多人浪费数天的问题。现象是：二进制启动后，ImGui 界面正常显示，但触摸没有任何响应。原因是 <code>/dev/input/event*</code> 的读取时机问题——在进程刚启动时，input 设备可能尚未完成初始化，或者被 selinux 策略阻塞。
+            </p>
+            <p>
+                <strong>解决方案</strong>：在 TouchManager 初始化时加入 <strong>重试机制</strong>，最多尝试 10 次，每次间隔 200ms。同时检查 selinux 上下文，确保进程具有 <code>u:r:su:s0</code> 或类似的允许访问 input 设备的上下文。若 selinux 为 enforcing 模式，需要添加规则或临时切换为 permissive。
+            </p>
+
+            <h3>多线程渲染问题</h3>
+            <p>
+                ImGui 本身不是线程安全的。所有 ImGui API 调用（包括 <code>NewFrame()</code>、控件添加、<code>Render()</code>）必须在同一个线程中执行。如果使用多线程进行事件轮询（例如一个线程读 input event，另一个线程做渲染），必须将事件数据通过原子队列传递到渲染线程，然后由渲染线程在 <code>NewFrame()</code> 之前更新 <code>io</code> 状态。
+            </p>
+            <pre><code>// 线程安全的事件传递模式
+std::atomic&lt;TouchEvent&gt; g_PendingEvent;
+std::mutex g_EventMutex;
+
+// 事件线程
+void EventThread() {
+    while (running) {
+        TouchEvent ev = ReadTouchEvent();
+        {
+            std::lock_guard&lt;std::mutex&gt; lock(g_EventMutex);
+            g_PendingEvent = ev;
+        }
+    }
+}
+
+// 渲染线程（每帧）
+void RenderFrame() {
+    {
+        std::lock_guard&lt;std::mutex&gt; lock(g_EventMutex);
+        ImGui::GetIO().MousePos = ImVec2(g_PendingEvent.x, g_PendingEvent.y);
+        ImGui::GetIO().MouseDown[0] = g_PendingEvent.pressed;
+    }
+    ImGui_ImplXXXX_NewFrame();
+    ImGui::NewFrame();
+    // ... 绘制 UI ...
+    ImGui::Render();
+    ImGui_ImplXXXX_RenderDrawData(ImGui::GetDrawData());
+}</code></pre>
+
+            <h3>其他常见问题</h3>
+            <ul>
+                <li><strong>字体渲染模糊</strong>：Android 屏幕 DPI 较高，ImGui 默认字体在 1080p+ 分辨率下显得过小。建议使用 <code>ImFontConfig::OversampleH = 3, OversampleV = 3</code>，并加载 Noto Sans SC 等支持中文的字体文件</li>
+                <li><strong>vsync 撕裂</strong>：在 Overlay 层上容易出现画面撕裂。解决方案是启用 EGL 的 <code>EGL_SWAP_BEHAVIOR_PRESERVED</code>，或在 DRM 方案中设置 <code>drmModePageFlip</code> 等待 vblank</li>
+                <li><strong>内存泄漏</strong>：ImGui 的 <code>DrawData</code> 在离屏渲染后需要手动释放 vertex/index buffer。使用 <code>ImGui_ImplVulkan_DestroyDeviceObjects()</code> 或 OpenGL 后端对应的清理函数</li>
+            </ul>
+
+            <h2>总结</h2>
+            <p>
+                将 ImGui 集成到 Android Root 环境的 Native 进程中是一个涉及多领域知识的技术挑战——需要同时掌握图形 API、Linux input 子系统、Android 图形栈以及一定的逆向工程经验。本文介绍的方案已经在多款设备上验证通过，覆盖了从骁龙 865 到天玑 9200 的 SoC 平台。
+            </p>
+            <p>
+                核心收获如下：
+            </p>
+            <ul>
+                <li><strong>双后端策略</strong>（Vulkan 优先 + OpenGL 回退）是保证兼容性的关键</li>
+                <li><strong>TouchManager</strong> 通过 EVIOCGNAME 过滤设备和随机化 uinput 参数，有效规避输入检测</li>
+                <li><strong>DRM/KMS 直接渲染</strong> 比 SurfaceFlinger 方案更稳定，但需要处理 dumb buffer 的生命周期</li>
+                <li>多线程场景下必须严格遵循 ImGui 的单线程约束，用原子队列同步事件</li>
+            </ul>
+            <p>
+                未来可以探索的方向包括：使用 <strong>Vulkan VK_KHR_external_memory_dma_buf</strong> 实现零拷贝 Overlay 绘制，以及通过 <strong>Mmap 共享内存</strong>实现多进程间 ImGui 状态同步。对于有兴趣深入的朋友，建议先阅读 ImGui 官方的 <code>examples/example_android_opengl3/</code> 示例，再结合本文的 Native 二进制场景做适配。
+            </p>
+
+            <!-- footer meta -->
+            <div class="article-footer-meta">
+                <p>本文发布于 2026-05-05 · 分类：逆向工程 · 字数：约 2200 字</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

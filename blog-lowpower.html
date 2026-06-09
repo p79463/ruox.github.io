@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - 嵌入式低功耗优化实战</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg" />
+    <style>
+        /* ============================================================
+           blog-detail – 嵌入式低功耗优化实战
+           color: purple #a78bfa / #8b5cf6
+           ============================================================ */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.8;
+        }
+
+        /* ---- layout ---- */
+        .blog-detail {
+            max-width: 820px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- back link ---- */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8888bb;
+            font-size: 14px;
+            text-decoration: none;
+            margin-bottom: 32px;
+            transition: color 0.25s, transform 0.2s;
+            cursor: pointer;
+        }
+        .back-link:hover {
+            color: #a78bfa;
+            transform: translateX(-2px);
+        }
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* ---- article header ---- */
+        .article-header {
+            margin-bottom: 40px;
+        }
+        .article-header .article-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #f0f0f8;
+            margin: 0 0 12px;
+            line-height: 1.3;
+        }
+        .article-header .article-title .accent {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .article-header .article-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            font-size: 14px;
+            color: #8888aa;
+            margin-bottom: 20px;
+        }
+        .article-header .article-meta .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .article-header .article-meta .tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(167, 139, 250, 0.10);
+            color: #b8a0f0;
+            border: 1px solid rgba(167, 139, 250, 0.18);
+        }
+
+        /* ---- article content ---- */
+        .article-content h2 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #e8e0f8;
+            margin: 36px 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(167, 139, 250, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .article-content h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #a78bfa, #7c3aed);
+            flex-shrink: 0;
+        }
+        .article-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #d4c8f0;
+            margin: 28px 0 10px;
+        }
+        .article-content p {
+            font-size: 15.5px;
+            color: #c8c8e0;
+            margin: 0 0 16px;
+            line-height: 1.85;
+        }
+        .article-content ul, .article-content ol {
+            margin: 0 0 18px;
+            padding-left: 24px;
+            color: #c8c8e0;
+            font-size: 15px;
+            line-height: 1.8;
+        }
+        .article-content ul li, .article-content ol li {
+            margin-bottom: 6px;
+        }
+        .article-content ul li strong, .article-content ol li strong {
+            color: #c4b0f0;
+            font-weight: 600;
+        }
+        .article-content ul li::marker {
+            color: #a78bfa;
+        }
+        .article-content ol li::marker {
+            color: #a78bfa;
+            font-weight: 600;
+        }
+
+        /* ---- callout / highlight box ---- */
+        .article-content .callout {
+            background: rgba(167, 139, 250, 0.06);
+            border: 1px solid rgba(167, 139, 250, 0.15);
+            border-left: 3px solid #a78bfa;
+            border-radius: 8px;
+            padding: 16px 20px;
+            margin: 20px 0;
+            font-size: 14.5px;
+            color: #d0c8e8;
+            line-height: 1.7;
+        }
+        .article-content .callout strong {
+            color: #c4b0f0;
+        }
+
+        /* ---- data table ---- */
+        .article-content .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        .article-content .data-table th {
+            background: rgba(167, 139, 250, 0.10);
+            color: #c4b0f0;
+            font-weight: 600;
+            padding: 10px 14px;
+            text-align: left;
+            border: 1px solid rgba(167, 139, 250, 0.12);
+        }
+        .article-content .data-table td {
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            color: #c0c0d8;
+        }
+        .article-content .data-table tr:nth-child(even) td {
+            background: rgba(255, 255, 255, 0.015);
+        }
+        .article-content .data-table td:first-child {
+            font-weight: 500;
+            color: #d0c8e8;
+        }
+
+        /* ---- result card ---- */
+        .article-content .result-card {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.06), rgba(124, 58, 237, 0.02));
+            border: 1px solid rgba(167, 139, 250, 0.15);
+            border-radius: 12px;
+            padding: 22px 24px;
+            margin: 24px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        .article-content .result-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #a78bfa, transparent);
+            opacity: 0.3;
+        }
+        .article-content .result-card .rc-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #d4c0f0;
+            margin-bottom: 8px;
+        }
+        .article-content .result-card .rc-body {
+            font-size: 14.5px;
+            color: #c8c0e0;
+            line-height: 1.7;
+        }
+        .article-content .result-card .rc-body strong {
+            color: #b8a0f0;
+            font-size: 18px;
+        }
+
+        /* ---- divider ---- */
+        .article-content .section-divider {
+            margin: 32px 0;
+            border: none;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.15), transparent);
+        }
+
+        /* ---- responsive ---- */
+        @media (max-width: 768px) {
+            .blog-detail { padding: 0 16px; }
+            .article-header .article-title { font-size: 24px; }
+            .article-content h2 { font-size: 19px; }
+            .article-content p { font-size: 14.5px; }
+        }
+        @media (max-width: 480px) {
+            .blog-detail { padding: 0 12px; }
+            .article-header .article-title { font-size: 20px; }
+            .article-header .article-meta { flex-direction: column; gap: 8px; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- Article Detail -->
+    <div class="blog-detail">
+
+        <!-- ← back -->
+        <a href="./blog.html" class="back-link">
+            <svg viewBox="0 0 16 16"><path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z"/></svg>
+            返回博客
+        </a>
+
+        <!-- Article Header -->
+        <div class="article-header">
+            <h1 class="article-title">
+                嵌入式低功耗优化实战：<span class="accent">腕表续航提升 200%</span>
+            </h1>
+            <div class="article-meta">
+                <span class="meta-item">📅 2026-05-10</span>
+                <span class="meta-item">|</span>
+                <span class="meta-item">
+                    <span class="tag">嵌入式</span>
+                </span>
+                <span class="meta-item">📖 约 2800 字</span>
+            </div>
+        </div>
+
+        <!-- Article Content -->
+        <div class="article-content">
+
+            <h2>项目背景</h2>
+            <p>
+                2025 年下半年，团队接手了某科技大学委托的腕表运动数据采集终端项目。设备需要实时采集佩戴者的心率、步数、加速度、GPS 轨迹等运动数据，并通过 400M 射频模块将数据上报至基站。项目初期原型机续航仅约 8 小时，远远无法满足终端用户连续使用一周以上的核心需求。
+            </p>
+            <p>
+                虽然功能验证全部通过，但产品经理在体验评审会上直言——<strong>"一个需要每天充电的腕表，在市场上没有任何竞争力。"</strong>于是，低功耗优化成为了项目从原型迈向量产的生死战。
+            </p>
+            <p>
+                在接下来的两个月里，团队从系统级层面展开全面的功耗分析与优化。本文将详细记录我们遇到的问题、排查方法以及最终的解决方案，希望能为同样从事嵌入式低功耗开发的同行提供一些参考。
+            </p>
+
+            <hr class="section-divider">
+
+            <h2>功耗分析</h2>
+            <p>
+                优化的第一步是量化。只有在每个模块、每种工作模式下精确测得功耗数据，才能有的放矢地进行优化。
+            </p>
+            <p>
+                我们使用了以下工具进行测量：<strong>Keysight 数字万用表</strong>（串联供电回路测量平均电流）、<strong>Rigol 数字示波器</strong>（配合电流探头捕捉瞬态尖峰）、<strong>Joulescope 精密功耗分析仪</strong>（长时间连续记录功耗曲线）。同时，我们为各模块分别设计了独立的供电使能引脚，以便分段测量。
+            </p>
+
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>模块</th>
+                        <th>工作模式</th>
+                        <th>电流 (mA)</th>
+                        <th>占比</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MCU (STM32U5)</td>
+                        <td>运行 @ 80MHz</td>
+                        <td>12.5</td>
+                        <td>8%</td>
+                    </tr>
+                    <tr>
+                        <td>400M 射频 (LoRa)</td>
+                        <td>发送 @ +20dBm</td>
+                        <td>95.0</td>
+                        <td>60%</td>
+                    </tr>
+                    <tr>
+                        <td>400M 射频 (LoRa)</td>
+                        <td>接收监听</td>
+                        <td>12.0</td>
+                        <td>8%</td>
+                    </tr>
+                    <tr>
+                        <td>GPS (Quectel L76K)</td>
+                        <td>定位</td>
+                        <td>22.0</td>
+                        <td>14%</td>
+                    </tr>
+                    <tr>
+                        <td>心率传感器</td>
+                        <td>连续采样</td>
+                        <td>8.5</td>
+                        <td>5%</td>
+                    </tr>
+                    <tr>
+                        <td>加速度计</td>
+                        <td>低功耗模式</td>
+                        <td>0.6</td>
+                        <td>&lt;1%</td>
+                    </tr>
+                    <tr>
+                        <td>OLED 屏幕</td>
+                        <td>亮屏</td>
+                        <td>2.0</td>
+                        <td>1%</td>
+                    </tr>
+                    <tr>
+                        <td>其他 (漏电 + 静态)</td>
+                        <td>—</td>
+                        <td>7.4</td>
+                        <td>5%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p>
+                从上表可以清晰地看到：<strong>400M 射频模块是最大的功耗黑洞</strong>，占比超过 68%。其次是 GPS 模块的定位过程，占 14%。令人意外的是，我们还测到了一个约 7.4 mA 的"幽灵电流"——在设备应处于关机状态时，供电回路上依然存在明显的漏电。
+            </p>
+
+            <div class="callout">
+                <strong>💡 关键发现：</strong>射频发射功耗占比超过 60%，是优化的首要目标。同时，关机状态下 7.4 mA 的漏电流意味着电路设计存在底层缺陷。
+            </div>
+
+            <hr class="section-divider">
+
+            <h2>优化措施</h2>
+
+            <h3>1. 400M 射频低功耗模式</h3>
+            <p>
+                原始方案中，射频模块每次发送数据都采用 +20dBm 最大功率，且发送完成后模块仍处于"待机"状态（RX 监听），并未真正进入休眠。我们对射频驱动进行了以下改造：
+            </p>
+            <ul>
+                <li><strong>动态功率调节：</strong>根据基站 RSSI 反馈自动调整发射功率。近距离（&lt;100m）降至 +7dBm，中距离（100-500m）使用 +14dBm，远距离（&gt;500m）才启用 +20dBm。实测 80% 的场景下仅需 +7dBm 即可可靠通信。</li>
+                <li><strong>发送即休眠：</strong>数据发送完成后立即将射频模块切换至 <strong>Sleep 模式</strong>（电流 &lt;1 µA），由 MCU 的 RTC 定时唤醒。将每次发射的后续监听等待交给基站侧做重传机制。</li>
+                <li><strong>数据聚合发送：</strong>将原本 1 分钟一次的小包上报改为 5 分钟一次的数据聚合上报，每次发送的数据量增加但发送次数减少为原来的 1/5。</li>
+            </ul>
+            <p>
+                优化后，射频模块日均耗电从 95 mA × 高频次发送降低到等效平均电流约 <strong>4.2 mA</strong>，降幅超过 95%。
+            </p>
+
+            <h3>2. 深度休眠逻辑优化</h3>
+            <p>
+                原始 MCU 固件使用 <strong>Stop 2 模式</strong>（保留 SRAM），唤醒源为 RTC 定时中断。理论功耗应为几个 µA，实测却高达 380 µA——偏差超过两个数量级。
+            </p>
+            <p>
+                排查过程颇为曲折。通过逐项关闭外设时钟并测量休眠电流，最终定位到问题：
+            </p>
+            <ul>
+                <li><strong>GPIO 浮空漏电：</strong>板上有 3 个未使用的 GPIO 引脚没有配置上下拉，导致在休眠状态下引脚电平不稳定，IO 口内部电路产生漏电通道。</li>
+                <li><strong>未关闭的外设时钟：</strong>SPI2 和 UART4 的外设时钟虽然在应用中未使用，但在初始化代码中被使能后忘记关闭，导致休眠时对应外设区域仍在消耗静态功耗。</li>
+                <li><strong>LDO 模式选择：</strong>在 Stop 模式下，默认的 LDO 供电模式功耗较高，切换到 <strong>SMPS (Switched Mode Power Supply)</strong> 模式后休眠电流进一步降低。</li>
+            </ul>
+            <p>
+                修复后 MCU 深度休眠电流从 380 µA 降至 <strong>5.2 µA</strong>。
+            </p>
+
+            <h3>3. 关机功耗问题修复</h3>
+            <p>
+                这是本次优化中最隐蔽的一个问题。设备在"关机"状态下仍然消耗约 7.4 mA 的电流，这意味着用户即使关闭了设备，电池也会在几天内耗光。
+            </p>
+            <p>
+                排查过程使用了热成像仪和逐段电压测量法。最终发现罪魁祸首是<strong>电源管理芯片的使能引脚</strong>——MCU 的 GPIO 在关机状态下输出高电平，导致 PMIC 始终处于使能状态。此外，GPS 模块的 VCC 引脚被直接连接到系统主电源轨上，没有任何负载开关控制。
+            </p>
+            <ul>
+                <li>增加 <strong>MOSFET 负载开关</strong>控制 PMIC 使能引脚，关机时 GPIO 输出低电平彻底断开供电。</li>
+                <li>为 GPS 模块增加独立的 <strong>P-MOS 开关</strong>，仅在需要定位时供电。</li>
+                <li>重新设计关机流程：按下关机键 → 保存关键数据到 Flash → 关闭所有外设 → 关闭 PMIC 使能 → MCU 进入 Standby 模式。</li>
+            </ul>
+            <p>
+                修复后关机电流从 7.4 mA 降至 <strong>0.8 µA</strong>，几乎为零。
+            </p>
+
+            <h3>4. 运动定位倒计时漏电</h3>
+            <p>
+                在运动模式下，系统需要在定位前（冷启动 GPS）等待约 30 秒的"倒计时"阶段。原始设计中，这 30 秒内所有模块全速运行等待 GPS 定位完成，造成了显著的浪费。
+            </p>
+            <ul>
+                <li><strong>分阶段供电：</strong>倒计时前 25 秒仅给 MCU 和加速度计供电，GPS 模块保持断电。最后 5 秒才给 GPS 上电并启动定位。</li>
+                <li><strong>减少定位次数：</strong>运动定位从"每 30 秒定位一次"改为"检测到运动状态变化时定位一次"，静止时段不再重复定位。</li>
+                <li><strong>辅助 GPS (AGPS)：</strong>使用基站预下发星历数据，将 GPS 冷启动时间从 30 秒缩短至 8 秒。</li>
+            </ul>
+            <p>
+                优化后运动模式定位功耗降低了约 65%。
+            </p>
+
+            <hr class="section-divider">
+
+            <h2>电量显示重构</h2>
+            <p>
+                在续航优化的过程中，我们发现另一个严重影响用户体验的问题：<strong>电量显示不准</strong>。用户反馈经常出现"还有 60% 电突然关机"或"显示 20% 却还能用一整天"的情况。
+            </p>
+            <p>
+                初始方案使用简单的 ADC 采集电池电压，再查表映射到百分比。但锂电池的放电曲线并非线性，且在不同负载电流下的端电压差异很大。我们做了以下改进：
+            </p>
+            <ul>
+                <li><strong>OCV 查表法：</strong>在空载条件下测量电池开路电压 (OCV)，配合电池厂商提供的 0.1C 放电曲线建立电压-容量映射表，精度提升至 ±5%。</li>
+                <li><strong>库仑计集成：</strong>在 PCB 改版时增加 TI BQ27426 库仑计芯片，实时累计充放电电荷。结合 OCV 矫正，电量显示精度提高到 <strong>±2%</strong>。</li>
+                <li><strong>动态补偿：</strong>在不同负载电流下对电压采样值进行 IR Drop 补偿，消除大电流放电时电压陡降导致的误判。</li>
+                <li><strong>低电量策略：</strong>当显示低于 15% 时触发精确测量模式（关闭非必要负载后测量 OCV），并在 5% 时强制进入深度休眠保护电池免于过放。</li>
+            </ul>
+            <p>
+                重构后的电量显示得到了用户的一致好评，再也没有出现"突然关机"的投诉。
+            </p>
+
+            <hr class="section-divider">
+
+            <h2>效果</h2>
+
+            <div class="result-card">
+                <div class="rc-title">🏆 优化成果汇总</div>
+                <div class="rc-body">
+                    <p>经过两轮优化迭代，最终实现的成果：</p>
+                    <ul>
+                        <li><strong>续航时间：</strong>8 小时 → <strong>26 小时</strong>（连续运动模式），日常待机可达 <strong>5-7 天</strong>，提升幅度超过 <strong>200%</strong></li>
+                        <li><strong>关机电流：</strong>7.4 mA → <strong>0.8 µA</strong>，降低 99.99%</li>
+                        <li><strong>休眠电流：</strong>380 µA → <strong>5.2 µA</strong>，降低 98.6%</li>
+                        <li><strong>电量显示精度：</strong>±20% → <strong>±2%</strong>，提升 10 倍</li>
+                        <li><strong>重量/体积：</strong>电池容量未增加，优化完全来自软件和电路设计改进</li>
+                    </ul>
+                    <p><strong>项目于 2026 年 3 月顺利通过验收并进入量产阶段。</strong></p>
+                </div>
+            </div>
+
+            <p>
+                从用户反馈来看，续航的提升直接改变了用户的使用习惯——以前需要每天充电，现在一周充一次即可。产品在众测中获得了 4.8/5.0 的高分评价。团队在复盘会上总结道：低功耗不是"做完功能后调个参数"，而应该从需求阶段就作为核心约束条件参与架构设计。
+            </p>
+
+            <hr class="section-divider">
+
+            <h2>总结</h2>
+            <p>
+                回顾这次低功耗优化实战，最深刻的体会是：<strong>低功耗设计需要从系统层面全面考虑</strong>，而不是孤立地优化某个模块。
+            </p>
+            <p>
+                具体而言，我们总结了以下几点经验：
+            </p>
+            <ul>
+                <li><strong>量化先行：</strong>没有精确的功耗数据，优化就是盲人摸象。建议在硬件设计阶段就预留测试点，方便后期做模块级功耗测量。</li>
+                <li><strong>关注休眠和关机：</strong>很多团队把精力集中在运行功耗优化上，但实际产品 90% 的时间都处于休眠或关机状态。这几个状态的功耗优化往往事半功倍。</li>
+                <li><strong>射频是重点：</strong>在无线产品中，射频模块通常占据功耗的 50% 以上。动态功率调节、数据聚合、发送即休眠是最有效的三板斧。</li>
+                <li><strong>电路设计细节决定成败：</strong>GPIO 浮空、未关闭的外设时钟、电源管理使能逻辑——这些看似微小的细节累积起来可能吃掉几十 mA 的电流。</li>
+                <li><strong>用户体验闭环：</strong>省电不仅是技术指标，最终要落到电量显示的准确性上。一个不准的电量进度条会让所有省电努力白费。</li>
+            </ul>
+
+            <div class="callout">
+                <strong>📌 写在最后：</strong>低功耗优化是一个永无止境的过程。即使在量产阶段，我们仍在通过 OTA 固件更新持续优化。如果你也有低功耗优化方面的经验或困惑，欢迎通过博客评论区或 GitHub 讨论区交流。
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

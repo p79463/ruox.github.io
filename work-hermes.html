@@ -16,7 +16,7 @@
         }
 
         .detail-page {
-            max-width: 820px;
+            max-width: 960px;
             margin: 40px auto 60px;
             padding: 0 24px;
             position: relative;
@@ -38,21 +38,26 @@
         .back-link:hover { color: #7c6cf0; }
         .back-link svg { width: 16px; height: 16px; fill: currentColor; }
 
-        /* hero */
+        /* ===== Hero ===== */
         .detail-hero {
             margin-bottom: 48px;
         }
         .detail-hero .project-title {
-            font-size: 32px;
+            font-size: 38px;
             font-weight: 700;
             color: #f0f0f8;
-            margin: 0 0 6px;
-            line-height: 1.3;
+            margin: 0 0 8px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #f0f0f8 0%, #a89aff 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         .detail-hero .project-sub {
-            font-size: 15px;
+            font-size: 16px;
             color: #8888aa;
-            margin: 0 0 20px;
+            margin: 0 0 24px;
+            max-width: 560px;
         }
         .detail-hero .tech-stack {
             display: flex;
@@ -70,22 +75,59 @@
             letter-spacing: 0.3px;
         }
 
-        /* sections */
-        .detail-section {
-            margin-bottom: 40px;
+        /* ===== Data Cards ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 48px;
         }
-        .detail-section h2 {
+        .data-card {
+            background: rgba(124, 108, 240, 0.06);
+            border: 1px solid rgba(124, 108, 240, 0.12);
+            border-radius: 14px;
+            padding: 24px 18px;
+            text-align: center;
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
+        }
+        .data-card:hover {
+            border-color: rgba(124, 108, 240, 0.4);
+            background: rgba(124, 108, 240, 0.1);
+            transform: translateY(-2px);
+        }
+        .data-card .data-value {
+            font-size: 30px;
+            font-weight: 700;
+            color: #a89aff;
+            margin-bottom: 6px;
+            line-height: 1.2;
+        }
+        .data-card .data-value .highlight-num {
+            font-size: 40px;
+            color: #7c6cf0;
+        }
+        .data-card .data-label {
+            font-size: 14px;
+            color: #b0b0cc;
+            line-height: 1.5;
+        }
+
+        /* ===== Architecture Diagram ===== */
+        .arch-section {
+            margin-bottom: 48px;
+        }
+        .arch-section h2 {
             font-size: 20px;
             font-weight: 600;
             color: #d0d0e8;
-            margin: 0 0 16px;
+            margin: 0 0 20px;
             padding-bottom: 8px;
             border-bottom: 1px solid rgba(124, 108, 240, 0.15);
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .detail-section h2 .sec-icon {
+        .arch-section h2 .sec-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -95,76 +137,368 @@
             border-radius: 6px;
             font-size: 15px;
         }
-        .detail-section p {
-            font-size: 15px;
-            color: #c8c8dd;
-            margin: 0 0 12px;
-            line-height: 1.8;
+        .arch-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            padding: 30px 20px;
+            background: rgba(124, 108, 240, 0.04);
+            border: 1px solid rgba(124, 108, 240, 0.1);
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
         }
-        .detail-section ul {
+        .arch-diagram::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7c6cf0, transparent);
+            opacity: 0.5;
+        }
+        .arch-node {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(124, 108, 240, 0.1);
+            border: 1px solid rgba(124, 108, 240, 0.25);
+            border-radius: 10px;
+            padding: 12px 22px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #d0d0e8;
+            position: relative;
+            z-index: 1;
+        }
+        .arch-node.primary {
+            background: rgba(124, 108, 240, 0.18);
+            border-color: rgba(124, 108, 240, 0.4);
+            color: #f0f0f8;
+        }
+        .arch-node .node-icon {
+            font-size: 18px;
+        }
+        .arch-arrow-down {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #7c6cf0;
+            font-size: 22px;
+            line-height: 1;
+            padding: 4px 0;
+            opacity: 0.7;
+            position: relative;
+            z-index: 1;
+        }
+        .arch-children {
+            display: flex;
+            gap: 40px;
+            margin-top: 0;
+            position: relative;
+            z-index: 1;
+        }
+        .arch-child-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .arch-child-group .arch-node {
+            font-size: 13px;
+            padding: 8px 16px;
+        }
+        .arch-child-group .arch-label {
+            font-size: 12px;
+            color: #8888aa;
+        }
+        .arch-bridge {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-top: 16px;
+            padding: 10px 24px;
+            background: rgba(124, 108, 240, 0.05);
+            border: 1px dashed rgba(124, 108, 240, 0.2);
+            border-radius: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        .arch-bridge .bridge-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #b0b0cc;
+        }
+        .arch-bridge .bridge-item .bridge-icon {
+            color: #7c6cf0;
+        }
+        .arch-bridge .bridge-divider {
+            width: 1px;
+            height: 24px;
+            background: rgba(124, 108, 240, 0.2);
+        }
+        .arch-cap {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: #8888aa;
+            position: relative;
+            z-index: 1;
+        }
+        .arch-cap .cap-line {
+            flex: 1;
+            height: 1px;
+            background: rgba(124, 108, 240, 0.15);
+            max-width: 60px;
+        }
+
+        /* ===== Two Column Responsibilities ===== */
+        .resp-section {
+            margin-bottom: 48px;
+        }
+        .resp-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #d0d0e8;
+            margin: 0 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(124, 108, 240, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .resp-section h2 .sec-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: rgba(124, 108, 240, 0.12);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .resp-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .resp-col {
+            background: rgba(124, 108, 240, 0.04);
+            border: 1px solid rgba(124, 108, 240, 0.1);
+            border-radius: 14px;
+            padding: 20px 22px;
+        }
+        .resp-col h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #a89aff;
+            margin: 0 0 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .resp-col ul {
             list-style: none;
             padding: 0;
             margin: 0;
         }
-        .detail-section ul li {
+        .resp-col ul li {
             position: relative;
-            padding: 10px 0 10px 24px;
-            font-size: 14.5px;
+            padding: 8px 0 8px 20px;
+            font-size: 14px;
             color: #c8c8dd;
             line-height: 1.7;
-            border-bottom: 1px solid rgba(255,255,255,0.04);
+            border-bottom: 1px solid rgba(255,255,255,0.03);
         }
-        .detail-section ul li:last-child { border-bottom: none; }
-        .detail-section ul li::before {
+        .resp-col ul li:last-child { border-bottom: none; }
+        .resp-col ul li::before {
             content: '';
             position: absolute;
-            left: 4px;
-            top: 18px;
+            left: 2px;
+            top: 16px;
             width: 6px;
             height: 6px;
             border-radius: 50%;
             background: #7c6cf0;
-            opacity: 0.6;
+            opacity: 0.5;
         }
-        .detail-section ul li strong {
+        .resp-col ul li strong {
             color: #c0b8f8;
             font-weight: 600;
         }
 
-        /* outcome cards */
-        .outcome-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-            margin-top: 8px;
+        /* ===== Tech Stack Grid ===== */
+        .tech-section {
+            margin-bottom: 48px;
         }
-        .outcome-card {
-            background: rgba(124, 108, 240, 0.06);
-            border: 1px solid rgba(124, 108, 240, 0.1);
-            border-radius: 12px;
-            padding: 20px 18px;
+        .tech-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #d0d0e8;
+            margin: 0 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(124, 108, 240, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .tech-section h2 .sec-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: rgba(124, 108, 240, 0.12);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+        }
+        .tech-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(124, 108, 240, 0.05);
+            border: 1px solid rgba(124, 108, 240, 0.08);
+            border-radius: 10px;
+            padding: 12px 14px;
             transition: border-color 0.25s, background 0.25s;
         }
-        .outcome-card:hover {
-            border-color: rgba(124, 108, 240, 0.3);
-            background: rgba(124, 108, 240, 0.09);
+        .tech-item:hover {
+            border-color: rgba(124, 108, 240, 0.25);
+            background: rgba(124, 108, 240, 0.08);
         }
-        .outcome-card .num {
-            font-size: 28px;
-            font-weight: 700;
-            color: #7c6cf0;
-            margin-bottom: 6px;
-            line-height: 1;
+        .tech-item .tech-icon {
+            font-size: 20px;
+            flex-shrink: 0;
         }
-        .outcome-card .label {
-            font-size: 14px;
-            color: #b0b0cc;
-            line-height: 1.5;
+        .tech-item .tech-info {
+            display: flex;
+            flex-direction: column;
+        }
+        .tech-item .tech-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d0d0e8;
+        }
+        .tech-item .tech-desc {
+            font-size: 11px;
+            color: #8888aa;
         }
 
-        @media (max-width: 640px) {
-            .outcome-grid { grid-template-columns: 1fr; }
-            .detail-hero .project-title { font-size: 26px; }
+        /* ===== Results ===== */
+        .result-section {
+            margin-bottom: 48px;
+        }
+        .result-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #d0d0e8;
+            margin: 0 0 20px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(124, 108, 240, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-section h2 .sec-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: rgba(124, 108, 240, 0.12);
+            border-radius: 6px;
+            font-size: 15px;
+        }
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .result-card {
+            background: rgba(124, 108, 240, 0.05);
+            border: 1px solid rgba(124, 108, 240, 0.1);
+            border-radius: 12px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            transition: border-color 0.25s, background 0.25s;
+        }
+        .result-card:hover {
+            border-color: rgba(124, 108, 240, 0.3);
+            background: rgba(124, 108, 240, 0.08);
+        }
+        .result-card .result-num {
+            font-size: 24px;
+            font-weight: 700;
+            color: #7c6cf0;
+            line-height: 1;
+            flex-shrink: 0;
+            min-width: 32px;
+        }
+        .result-card .result-text {
+            font-size: 14px;
+            color: #c8c8dd;
+            line-height: 1.7;
+        }
+        .result-card .result-text strong {
+            color: #c0b8f8;
+        }
+
+        /* ===== GitHub Button ===== */
+        .github-area {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 32px;
+        }
+        .github-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(124, 108, 240, 0.1);
+            border: 1px solid rgba(124, 108, 240, 0.25);
+            border-radius: 10px;
+            padding: 12px 28px;
+            color: #d0d0e8;
+            font-size: 15px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.25s, border-color 0.25s, transform 0.2s;
+        }
+        .github-btn:hover {
+            background: rgba(124, 108, 240, 0.2);
+            border-color: rgba(124, 108, 240, 0.5);
+            transform: translateY(-1px);
+        }
+        .github-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 768px) {
+            .data-grid { grid-template-columns: repeat(2, 1fr); }
+            .resp-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .result-grid { grid-template-columns: 1fr; }
+            .arch-children { flex-direction: column; gap: 12px; align-items: center; }
+            .arch-bridge { flex-direction: column; gap: 8px; }
+            .arch-bridge .bridge-divider { width: 40px; height: 1px; }
+            .detail-hero .project-title { font-size: 28px; }
+        }
+        @media (max-width: 480px) {
+            .data-grid { grid-template-columns: 1fr; }
+            .tech-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -204,7 +538,7 @@
         <!-- Hero -->
         <div class="detail-hero">
             <h1 class="project-title">Hermes Agent 多智能体系统</h1>
-            <p class="project-sub">基于开源 AI Agent 框架，搭建实际可用的多智能体协作系统</p>
+            <p class="project-sub">基于开源 AI Agent 框架，搭建实际可用的多智能体协作系统 — 主调度器与多个编码子 Agent 协同，通过 MCP 协议扩展工具链</p>
             <div class="tech-stack">
                 <span class="tag">Hermes Agent</span>
                 <span class="tag">MCP</span>
@@ -212,50 +546,227 @@
                 <span class="tag">Codex</span>
                 <span class="tag">Claude Code</span>
                 <span class="tag">FastAPI</span>
+                <span class="tag">Docker</span>
+                <span class="tag">Telegram Bot</span>
             </div>
         </div>
 
-        <!-- 项目描述 -->
-        <div class="detail-section">
-            <h2><span class="sec-icon">📋</span> 项目概述</h2>
-            <p>
-                基于开源 AI Agent 框架 <strong>Hermes Agent</strong>，搭建实际可用的多智能体协作系统。
-                涵盖 Agent Loop 配置调优、多 Agent 任务编排、Tool Calling 机制、MCP 服务扩展、
-                跨平台网关部署、定时任务调度与自动化工作流。
-            </p>
+        <!-- Data Cards -->
+        <div class="data-grid">
+            <div class="data-card">
+                <div class="data-value"><span class="highlight-num">40%</span> 提效</div>
+                <div class="data-label">AI Coding Agent 辅助开发带来的效率提升</div>
+            </div>
+            <div class="data-card">
+                <div class="data-value">多 Agent<br>协作</div>
+                <div class="data-label">主调度器 + 编码子 Agent 分工协作</div>
+            </div>
+            <div class="data-card">
+                <div class="data-value">MCP<br>扩展</div>
+                <div class="data-label">标准化工具接入协议，无缝集成外部工具链</div>
+            </div>
+            <div class="data-card">
+                <div class="data-value">跨平台<br>部署</div>
+                <div class="data-label">Telegram / 终端多渠道 AI 访问入口</div>
+            </div>
         </div>
 
-        <!-- 项目职责 -->
-        <div class="detail-section">
+        <!-- System Architecture -->
+        <div class="arch-section">
+            <h2><span class="sec-icon">🔧</span> 系统架构</h2>
+            <div class="arch-diagram">
+                <!-- Top: Hermes Agent -->
+                <div class="arch-node primary">
+                    <span class="node-icon">🧠</span> Hermes Agent（主调度器）
+                </div>
+
+                <!-- Arrow down -->
+                <div class="arch-arrow-down">▼</div>
+
+                <!-- Children: Codex & Claude Code -->
+                <div class="arch-children">
+                    <div class="arch-child-group">
+                        <div class="arch-node">
+                            <span class="node-icon">✏️</span> Codex
+                        </div>
+                        <div class="arch-label">编码执行子 Agent</div>
+                    </div>
+                    <div class="arch-child-group">
+                        <div class="arch-node">
+                            <span class="node-icon">🤖</span> Claude Code
+                        </div>
+                        <div class="arch-label">编码执行子 Agent</div>
+                    </div>
+                </div>
+
+                <!-- MCP Bridge -->
+                <div class="arch-bridge">
+                    <div class="bridge-item">
+                        <span class="bridge-icon">🔌</span> MCP Server
+                    </div>
+                    <div class="bridge-divider"></div>
+                    <div class="bridge-item">
+                        <span class="bridge-icon">🔗</span> MCP Client
+                    </div>
+                    <div class="bridge-divider"></div>
+                    <div class="bridge-item">
+                        <span class="bridge-icon">🧩</span> 外部工具链
+                    </div>
+                </div>
+
+                <div class="arch-cap">
+                    <span class="cap-line"></span>
+                    <span>Skill 机制 · Cron 调度 · Webhook 事件驱动 · 跨平台网关</span>
+                    <span class="cap-line"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Responsibilities: Two Columns -->
+        <div class="resp-section">
             <h2><span class="sec-icon">⚡</span> 项目职责</h2>
-            <ul>
-                <li>配置并调优 <strong>Hermes Agent</strong> 框架核心参数，包括 Tool Calling、Context Compression、Reasoning Effort 等工作参数</li>
-                <li>搭建 <strong>MCP Server/Client</strong>，集成外部工具链到 Agent 生态，实现标准化工具接入协议</li>
-                <li>实践多 Agent 协作模式：<strong>Hermes Agent</strong> 作为主调度器，<strong>Codex / Claude Code</strong> 作为编码执行子 Agent</li>
-                <li>通过 <strong>Skill 机制</strong> 沉淀可复用的过程知识，实现 Agent 自学习能力</li>
-                <li>配置 <strong>Cron 定时任务</strong> 调度，实现 Webhook 事件驱动的自动化工作流</li>
-                <li>部署跨平台网关（<strong>Telegram / 终端</strong>），实现多渠道 AI 助手访问入口</li>
-                <li>使用 <strong>AI Coding Agent</strong> 辅助开发与调试，提效约 <strong>40%</strong></li>
-            </ul>
-        </div>
-
-        <!-- 项目成果 -->
-        <div class="detail-section">
-            <h2><span class="sec-icon">🏆</span> 项目成果</h2>
-            <div class="outcome-grid">
-                <div class="outcome-card">
-                    <div class="num">01</div>
-                    <div class="label">深入理解主流 AI Agent 框架的架构设计与最佳实践</div>
+            <div class="resp-grid">
+                <div class="resp-col">
+                    <h3>🧩 Agent 框架</h3>
+                    <ul>
+                        <li>配置并调优 <strong>Hermes Agent</strong> 框架核心参数，包括 Tool Calling、Context Compression、Reasoning Effort 等工作参数</li>
+                        <li>实践多 Agent 协作模式：<strong>Hermes Agent</strong> 作为主调度器，<strong>Codex / Claude Code</strong> 作为编码执行子 Agent</li>
+                        <li>通过 <strong>Skill 机制</strong> 沉淀可复用的过程知识，实现 Agent 自学习能力</li>
+                        <li>配置 <strong>Cron 定时任务</strong> 调度，实现 Webhook 事件驱动的自动化工作流</li>
+                    </ul>
                 </div>
-                <div class="outcome-card">
-                    <div class="num">02</div>
-                    <div class="label">掌握 MCP 协议落地实践，具备 Agent 工具链标准化扩展能力</div>
-                </div>
-                <div class="outcome-card">
-                    <div class="num">03</div>
-                    <div class="label">积累了 AI Coding Agent 辅助开发的实战方法论</div>
+                <div class="resp-col">
+                    <h3>🔧 工具链</h3>
+                    <ul>
+                        <li>搭建 <strong>MCP Server/Client</strong>，集成外部工具链到 Agent 生态，实现标准化工具接入协议</li>
+                        <li>部署跨平台网关（<strong>Telegram / 终端</strong>），实现多渠道 AI 助手访问入口</li>
+                        <li>使用 <strong>AI Coding Agent</strong> 辅助开发与调试，提效约 <strong>40%</strong></li>
+                        <li>基于 <strong>FastAPI</strong> 构建 RESTful API 网关层，统一管理 Agent 服务</li>
+                    </ul>
                 </div>
             </div>
+        </div>
+
+        <!-- Tech Stack Grid -->
+        <div class="tech-section">
+            <h2><span class="sec-icon">📦</span> 技术栈</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <span class="tech-icon">🧠</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Hermes Agent</span>
+                        <span class="tech-desc">AI Agent 框架</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🔌</span>
+                    <div class="tech-info">
+                        <span class="tech-name">MCP</span>
+                        <span class="tech-desc">模型上下文协议</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🤝</span>
+                    <div class="tech-info">
+                        <span class="tech-name">CrewAI</span>
+                        <span class="tech-desc">多 Agent 编排</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">✏️</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Codex</span>
+                        <span class="tech-desc">编码 Agent</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🤖</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Claude Code</span>
+                        <span class="tech-desc">编码 Agent</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">⚡</span>
+                    <div class="tech-info">
+                        <span class="tech-name">FastAPI</span>
+                        <span class="tech-desc">API 网关层</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🐳</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Docker</span>
+                        <span class="tech-desc">容器化部署</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">📱</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Telegram Bot</span>
+                        <span class="tech-desc">跨平台接入</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">📜</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Python</span>
+                        <span class="tech-desc">核心开发语言</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">🔄</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Webhook</span>
+                        <span class="tech-desc">事件驱动</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">⏰</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Cron</span>
+                        <span class="tech-desc">定时任务</span>
+                    </div>
+                </div>
+                <div class="tech-item">
+                    <span class="tech-icon">📘</span>
+                    <div class="tech-info">
+                        <span class="tech-name">Skill 机制</span>
+                        <span class="tech-desc">知识沉淀复用</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results -->
+        <div class="result-section">
+            <h2><span class="sec-icon">🏆</span> 项目成果</h2>
+            <div class="result-grid">
+                <div class="result-card">
+                    <div class="result-num">01</div>
+                    <div class="result-text">深入理解主流 <strong>AI Agent 框架</strong> 的架构设计与最佳实践，掌握多 Agent 协作的编排模式</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-num">02</div>
+                    <div class="result-text">掌握 <strong>MCP 协议</strong> 落地实践，具备 Agent 工具链标准化扩展能力</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-num">03</div>
+                    <div class="result-text">搭建完整的 <strong>跨平台 Agent 服务</strong>，覆盖 Telegram / 终端多渠道入口</div>
+                </div>
+                <div class="result-card">
+                    <div class="result-num">04</div>
+                    <div class="result-text">积累了 <strong>AI Coding Agent</strong> 辅助开发的实战方法论，开发提效约 <strong>40%</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- GitHub Button -->
+        <div class="github-area">
+            <a href="https://github.com/p79463/hermes-agent" target="_blank" class="github-btn">
+                <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                查看 GitHub 仓库
+            </a>
         </div>
     </div>
 

@@ -7,151 +7,471 @@
     <link rel="stylesheet" href="./css/style.min.css">
     <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
     <style>
-        /* ---- work-detail layout ---- */
+        /* ============================================================
+           work-detail – AI 私人助理系统
+           color: cyan #5ec8e3 / #3aa8d0
+           ============================================================ */
+        body {
+            background: #0a0a0f;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.7;
+        }
+
+        /* ---- layout ---- */
         .work-detail {
-            max-width: 900px;
+            max-width: 860px;
             margin: 40px auto 60px;
             padding: 0 24px;
+            position: relative;
+            z-index: 1;
         }
-        .work-detail .back-link {
+
+        /* ---- back link ---- */
+        .back-link {
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            color: #8b8ba7;
+            color: #8888aa;
             font-size: 14px;
             text-decoration: none;
-            transition: color 0.2s;
             margin-bottom: 32px;
+            transition: color 0.25s, transform 0.2s;
+            cursor: pointer;
         }
-        .work-detail .back-link:hover {
-            color: #E8E8F6;
+        .back-link:hover {
+            color: #5ec8e3;
+            transform: translateX(-2px);
         }
-        .work-detail-header {
-            margin-bottom: 40px;
+        .back-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
         }
-        .work-detail-header h1 {
-            font-size: 32px;
+
+        /* ============================================================
+           work-hero
+           ============================================================ */
+        .work-hero {
+            margin-bottom: 48px;
+        }
+        .work-hero .hero-title {
+            font-size: 34px;
             font-weight: 700;
-            color: #E8E8F6;
-            margin-bottom: 8px;
+            color: #f0f0f8;
+            margin: 0 0 8px;
+            line-height: 1.25;
         }
-        .work-detail-header .tag-row {
+        .work-hero .hero-title .accent {
+            background: linear-gradient(135deg, #5ec8e3, #3aa8d0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .work-hero .hero-sub {
+            font-size: 15px;
+            color: #8888aa;
+            margin: 0 0 24px;
+            line-height: 1.6;
+            max-width: 640px;
+        }
+        .work-hero .hero-tags {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 16px;
         }
-        .work-detail-header .tag-row .tag {
+        .work-hero .hero-tags .tag {
             display: inline-block;
-            padding: 2px 12px;
+            padding: 3px 14px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 12px;
             font-weight: 500;
-            letter-spacing: 0.5px;
-            background: rgba(120, 120, 160, 0.15);
-            color: #b0b0cc;
-            border: 1px solid rgba(120, 120, 160, 0.2);
+            letter-spacing: 0.4px;
+            background: rgba(94, 200, 227, 0.1);
+            color: #7ec8e3;
+            border: 1px solid rgba(94, 200, 227, 0.2);
         }
-        .work-detail-header .tech-stack {
+        .work-hero .hero-tech {
             display: flex;
             flex-wrap: wrap;
             gap: 8px;
-            margin-top: 12px;
         }
-        .work-detail-header .tech-stack .tech-badge {
+        .work-hero .hero-tech .badge {
             display: inline-block;
             padding: 4px 14px;
             border-radius: 6px;
             font-size: 12px;
             font-weight: 500;
-            background: rgba(100, 200, 255, 0.08);
-            color: #7ec8e3;
-            border: 1px solid rgba(100, 200, 255, 0.18);
+            background: rgba(94, 200, 227, 0.07);
+            color: #6ec8e3;
+            border: 1px solid rgba(94, 200, 227, 0.14);
+            transition: background 0.2s, border-color 0.2s;
         }
-        .work-detail-body {
-            display: flex;
-            flex-direction: column;
-            gap: 36px;
+        .work-hero .hero-tech .badge:hover {
+            background: rgba(94, 200, 227, 0.14);
+            border-color: rgba(94, 200, 227, 0.3);
         }
-        .work-section {
+
+        /* ============================================================
+           work-stats
+           ============================================================ */
+        .work-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin-bottom: 44px;
+        }
+        .stat-card {
             background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(94, 200, 227, 0.08);
             border-radius: 12px;
-            padding: 28px 32px;
+            padding: 22px 16px;
+            text-align: center;
+            transition: border-color 0.25s, background 0.25s, transform 0.2s;
         }
-        .work-section h2 {
+        .stat-card:hover {
+            border-color: rgba(94, 200, 227, 0.28);
+            background: rgba(94, 200, 227, 0.05);
+            transform: translateY(-3px);
+        }
+        .stat-card .stat-num {
+            font-size: 28px;
+            font-weight: 700;
+            color: #5ec8e3;
+            line-height: 1.1;
+            margin-bottom: 6px;
+        }
+        .stat-card .stat-label {
+            font-size: 13px;
+            color: #a0a0c0;
+            line-height: 1.5;
+        }
+        .stat-card .stat-icon {
             font-size: 20px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        /* ============================================================
+           work-arch  – 系统架构图
+           ============================================================ */
+        .work-arch {
+            margin-bottom: 44px;
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 32px 28px;
+        }
+        .work-arch .arch-title {
+            font-size: 18px;
             font-weight: 600;
-            color: #E8E8F6;
-            margin-bottom: 16px;
+            color: #e0e0f0;
+            margin: 0 0 24px;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .work-section h2::before {
+        .work-arch .arch-title::before {
             content: '';
             display: inline-block;
             width: 4px;
-            height: 20px;
+            height: 18px;
             border-radius: 2px;
-            background: linear-gradient(180deg, #7ec8e3, #5a7dca);
+            background: linear-gradient(180deg, #5ec8e3, #3aa8d0);
         }
-        .work-section p {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #b8b8d0;
-        }
-        .work-section ul {
-            margin: 0;
-            padding: 0;
-            list-style: none;
-        }
-        .work-section li {
-            font-size: 14px;
-            line-height: 1.7;
-            color: #c4c4dc;
-            padding: 6px 0 6px 20px;
-            position: relative;
-        }
-        .work-section li::before {
-            content: '▸';
-            position: absolute;
-            left: 0;
-            color: #7ec8e3;
-            font-size: 13px;
-        }
-        .work-section .description-text {
-            font-size: 14px;
-            line-height: 1.8;
-            color: #b8b8d0;
-        }
-        .work-tech-list {
+
+        /* flow row */
+        .arch-flow {
             display: flex;
+            align-items: center;
+            justify-content: center;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 0;
+            margin-bottom: 28px;
         }
-        .work-tech-list .item {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 6px;
+        .arch-node {
+            flex-shrink: 0;
+            background: rgba(94, 200, 227, 0.07);
+            border: 1px solid rgba(94, 200, 227, 0.16);
+            border-radius: 10px;
+            padding: 12px 18px;
+            text-align: center;
+            min-width: 90px;
+            transition: border-color 0.2s, background 0.2s;
+            cursor: default;
+        }
+        .arch-node:hover {
+            border-color: rgba(94, 200, 227, 0.4);
+            background: rgba(94, 200, 227, 0.12);
+        }
+        .arch-node .node-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: #5ec8e3;
+            line-height: 1.3;
+        }
+        .arch-node .node-sub {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 2px;
+        }
+        .arch-arrow {
+            flex-shrink: 0;
+            padding: 0 6px;
+            color: #5ec8e3;
+            font-size: 16px;
+            opacity: 0.6;
+            user-select: none;
+        }
+
+        /* peripheral components */
+        .arch-peripherals {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        .arch-peri {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed rgba(94, 200, 227, 0.12);
+            border-radius: 8px;
+            padding: 14px 12px;
+            text-align: center;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .arch-peri:hover {
+            border-color: rgba(94, 200, 227, 0.3);
+            background: rgba(94, 200, 227, 0.04);
+        }
+        .arch-peri .peri-icon {
+            font-size: 20px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        .arch-peri .peri-label {
             font-size: 12px;
             font-weight: 500;
-            background: rgba(100, 200, 255, 0.06);
-            color: #8ec8e3;
-            border: 1px solid rgba(100, 200, 255, 0.12);
+            color: #b0b0d0;
         }
-        @media screen and (max-width: 768px) {
-            .work-detail {
-                padding: 0 16px;
-                margin: 24px auto 40px;
-            }
-            .work-detail-header h1 {
-                font-size: 24px;
-            }
-            .work-section {
-                padding: 20px 18px;
-            }
+        .arch-peri .peri-sub {
+            font-size: 11px;
+            color: #7a7a9a;
+            margin-top: 2px;
+        }
+
+        /* ============================================================
+           work-grid  – 核心功能 / 技术突破 两栏
+           ============================================================ */
+        .work-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 44px;
+        }
+        .work-grid-col {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 24px 22px;
+        }
+        .work-grid-col h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e0e0f0;
+            margin: 0 0 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(94, 200, 227, 0.12);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .work-grid-col ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .work-grid-col ul li {
+            font-size: 13.5px;
+            color: #c4c4dc;
+            line-height: 1.65;
+            padding: 8px 0 8px 20px;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+        .work-grid-col ul li:last-child { border-bottom: none; }
+        .work-grid-col ul li::before {
+            content: '◆';
+            position: absolute;
+            left: 0;
+            top: 9px;
+            font-size: 8px;
+            color: #5ec8e3;
+            opacity: 0.6;
+        }
+        .work-grid-col ul li strong {
+            color: #7ec8e3;
+            font-weight: 600;
+        }
+
+        /* ============================================================
+           work-tech-grid  – 技术栈网格卡片
+           ============================================================ */
+        .work-tech-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-bottom: 44px;
+        }
+        .tech-card {
+            background: rgba(255, 255, 255, 0.015);
+            border: 1px solid rgba(94, 200, 227, 0.07);
+            border-radius: 10px;
+            padding: 18px 14px;
+            text-align: center;
+            transition: border-color 0.25s, background 0.25s, transform 0.2s;
+            cursor: default;
+        }
+        .tech-card:hover {
+            border-color: rgba(94, 200, 227, 0.3);
+            background: rgba(94, 200, 227, 0.06);
+            transform: translateY(-2px);
+        }
+        .tech-card .tc-icon {
+            font-size: 26px;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .tech-card .tc-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #d0d0e8;
+        }
+        .tech-card .tc-desc {
+            font-size: 11px;
+            color: #8888aa;
+            margin-top: 3px;
+            line-height: 1.4;
+        }
+
+        /* ============================================================
+           work-highlight  – 成果金卡
+           ============================================================ */
+        .work-highlight {
+            margin-bottom: 44px;
+        }
+        .work-highlight h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #e0e0f0;
+            margin: 0 0 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .work-highlight h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #f0c040, #d4a030);
+        }
+        .highlight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 14px;
+        }
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(240, 192, 64, 0.06), rgba(212, 160, 48, 0.02));
+            border: 1px solid rgba(240, 192, 64, 0.15);
+            border-radius: 12px;
+            padding: 22px 18px;
+            transition: border-color 0.25s, background 0.25s, transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+        .highlight-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #f0c040, transparent);
+            opacity: 0.4;
+        }
+        .highlight-card:hover {
+            border-color: rgba(240, 192, 64, 0.35);
+            background: linear-gradient(135deg, rgba(240, 192, 64, 0.10), rgba(212, 160, 48, 0.04));
+            transform: translateY(-3px);
+        }
+        .highlight-card .hl-icon {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .highlight-card .hl-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #e8d088;
+            margin-bottom: 6px;
+        }
+        .highlight-card .hl-desc {
+            font-size: 13px;
+            color: #b8b0a0;
+            line-height: 1.6;
+        }
+
+        /* ============================================================
+           work-github  – 底部按钮
+           ============================================================ */
+        .work-github {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .work-github .gh-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 32px;
+            background: rgba(94, 200, 227, 0.08);
+            border: 1px solid rgba(94, 200, 227, 0.2);
+            border-radius: 10px;
+            color: #5ec8e3;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background 0.25s, border-color 0.25s, transform 0.2s;
+        }
+        .work-github .gh-btn:hover {
+            background: rgba(94, 200, 227, 0.16);
+            border-color: rgba(94, 200, 227, 0.35);
+            transform: translateY(-2px);
+        }
+        .work-github .gh-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* ============================================================
+           responsive
+           ============================================================ */
+        @media (max-width: 768px) {
+            .work-stats { grid-template-columns: repeat(2, 1fr); }
+            .work-grid { grid-template-columns: 1fr; }
+            .work-tech-grid { grid-template-columns: repeat(2, 1fr); }
+            .highlight-grid { grid-template-columns: 1fr; }
+            .arch-peripherals { grid-template-columns: 1fr; }
+            .arch-flow { flex-wrap: wrap; gap: 6px; }
+            .arch-arrow { transform: rotate(90deg); padding: 2px 0; }
+            .work-hero .hero-title { font-size: 26px; }
+        }
+        @media (max-width: 480px) {
+            .work-stats { grid-template-columns: 1fr; }
+            .work-tech-grid { grid-template-columns: 1fr; }
+            .work-detail { padding: 0 14px; }
+            .stat-card { padding: 16px 12px; }
         }
     </style>
 </head>
@@ -183,81 +503,216 @@
         <blockquote><img src="./assets/public/logo.svg"></blockquote>
     </div>
 
-    <!-- Work Detail -->
+    <!-- ============================================================
+         Work Detail
+         ============================================================ -->
     <div class="work-detail">
-        <a href="./work.html" class="back-link">← 返回作品集</a>
 
-        <div class="work-detail-header">
-            <h1>AI 私人助理系统</h1>
-            <div class="tag-row">
+        <!-- ← back -->
+        <a href="./work.html" class="back-link">
+            <svg viewBox="0 0 16 16"><path d="M10.55 7.58332H1.16663V6.41665H10.55L7.75415 3.62082L8.5791 2.79587L12.1645 6.3813C12.5062 6.72299 12.5062 7.27701 12.1645 7.61873L8.5791 11.2042L7.75415 10.3792L10.55 7.58332Z"/></svg>
+            返回作品集
+        </a>
+
+        <!-- ===== Hero ===== -->
+        <div class="work-hero">
+            <h1 class="hero-title">
+                <span class="accent">AI 私人助理</span>系统
+            </h1>
+            <p class="hero-sub">
+                基于 LangChain + FastAPI 搭建的智能助理系统，具备知识库检索、工具调用、代码解释器与多轮对话能力，
+                通过硅基流动 API 接入大模型，结合 RAG 混合检索技术实现高效精准的智能问答。
+            </p>
+            <div class="hero-tags">
                 <span class="tag">AI</span>
                 <span class="tag">LLM</span>
                 <span class="tag">RAG</span>
                 <span class="tag">Agent</span>
                 <span class="tag">MCP</span>
             </div>
-            <div class="tech-stack">
-                <span class="tech-badge">Python</span>
-                <span class="tech-badge">LangChain</span>
-                <span class="tech-badge">FastAPI</span>
-                <span class="tech-badge">FAISS</span>
-                <span class="tech-badge">硅基流动API</span>
-                <span class="tech-badge">Streamlit</span>
-                <span class="tech-badge">CodeBox</span>
-                <span class="tech-badge">MCP</span>
+            <div class="hero-tech">
+                <span class="badge">Python</span>
+                <span class="badge">LangChain</span>
+                <span class="badge">FastAPI</span>
+                <span class="badge">FAISS</span>
+                <span class="badge">硅基流动 API</span>
+                <span class="badge">Streamlit</span>
+                <span class="badge">CodeBox</span>
+                <span class="badge">MCP</span>
             </div>
         </div>
 
-        <div class="work-detail-body">
-            <!-- 项目简介 -->
-            <div class="work-section">
-                <h2>项目简介</h2>
-                <p>
-                    基于 LangChain 和 FastAPI，搭建具备知识库检索、工具调用、代码解释器、多轮对话能力的私人 AI 助理系统。
-                    通过硅基流动 API 接入大模型，结合 RAG 知识库与混合检索技术，实现高效、精准的智能问答与任务执行。
-                </p>
+        <!-- ===== Stats ===== -->
+        <div class="work-stats">
+            <div class="stat-card">
+                <span class="stat-icon">📈</span>
+                <div class="stat-num">+15%</div>
+                <div class="stat-label">中文场景召回率提升</div>
             </div>
+            <div class="stat-card">
+                <span class="stat-icon">🔧</span>
+                <div class="stat-num">8</div>
+                <div class="stat-label">种工具集成</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">⚡</span>
+                <div class="stat-num">端到端</div>
+                <div class="stat-label">AI 助理系统</div>
+            </div>
+            <div class="stat-card">
+                <span class="stat-icon">🔌</span>
+                <div class="stat-num">MCP</div>
+                <div class="stat-label">标准化扩展协议</div>
+            </div>
+        </div>
 
-            <!-- 技术栈 -->
-            <div class="work-section">
-                <h2>技术栈</h2>
-                <div class="work-tech-list">
-                    <span class="item">Python</span>
-                    <span class="item">LangChain</span>
-                    <span class="item">FastAPI</span>
-                    <span class="item">FAISS</span>
-                    <span class="item">硅基流动API</span>
-                    <span class="item">Streamlit</span>
-                    <span class="item">CodeBox</span>
-                    <span class="item">MCP</span>
+        <!-- ===== 系统架构图 ===== -->
+        <div class="work-arch">
+            <div class="arch-title">系统架构图</div>
+
+            <!-- 主流程 -->
+            <div class="arch-flow">
+                <div class="arch-node">
+                    <div class="node-label">硅基流动 API</div>
+                    <div class="node-sub">Qwen2.5-72B</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="node-label">LangChain Agent</div>
+                    <div class="node-sub">ReAct 范式</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="node-label">FastAPI 后端</div>
+                    <div class="node-sub">RESTful 服务</div>
+                </div>
+                <div class="arch-arrow">→</div>
+                <div class="arch-node">
+                    <div class="node-label">Streamlit 前端</div>
+                    <div class="node-sub">对话界面</div>
                 </div>
             </div>
 
-            <!-- 项目职责 -->
-            <div class="work-section">
-                <h2>项目职责</h2>
+            <!-- 周边组件 -->
+            <div class="arch-peripherals">
+                <div class="arch-peri">
+                    <span class="peri-icon">📚</span>
+                    <div class="peri-label">RAG 知识库</div>
+                    <div class="peri-sub">FAISS + BM25 混合检索</div>
+                </div>
+                <div class="arch-peri">
+                    <span class="peri-icon">🔒</span>
+                    <div class="peri-label">CodeBox 沙箱</div>
+                    <div class="peri-sub">Python 代码安全执行</div>
+                </div>
+                <div class="arch-peri">
+                    <span class="peri-icon">🔗</span>
+                    <div class="peri-label">MCP 工具链</div>
+                    <div class="peri-sub">标准化 Agent 扩展</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== 核心功能 / 技术突破 两栏 ===== -->
+        <div class="work-grid">
+            <div class="work-grid-col">
+                <h3>⚙️ 核心功能</h3>
                 <ul>
-                    <li>通过硅基流动 API 接入 Qwen2.5-72B-Instruct 大模型，完成推理参数调优</li>
-                    <li>基于 LangChain 构建 ReAct 范式 Agent，集成天气查询、网络搜索、知识库检索、代码解释器</li>
-                    <li>实现 RAG 知识库模块，支持多格式文档加载（PDF/TXT/CSV/MD/DOCX）、文本分割策略、FAISS向量存储与检索</li>
-                    <li>实现 FAISS + BM25 混合检索，中文场景召回准确率提升约 15%</li>
-                    <li>使用 FastAPI 搭建 RESTful 后端服务，实现对话接口与知识库管理</li>
-                    <li>自定义异步回调处理器，实现 LLM 推理结果的流式输出</li>
-                    <li>集成 CodeBox 沙箱实现代码解释器功能，支持 Python 代码安全执行与图片渲染</li>
-                    <li>基于 MCP（Model Context Protocol）扩展 Agent 工具链</li>
+                    <li>通过硅基流动 API 接入 <strong>Qwen2.5-72B-Instruct</strong> 大模型，完成推理参数调优</li>
+                    <li>基于 LangChain 构建 <strong>ReAct 范式 Agent</strong>，集成天气查询、网络搜索、知识库检索、代码解释器</li>
+                    <li>使用 FastAPI 搭建 <strong>RESTful 后端服务</strong>，实现对话接口与知识库管理</li>
+                    <li>自定义<strong>异步回调处理器</strong>，实现 LLM 推理结果的流式输出</li>
+                    <li>集成 CodeBox 沙箱实现<strong>代码解释器功能</strong>，支持 Python 安全执行与图片渲染</li>
+                    <li>基于 <strong>MCP</strong> 扩展 Agent 工具链，实现标准化工具接入</li>
                 </ul>
             </div>
-
-            <!-- 项目成果 -->
-            <div class="work-section">
-                <h2>项目成果</h2>
+            <div class="work-grid-col">
+                <h3>🧠 技术突破</h3>
                 <ul>
-                    <li>成功搭建端到端的 AI 助理系统</li>
-                    <li>掌握大模型应用开发完整技术栈</li>
-                    <li>积累了 FAISS 向量数据库使用经验和混合检索调优实践</li>
+                    <li><strong>FAISS + BM25 混合检索</strong>策略，中文场景召回准确率提升约 <strong>15%</strong></li>
+                    <li>实现 <strong>RAG 知识库</strong>模块：支持 PDF / TXT / CSV / MD / DOCX 多格式文档加载</li>
+                    <li>灵活的<strong>文本分割策略</strong> + FAISS 向量存储与语义检索</li>
+                    <li>完整的 <strong>Agent 工具调用</strong>链路：从意图识别→工具选择→参数填充→结果解析</li>
+                    <li>多工具<strong>组合编排</strong>能力，单一对话中可依次调用多个外部工具</li>
+                    <li>MCP 协议落地实践，具备 <strong>Agent 工具链标准化</strong>扩展能力</li>
                 </ul>
             </div>
         </div>
+
+        <!-- ===== 技术栈网格 ===== -->
+        <div class="work-tech-grid">
+            <div class="tech-card">
+                <span class="tc-icon">🐍</span>
+                <div class="tc-name">Python</div>
+                <div class="tc-desc">主编程语言</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">🔗</span>
+                <div class="tc-name">LangChain</div>
+                <div class="tc-desc">Agent 框架</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">⚡</span>
+                <div class="tc-name">FastAPI</div>
+                <div class="tc-desc">RESTful 后端</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">🗂️</span>
+                <div class="tc-name">FAISS</div>
+                <div class="tc-desc">向量检索</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">🌐</span>
+                <div class="tc-name">硅基流动 API</div>
+                <div class="tc-desc">大模型推理</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">🖥️</span>
+                <div class="tc-name">Streamlit</div>
+                <div class="tc-desc">前端界面</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">📦</span>
+                <div class="tc-name">CodeBox</div>
+                <div class="tc-desc">沙箱执行</div>
+            </div>
+            <div class="tech-card">
+                <span class="tc-icon">🔌</span>
+                <div class="tc-name">MCP</div>
+                <div class="tc-desc">工具协议</div>
+            </div>
+        </div>
+
+        <!-- ===== 项目成果 ===== -->
+        <div class="work-highlight">
+            <h2>🏆 项目成果</h2>
+            <div class="highlight-grid">
+                <div class="highlight-card">
+                    <span class="hl-icon">🎯</span>
+                    <div class="hl-title">端到端 AI 助理</div>
+                    <div class="hl-desc">成功搭建从模型接入、知识检索到对话交互的完整 AI 助理系统</div>
+                </div>
+                <div class="highlight-card">
+                    <span class="hl-icon">🧩</span>
+                    <div class="hl-title">全栈技术掌握</div>
+                    <div class="hl-desc">覆盖大模型应用开发完整技术栈：LLM → Agent → RAG → 后端 → 前端</div>
+                </div>
+                <div class="highlight-card">
+                    <span class="hl-icon">⚡</span>
+                    <div class="hl-title">混合检索调优</div>
+                    <div class="hl-desc">积累了 FAISS 向量数据库使用经验和 FAISS+BM25 混合检索优化实践</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== GitHub 按钮 ===== -->
+        <div class="work-github">
+            <a href="https://github.com/p79463" target="_blank" class="gh-btn">
+                <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                查看 GitHub 仓库
+            </a>
+        </div>
+
     </div>
 
     <!-- Footer -->

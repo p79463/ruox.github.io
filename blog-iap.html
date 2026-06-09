@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IAP 在线升级库设计：可移植的嵌入式 OTA 方案 - MyBoke</title>
+  <style>
+    /* === Reset & Base === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: #0d0a14;
+      color: #ddd8e8;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    a { color: #c084fc; text-decoration: none; transition: color 0.2s; }
+    a:hover { color: #e2b6ff; }
+
+    /* === Blog Layout === */
+    .blog-wrapper {
+      display: flex;
+      flex: 1;
+      position: relative;
+    }
+
+    /* --- Left Sidebar (Widget) --- */
+    .blog-sidebar {
+      width: 260px;
+      flex-shrink: 0;
+      padding: 2rem 1.5rem;
+      border-right: 1px solid #2a1f3f;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+    }
+    .blog-sidebar::-webkit-scrollbar { width: 4px; }
+    .blog-sidebar::-webkit-scrollbar-thumb { background: #4a2d6b; border-radius: 4px; }
+    .blog-sidebar h3 {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #7a5ea0;
+      margin-bottom: 1rem;
+      border-bottom: 1px solid #2a1f3f;
+      padding-bottom: 0.5rem;
+    }
+    .blog-widget { margin-bottom: 2rem; }
+    .blog-widget ul { list-style: none; }
+    .blog-widget li { margin-bottom: 0.5rem; }
+    .blog-widget li a {
+      font-size: 0.9rem;
+      color: #b8a8d0;
+      display: block;
+      padding: 0.3rem 0.5rem;
+      border-radius: 4px;
+      transition: background 0.2s;
+    }
+    .blog-widget li a:hover { background: #1f1535; color: #e2b6ff; }
+
+    .blog-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      background: #1f1535;
+      color: #c084fc;
+      padding: 0.15rem 0.6rem;
+      border-radius: 10px;
+      margin: 0.15rem 0.2rem;
+      border: 1px solid #3a2560;
+    }
+    .blog-tag:hover { background: #2f1d50; }
+
+    /* --- Main Content Area --- */
+    .blog-main {
+      flex: 1;
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 2rem 2.5rem 4rem;
+    }
+
+    /* --- Header --- */
+    .blog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid #2a1f3f;
+      margin-bottom: 2.5rem;
+    }
+    .blog-header-left { display: flex; align-items: center; gap: 1rem; }
+    .blog-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.9rem;
+      color: #9a80c0;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #2a1f3f;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .blog-back-link:hover {
+      background: #1f1535;
+      border-color: #5a3d80;
+      color: #e2b6ff;
+    }
+    .blog-site-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #c084fc;
+    }
+
+    /* --- Article --- */
+    .blog-article { margin-bottom: 3rem; }
+
+    .blog-article-header { margin-bottom: 2rem; }
+    .blog-article-title {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #ede4f8;
+      line-height: 1.3;
+      margin-bottom: 0.8rem;
+    }
+    .blog-article-meta {
+      font-size: 0.85rem;
+      color: #7a5ea0;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+    .blog-article-meta .blog-meta-sep { color: #3a2560; }
+    .blog-article-meta a { color: #9a80c0; }
+
+    .blog-content h2 {
+      font-size: 1.45rem;
+      color: #d4b8ff;
+      margin: 2rem 0 1rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid #2a1f3f;
+    }
+    .blog-content h3 {
+      font-size: 1.15rem;
+      color: #c8a8ee;
+      margin: 1.5rem 0 0.8rem;
+    }
+    .blog-content p {
+      margin-bottom: 1rem;
+      color: #c8c0d8;
+    }
+    .blog-content ul, .blog-content ol {
+      margin: 0.5rem 0 1rem 1.5rem;
+      color: #c8c0d8;
+    }
+    .blog-content li { margin-bottom: 0.4rem; }
+    .blog-content strong { color: #e2d0f8; }
+    .blog-content code {
+      background: #1a1230;
+      color: #d4b8ff;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.88em;
+      border: 1px solid #2a1f3f;
+    }
+    .blog-content pre {
+      background: #110d20;
+      border: 1px solid #2a1f3f;
+      border-radius: 8px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+      overflow-x: auto;
+    }
+    .blog-content pre code {
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.88em;
+      color: #d0c0e8;
+    }
+    .blog-content blockquote {
+      border-left: 3px solid #6a4a9a;
+      background: #1a1230;
+      padding: 0.8rem 1.2rem;
+      margin: 1rem 0;
+      border-radius: 0 6px 6px 0;
+      color: #b8a8d0;
+    }
+    .blog-content blockquote strong { color: #d4b8ff; }
+
+    /* --- Canvas (decorative) --- */
+    .blog-canvas-area {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      margin: 1.5rem 0;
+      border-radius: 10px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0d0a14 0%, #1a1230 40%, #2a1a48 70%, #1a1230 100%);
+      border: 1px solid #2a1f3f;
+    }
+    .blog-canvas-area canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* --- Footer --- */
+    .blog-footer {
+      border-top: 1px solid #2a1f3f;
+      padding: 1.5rem 0;
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #5a4a78;
+    }
+    .blog-footer a { color: #7a5ea0; }
+    .blog-footer a:hover { color: #c084fc; }
+
+    /* --- Nav (prev / next) --- */
+    .blog-nav-links {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin: 2rem 0 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid #2a1f3f;
+    }
+    .blog-nav-links a {
+      font-size: 0.9rem;
+      color: #9a80c0;
+      max-width: 45%;
+      padding: 0.4rem 0.8rem;
+      border: 1px solid #2a1f3f;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+    .blog-nav-links a:hover {
+      background: #1f1535;
+      border-color: #5a3d80;
+      color: #e2b6ff;
+    }
+    .blog-nav-links .nav-next { text-align: right; margin-left: auto; }
+
+    /* --- Responsive --- */
+    @media (max-width: 900px) {
+      .blog-sidebar { display: none; }
+      .blog-main { padding: 1.5rem; }
+      .blog-article-title { font-size: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .blog-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
+      .blog-nav-links { flex-direction: column; }
+      .blog-nav-links a { max-width: 100%; }
+      .blog-nav-links .nav-next { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="blog-wrapper">
+
+  <!-- ===== Left Sidebar / Widget ===== -->
+  <aside class="blog-sidebar">
+    <div class="blog-widget">
+      <h3>📂 分类</h3>
+      <ul>
+        <li><a href="#">嵌入式</a></li>
+        <li><a href="#">C / C++</a></li>
+        <li><a href="#">RTOS</a></li>
+        <li><a href="#">工具链</a></li>
+        <li><a href="#">随笔</a></li>
+      </ul>
+    </div>
+
+    <div class="blog-widget">
+      <h3>🏷️ 标签</h3>
+      <div>
+        <a href="#" class="blog-tag">IAP</a>
+        <a href="#" class="blog-tag">OTA</a>
+        <a href="#" class="blog-tag">Bootloader</a>
+        <a href="#" class="blog-tag">嵌入式</a>
+        <a href="#" class="blog-tag">固件升级</a>
+        <a href="#" class="blog-tag">CRC32</a>
+        <a href="#" class="blog-tag">跨平台</a>
+      </div>
+    </div>
+
+    <div class="blog-widget">
+      <h3>📄 近期文章</h3>
+      <ul>
+        <li><a href="blog-iap.html">IAP 在线升级库设计</a></li>
+        <li><a href="#">FreeRTOS 任务调度浅析</a></li>
+        <li><a href="#">CMake 构建嵌入式项目</a></li>
+        <li><a href="#">ARM Cortex-M 启动流程</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <!-- ===== Main Column ===== -->
+  <main class="blog-main">
+
+    <!-- Blog Header -->
+    <header class="blog-header">
+      <div class="blog-header-left">
+        <a href="./blog.html" class="blog-back-link">← 返回博客</a>
+        <span class="blog-site-title">MyBoke</span>
+      </div>
+    </header>
+
+    <!-- Article -->
+    <article class="blog-article">
+      <header class="blog-article-header">
+        <h1 class="blog-article-title">IAP 在线升级库设计：可移植的嵌入式 OTA 方案</h1>
+        <div class="blog-article-meta">
+          <span>📅 2026-05-30</span>
+          <span class="blog-meta-sep">|</span>
+          <span>📂 <a href="#">嵌入式</a></span>
+        </div>
+      </header>
+
+      <div class="blog-content">
+
+        <h2>背景</h2>
+        <p>在嵌入式设备生命周期中，固件升级是不可避免的需求。传统方式通过烧录器更新，维护成本高——产品部署在现场后，开壳、接线、烧录、封装一套流程下来，人工和时间成本都很可观。本文介绍独立设计的通用 <strong>OTA 在线升级库</strong>（IAP, In-Application Programming），为资源受限的 MCU 提供一套可移植、高可靠的固件更新方案。</p>
+
+        <h2>架构设计</h2>
+
+        <h3>Bootloader + APP 双区</h3>
+        <p>Flash 存储划分为 <strong>Bootloader 区</strong>和 <strong>APP 区</strong>。芯片上电后首先执行 Bootloader，Bootloader 检查升级标志位或外部触发条件，决定直接跳转到 APP 区运行，还是进入升级流程接收新固件。</p>
+        <blockquote>
+          <strong>要点：</strong>APP 区起始地址必须与芯片的扇区/Sector 对齐，避免跨扇区擦写时破坏 Bootloader。
+        </blockquote>
+
+        <h3>通信协议抽象</h3>
+        <p>升级库通过抽象传输层接口，支持 <strong>CAN、RS232、RS485、以太网</strong>等多种物理传输方式。上层使用统一的数据帧格式：</p>
+        <pre><code>+--------+--------+----------+-----------+--------+
+| 帧头   | 长度   | 命令类型 | 数据载荷  | CRC32  |
+| 2 Byte | 2 Byte | 1 Byte   | N Byte    | 4 Byte |
++--------+--------+----------+-----------+--------+</code></pre>
+        <p>命令类型包括：握手、开始升级、传输块、校验请求、升级完成等，便于扩展。</p>
+
+        <h3>数据校验</h3>
+        <p>每帧使用 <strong>CRC32</strong> 校验，确保单帧传输的完整性。整个固件包在传输完成后由 Bootloader 进行整体哈希校验（SHA256 可选），彻底杜绝固件损坏或篡改导致的变砖风险。</p>
+
+        <h3>断点续传</h3>
+        <p>升级过程中如果断电或通信中断，重新上电后 Bootloader 检测到未完成的升级事务，从上次成功写入的块继续传输，而非从头重传。关键设计：</p>
+        <ul>
+          <li>每个块写入后持久化记录已完成的块位图（Bitmap）到 Flash 末尾预留区域</li>
+          <li>位图本身写入前也做 CRC 保护</li>
+          <li>完成所有块后擦除位图标记，进入 APP</li>
+        </ul>
+
+        <h2>跨芯片移植</h2>
+        <p>设计时充分考虑跨平台兼容性。通过 <strong>硬件抽象层（HAL）</strong> 隔离芯片相关的 Flash 擦写操作、看门狗管理、中断向量表重映射等底层细节。移植到新 MCU 时只需实现以下接口：</p>
+        <pre><code>// flash_hal.h — 移植适配层
+int32_t flash_hal_erase(uint32_t addr, uint32_t len);
+int32_t flash_hal_write(uint32_t addr, const uint8_t *data, uint32_t len);
+int32_t flash_hal_read(uint32_t addr, uint8_t *buf, uint32_t len);
+void    flash_hal_lock(void);
+void    flash_hal_unlock(void);</code></pre>
+        <p>目前已经在 <strong>STM32F4</strong>、<strong>GD32F3</strong>、<strong>AT32F4</strong> 三款 MCU 上完成移植验证，后续计划支持 NXP LPC 系列和国产 RISC-V 芯片。</p>
+
+        <h2>总结</h2>
+        <p>一个设计良好的 IAP 方案能显著降低产品维护成本。通过合理划分 Flash 区域、抽象通信和存储接口、加入断点续传与强校验机制，这套 OTA 升级库既能适应产线烧录场景，也能满足远程固件推送的需求。后续工作方向包括：支持多固件备份回滚、加密固件包（AES-128-GCM）、以及 Bootloader 自身的安全升级机制。</p>
+
+      </div>
+    </article>
+
+    <!-- Decorative Canvas -->
+    <div class="blog-canvas-area">
+      <canvas id="blogCanvas" width="880" height="120"></canvas>
+    </div>
+
+    <!-- Navigation (prev / next) -->
+    <nav class="blog-nav-links">
+      <a href="#" class="nav-prev">← 上一篇文章</a>
+      <a href="#" class="nav-next">下一篇文章 →</a>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="blog-footer">
+      &copy; 2026 <a href="./blog.html">MyBoke</a> &middot;
+      Powered by Nous &middot;
+      <a href="#">RSS</a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+(function() {
+  var canvas = document.getElementById('blogCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height;
+
+  // Resize canvas to actual CSS size
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * (window.devicePixelRatio || 1);
+    canvas.height = H * (window.devicePixelRatio || 1);
+    ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+    W = rect.width;
+    H = canvas.height / (window.devicePixelRatio || 1);
+  }
+  resize();
+  window.addEventListener('resize', function() { resize(); draw(); });
+
+  // Purple particles
+  var particles = [];
+  var P_COUNT = 40;
+
+  function initParticles() {
+    particles = [];
+    for (var i = 0; i < P_COUNT; i++) {
+      particles.push({
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 2 + 1,
+        alpha: Math.random() * 0.6 + 0.2
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Draw particles
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(192, 132, 252, ' + p.alpha + ')';
+      ctx.fill();
+
+      // Draw connections between close particles
+      for (var j = i + 1; j < particles.length; j++) {
+        var q = particles[j];
+        var dx = p.x - q.x;
+        var dy = p.y - q.y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(q.x, q.y);
+          ctx.strokeStyle = 'rgba(160, 100, 220, ' + (0.15 * (1 - dist / 100)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+
+      // Update position
+      p.x += p.vx;
+      p.y += p.vy;
+
+      // Wrap around
+      if (p.x < -10) p.x = W + 10;
+      if (p.x > W + 10) p.x = -10;
+      if (p.y < -10) p.y = H + 10;
+      if (p.y > H + 10) p.y = -10;
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  initParticles();
+  draw();
+})();
+</script>
+
+</body>
+</html>
