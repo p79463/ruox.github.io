@@ -3,9 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruox - My Projects</title>
+    <title>Ruox - 作品</title>
     <link rel="stylesheet" href="./css/style.min.css">
     <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ===== Enhanced Work Page ===== */
+        body {
+            background: linear-gradient(160deg, #0a0a12 0%, #0f0f1a 30%, #0c0c18 60%, #0a0a12 100%) !important;
+            min-height: 100vh;
+        }
+
+        .page-hero {
+            text-align: center;
+            padding: 60px 24px 20px;
+        }
+        .page-hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #f0f0fa;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f0f0fa 0%, #a89aff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-hero .subtitle {
+            font-size: 14px;
+            color: #8888a8;
+            letter-spacing: 4px;
+        }
+
+        .work {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 10px 24px 60px;
+        }
+        .card-list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        /* Work card */
+        .card-list .magical.item {
+            background: linear-gradient(145deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%) !important;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            backdrop-filter: blur(4px);
+        }
+        .card-list .magical.item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 14px 0 0 14px;
+            opacity: 0.6;
+            transition: opacity 0.3s;
+        }
+        /* Project-specific accent colors */
+        .card-list .magical.item:nth-child(1)::before { background: linear-gradient(180deg, #5ec8e3, #3aa8d0); }
+        .card-list .magical.item:nth-child(2)::before { background: linear-gradient(180deg, #5ec8a0, #3aa87c); }
+        .card-list .magical.item:nth-child(3)::before { background: linear-gradient(180deg, #a89aff, #7c6cf0); }
+        .card-list .magical.item:nth-child(4)::before { background: linear-gradient(180deg, #f0a040, #d08030); }
+        .card-list .magical.item:nth-child(5)::before { background: linear-gradient(180deg, #4a9eff, #3078d0); }
+        .card-list .magical.item:nth-child(6)::before { background: linear-gradient(180deg, #4ad0c0, #30a8a0); }
+        .card-list .magical.item:nth-child(7)::before { background: linear-gradient(180deg, #5ec8e3, #3aa8d0); }
+        .card-list .magical.item:nth-child(8)::before { background: linear-gradient(180deg, #c070e0, #a050c0); }
+
+        .card-list .magical.item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,255,255,0.15);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.4), 0 0 60px rgba(168,154,255,0.04);
+        }
+        .card-list .magical.item:hover::before {
+            opacity: 1;
+        }
+
+        .card-list .magical.item a {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 0;
+            text-decoration: none;
+        }
+
+        .card-list .magical.item .dark {
+            height: 140px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, rgba(168,154,255,0.04) 0%, transparent 70%);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .card-list .magical.item .dark .cover {
+            width: 60px;
+            height: 60px;
+            opacity: 0.25;
+            filter: grayscale(0.6);
+            transition: all 0.3s;
+        }
+        .card-list .magical.item:hover .dark .cover {
+            opacity: 0.5;
+            transform: scale(1.1);
+        }
+
+        .card-list .magical.item .text {
+            padding: 18px 20px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-list .magical.item .title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .card-list .magical.item .title .name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e8e8f6;
+            transition: color 0.2s;
+        }
+        .card-list .magical.item:hover .title .name {
+            color: #fff;
+        }
+
+        /* Colored tags */
+        .card-list .tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 12px;
+            border-radius: 20px;
+            letter-spacing: 0.5px;
+            border: 1px solid;
+        }
+        .card-list .tag.tag-web { background: rgba(94,200,227,0.12); color: #7ec8e3; border-color: rgba(94,200,227,0.2); }
+        .card-list .tag.tag-app { background: rgba(94,200,160,0.12); color: #7ec8a0; border-color: rgba(94,200,160,0.2); }
+        .card-list .tag.tag-2b { background: rgba(168,154,255,0.12); color: #a89aff; border-color: rgba(168,154,255,0.2); }
+        .card-list .tag.tag-assets { background: rgba(240,160,64,0.12); color: #f0a040; border-color: rgba(240,160,64,0.2); }
+        .card-list .tag.tag-other { background: rgba(192,112,224,0.12); color: #c070e0; border-color: rgba(192,112,224,0.2); }
+
+        .card-list .magical.item .desc {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #9090b0;
+            flex: 1;
+            transition: color 0.2s;
+        }
+        .card-list .magical.item:hover .desc {
+            color: #a8a8c8;
+        }
+
+        @media screen and (max-width: 768px) {
+            .card-list { grid-template-columns: 1fr; }
+            .page-hero { padding: 40px 16px 16px; }
+            .page-hero h1 { font-size: 28px; }
+            .card-list .magical.item .dark { height: 100px; }
+        }
+    </style>
 </head>
 <body>
     <canvas class="fireworks"></canvas>
@@ -32,146 +195,133 @@
         </div>
         <blockquote><img src="./assets/public/logo.svg"></blockquote>
     </div>
-        <div class="work">
-            <div class="card-list">
-                <div class="magical item">
-                    <a href="./work-ai-assistant.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">AI 私人助理系统</div>
-                                </div>
-                                <div class="tag tag-web">AI</div>
-                            </div>
-                            <div class="desc">基于 LangChain + FastAPI 的 RAG + Agent + MCP 全栈 AI 系统。支持 FAISS+BM25 混合检索、CodeBox 沙箱代码执行、MCP 标准工具扩展, 前端 Streamlit 交互</div>
+
+    <div class="page-hero">
+        <h1>作品集</h1>
+        <div class="subtitle">AI · 嵌入式 · 逆向工程 · 自动化</div>
+    </div>
+
+    <div class="work">
+        <div class="card-list">
+            <div class="magical item">
+                <a href="./work-ai-assistant.html">
+                    <div class="dark"><img class="cover" src="./assets/index/figicon.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">AI 私人助理系统</div></div>
+                            <div class="tag tag-web">AI</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-jobboth.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">JobBot 智能招聘自动化</div>
-                                </div>
-                                <div class="tag tag-app">Python</div>
-                            </div>
-                            <div class="desc">基于 Camoufox 反检测浏览器的多平台自动投递系统。覆盖 Boss直聘/智联招聘, 攻克 PUA 字体编码反爬, 配置驱动多维过滤, Cookie 持久化, 限流重试</div>
+                        <div class="desc">基于 LangChain + FastAPI 的 RAG + Agent + MCP 全栈 AI 系统。FAISS+BM25 混合检索、CodeBox 沙箱、MCP 标准工具扩展</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-jobboth.html">
+                    <div class="dark"><img class="cover" src="./assets/index/rpb.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">JobBot 智能招聘自动化</div></div>
+                            <div class="tag tag-app">Python</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-hermes.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">Hermes Agent 多智能体系统</div>
-                                </div>
-                                <div class="tag tag-2b">Agent</div>
-                            </div>
-                            <div class="desc">基于 Hermes Agent / CrewAI 搭建多 Agent 协作系统。MCP Server/Client 开发, Tool Calling 编排, Skill 自学习机制, Codex/Claude Code 协同开发</div>
+                        <div class="desc">Camoufox 反检测浏览器多平台自动投递。攻克 PUA 字体编码反爬、Cookie 持久化、配置驱动多维过滤</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-hermes.html">
+                    <div class="dark"><img class="cover" src="./assets/index/figma.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">Hermes Agent 多智能体系统</div></div>
+                            <div class="tag tag-2b">Agent</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-ollvm.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">OLLVM 代码混淆工具链</div>
-                                </div>
-                                <div class="tag tag-assets">LLVM</div>
-                            </div>
-                            <div class="desc">LLVM 14 → 19 移植 OLLVM 混淆 Pass。控制流扁平化、虚假控制流、指令替换, CMake per-file 精细控制, 集成 Android NDK r28c 交叉编译链</div>
+                        <div class="desc">Hermes Agent / CrewAI 多 Agent 协作系统。MCP Server/Client 开发、Skill 自学习、Codex/Claude Code 协同</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-ollvm.html">
+                    <div class="dark"><img class="cover" src="./assets/index/adapter.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">OLLVM 代码混淆工具链</div></div>
+                            <div class="tag tag-assets">LLVM</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-android-mem.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">Android 内存分析与可视化工具</div>
-                                </div>
-                                <div class="tag tag-other">C/C++</div>
-                            </div>
-                            <div class="desc">基于 Lua + C/C++ + ImGui 的 Android Root 环境内存分析系统。集成 OpenGL/Vulkan 渲染, 对接 Linux 内核模块实现系统级内存读写</div>
+                        <div class="desc">LLVM 14→19 移植 OLLVM 混淆 Pass。控制流扁平化、虚假控制流、指令替换、CMake per-file 分层混淆策略</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-android-mem.html">
+                    <div class="dark"><img class="cover" src="./assets/index/biliui.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">Android 内存分析与可视化工具</div></div>
+                            <div class="tag tag-other">C/C++</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-starflash.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">星闪通信系统开发与优化</div>
-                                </div>
-                                <div class="tag tag-app">Embedded</div>
-                            </div>
-                            <div class="desc">HC32F460 + RK3588 平台, 腕表与平板间星闪通信, DMA 数据搬运优化, OTA 升级, 环形缓冲区重构, 数据包截断问题修复</div>
+                        <div class="desc">Lua + C/C++ + ImGui 的 Android Root 内存分析系统。OpenGL/Vulkan 渲染、Linux 内核模块系统级读写</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-starflash.html">
+                    <div class="dark"><img class="cover" src="./assets/index/larkmap.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">星闪通信系统开发与优化</div></div>
+                            <div class="tag tag-app">Embedded</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-pis.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">地铁广播 PIS 系统</div>
-                                </div>
-                                <div class="tag tag-2b">STM32</div>
-                            </div>
-                            <div class="desc">FreeRTOS 驱动的全自动地铁广播系统, CAN/RS232/RS485 通信, VS1063 音频编解码, FatFs 文件系统, IAP 在线升级, 自动报站</div>
+                        <div class="desc">HC32F460 + RK3588 腕表平板星闪通信。DMA 优化、OTA 升级、环形缓冲区重构、数据包截断修复</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-pis.html">
+                    <div class="dark"><img class="cover" src="./assets/index/dippermap.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">地铁广播 PIS 系统</div></div>
+                            <div class="tag tag-2b">STM32</div>
                         </div>
-                    </a>
-                </div>
-                <div class="magical item">
-                    <a href="./work-seat.html">
-                        <div class="dark"><img class="cover" src="./assets/work/empty.png"></div>
-                        <div class="text">
-                            <div class="title-area">
-                                <div class="title">
-                                    <div class="name">座位预订显示系统</div>
-                                </div>
-                                <div class="tag tag-other">STM32</div>
-                            </div>
-                            <div class="desc">国外地铁列车座位预订显示, CAN 总线通信, 触摸交互, LCD 显示, 批量工装升级软件, 从 0 到 1 量产交付</div>
+                        <div class="desc">FreeRTOS 全自动地铁广播系统。CAN/RS232/RS485 通信、VS1063 音频、IAP 在线升级、自动报站</div>
+                    </div>
+                </a>
+            </div>
+            <div class="magical item">
+                <a href="./work-seat.html">
+                    <div class="dark"><img class="cover" src="./assets/index/wechat-public.png"></div>
+                    <div class="text">
+                        <div class="title-area">
+                            <div class="title"><div class="name">座位预订显示系统</div></div>
+                            <div class="tag tag-other">STM32</div>
                         </div>
-                    </a>
-                </div>
+                        <div class="desc">国外地铁列车座位预订。CAN 总线通信、触摸 LCD 交互、批量工装升级、从 0 到 1 量产交付</div>
+                    </div>
+                </a>
             </div>
         </div>
-        <div class="footer">
-            <div class="copyright">
-                <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
-                <span>|</span>
-                <div class="fillings">
-                    <a href="./about.html">Ruox</a>
-                </div>
-                <span>|</span>
-                <div class="friends">
-                    <a href="https://github.com/p79463" target="_blank">GitHub</a>
-                </div>
+    </div>
+
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings"><a href="./about.html">Ruox</a></div>
+            <span>|</span>
+            <div class="friends"><a href="https://github.com/p79463" target="_blank">GitHub</a></div>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
             </div>
         </div>
-        <div class="widget">
-            <div class="shape-light"></div>
-            <div class="shape-star">
-                <div class="rising-stars rising-stars-visible">
-                    <div style="height:1px;width:1px"></div>
-                    <div style="height:2px;width:2px"></div>
-                    <div style="height:1px;width:1px"></div>
-                </div>
-            </div>
-            <div class="shape-earth"></div>
-        </div>
+        <div class="shape-earth"></div>
+    </div>
 </body>
 <script>
     window.addEventListener("mousemove", function (e) {

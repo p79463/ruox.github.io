@@ -6,6 +6,173 @@
     <title>Ruox - 博客</title>
     <link rel="stylesheet" href="./css/style.min.css">
     <link rel="shortcut icon" href="./assets/public/favicon.svg" />
+    <style>
+        /* ===== Enhanced Blog Page ===== */
+        body {
+            background: linear-gradient(160deg, #0a0a12 0%, #0f0f1a 30%, #0c0c18 60%, #0a0a12 100%) !important;
+            min-height: 100vh;
+        }
+
+        .page-hero {
+            text-align: center;
+            padding: 60px 24px 10px;
+        }
+        .page-hero h1 {
+            font-size: 36px;
+            font-weight: 700;
+            color: #f0f0fa;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #f0f0fa 0%, #a89aff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .page-hero .subtitle {
+            font-size: 14px;
+            color: #8888a8;
+            letter-spacing: 4px;
+        }
+
+        .blog {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px 60px;
+            display: flex;
+            gap: 30px;
+        }
+        .blog-left {
+            flex: 0 0 3px;
+            position: relative;
+        }
+        .blog-left .blog-left-line {
+            position: sticky;
+            top: 100px;
+        }
+        .blog-left .blog-left-line img {
+            width: 3px;
+            opacity: 0.4;
+        }
+        .blog-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        /* Blog item card */
+        .blog-list .item {
+            background: linear-gradient(145deg, rgba(255,255,255,0.035) 0%, rgba(255,255,255,0.008) 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            backdrop-filter: blur(4px);
+        }
+        .blog-list .item:hover {
+            transform: translateX(4px);
+            border-color: rgba(168,154,255,0.2);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3), 0 0 40px rgba(168,154,255,0.03);
+        }
+        .blog-list .item a {
+            display: flex;
+            flex-direction: column;
+            padding: 20px 24px;
+            text-decoration: none;
+            gap: 10px;
+        }
+        .blog-list .item .text {
+            flex: 1;
+        }
+        .blog-list .item .title-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .blog-list .item .title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .blog-list .item .title .name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #e0e0f0;
+            transition: color 0.2s;
+            line-height: 1.4;
+        }
+        .blog-list .item:hover .title .name {
+            color: #c4b8ff;
+        }
+        .blog-list .item .title .link {
+            font-size: 13px;
+            color: #6666a0;
+            transition: color 0.2s;
+        }
+        .blog-list .item:hover .title .link {
+            color: #a89aff;
+        }
+        .blog-list .item .tag {
+            font-size: 13px;
+            flex-shrink: 0;
+            padding: 0 4px;
+        }
+        .blog-list .item .desc {
+            font-size: 13px;
+            line-height: 1.7;
+            color: #8888aa;
+            transition: color 0.2s;
+        }
+        .blog-list .item:hover .desc {
+            color: #9a9abc;
+        }
+
+        .blog-list .item .info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .blog-list .item .info .info-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+            opacity: 0.6;
+            background: rgba(168,154,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .blog-list .item .info .info-avatar img {
+            width: 16px;
+            height: 16px;
+        }
+        .blog-list .item .info .info-name {
+            font-size: 12px;
+            color: #6666a0;
+            font-weight: 500;
+        }
+        .blog-list .item .info .info-time {
+            font-size: 12px;
+            color: #555588;
+            margin-left: auto;
+        }
+
+        .blog-list .content-divider {
+            display: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .blog { padding: 0 16px 40px; }
+            .blog-left { display: none; }
+            .page-hero { padding: 40px 16px 0; }
+            .page-hero h1 { font-size: 28px; }
+            .blog-list .item a { padding: 16px 18px; }
+            .blog-list .item .title .name { font-size: 15px; }
+        }
+    </style>
 </head>
 <body>
     <canvas class="fireworks"></canvas>
@@ -32,6 +199,12 @@
         </div>
         <blockquote><img src="./assets/public/logo.svg"></blockquote>
     </div>
+
+    <div class="page-hero">
+        <h1>博客</h1>
+        <div class="subtitle">技术笔记 · 实践总结 · 经验分享</div>
+    </div>
+
     <div class="blog">
         <div class="blog-left">
             <div class="blog-left-line"><img src="./assets/blog/line-dot.svg"></div>
@@ -43,7 +216,7 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">WSL 交叉编译环境搭建与 Android NDK 配置</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                             <div class="tag">⚙️</div>
                         </div>
@@ -55,7 +228,6 @@
                         <div class="info-time">2026-06-08</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-ollvm.html">
@@ -63,10 +235,10 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">OLLVM 混淆 Pass 移植 LLVM 19 踩坑记</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
-                        <div class="desc">将 OLLVM 从 LLVM 14 移植到 LLVM 19 的过程中遇到的 API 变更与适配记录。涉及 Pass Manager 重构、LegacyPM → NewPM 迁移、LLVM Pass 注册机制变更、以及多层混淆策略（Flattening + BogusControlFlow + Substitution）的集成调试经验。</div>
+                        <div class="desc">将 OLLVM 从 LLVM 14 移植到 LLVM 19 的过程中遇到的 API 变更与适配记录。涉及 Pass Manager 重构、LegacyPM → NewPM 迁移、LLVM Pass 注册机制变更、以及多层混淆策略的集成调试经验。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
@@ -74,7 +246,6 @@
                         <div class="info-time">2026-06-05</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-iap.html">
@@ -82,10 +253,10 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">IAP 在线升级库设计：可移植的嵌入式 OTA 方案</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
-                        <div class="desc">独立开发的通用 OTA 在线升级可移植库的设计思路与实现细节。Bootloader 与 APP 的内存布局规划、多通信协议（CAN/RS232/以太网）统一升级接口设计、数据校验与断点续传机制、以及跨芯片平台（STM32/HC32/N32）的移植经验。</div>
+                        <div class="desc">独立开发的通用 OTA 在线升级可移植库的设计思路与实现细节。Bootloader 与 APP 的内存布局规划、多通信协议统一升级接口设计、数据校验与断点续传机制、以及跨芯片平台的移植经验。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
@@ -93,7 +264,6 @@
                         <div class="info-time">2026-05-30</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-pis.html">
@@ -101,7 +271,7 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">地铁 PIS 系统通信协议设计：CAN/RS232/RS485 多协议架构实战</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
                         <div class="desc">国内外多条地铁线路的乘客信息系统（PIS）通信架构设计经验。如何在同一个系统中整合 CAN 总线、RS232、RS485 三种通信协议，设计统一的数据帧格式与设备寻址方案，以及在多设备协同场景下的中断优先级与实时性平衡实践。</div>
@@ -112,7 +282,6 @@
                         <div class="info-time">2026-05-25</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-antiscrape.html">
@@ -120,10 +289,10 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">Boss 直聘反爬对抗：PUA 字体编码解密实录</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
-                        <div class="desc">在开发 JobBot 自动投递系统过程中，攻克 Boss 直聘 PUA 字体编码反爬机制的完整记录。从字体文件提取、字形映射分析、到 DOM 层面解码加密薪资数据的全流程技术复盘，以及 Camoufox 反检测浏览器的 WebGL/Canvas/字体指纹模拟方案。</div>
+                        <div class="desc">在开发 JobBot 自动投递系统过程中，攻克 Boss 直聘 PUA 字体编码反爬机制的完整记录。从字体文件提取、字形映射分析、到 DOM 层面解码加密薪资数据的全流程技术复盘。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
@@ -131,7 +300,6 @@
                         <div class="info-time">2026-05-20</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-ai-roadmap.html">
@@ -139,10 +307,10 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">从嵌入式到 AI 应用开发者的学习路线</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
-                        <div class="desc">4 年嵌入式软件工程师向 AI 应用开发者转型的学习路线与心得。从 LLM 基础原理、本地部署（Ollama/vLLM/CUDA）、LangChain 框架、RAG 知识库构建、到 Agent 系统（Hermes Agent/CrewAI）和 MCP 协议实践 —— 覆盖 AI 全栈技术点的学习路径规划。</div>
+                        <div class="desc">4 年嵌入式软件工程师向 AI 应用开发者转型的学习路线与心得。从 LLM 基础原理、本地部署（Ollama/vLLM/CUDA）、LangChain 框架、RAG 知识库构建、到 Agent 系统和 MCP 协议实践。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
@@ -150,7 +318,6 @@
                         <div class="info-time">2026-05-15</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-lowpower.html">
@@ -158,7 +325,7 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">嵌入式低功耗优化实战：腕表续航提升 200%</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
                         <div class="desc">在某科大腕表运动数据采集终端项目中，通过 400M 射频低功耗模式设计、深度休眠逻辑优化、关机功耗分析与修复、运动定位倒计时漏电问题排查等手段，将设备续航时间延长 200% 的完整优化过程。</div>
@@ -169,7 +336,6 @@
                         <div class="info-time">2026-05-10</div>
                     </div>
                 </a>
-                <div class="content-divider"></div>
             </div>
             <div class="item">
                 <a href="./blog-imgui.html">
@@ -177,10 +343,10 @@
                         <div class="title-area">
                             <div class="title">
                                 <div class="name">ImGui + OpenGL/Vulkan Android 集成实践</div>
-                                <div class="link"> →</div>
+                                <div class="link">→</div>
                             </div>
                         </div>
-                        <div class="desc">在 Android Root 环境下集成 ImGui 即时模式 UI 框架到 Native 二进制程序的完整方案。OpenGL ES 与 Vulkan 双渲染后端支持、触摸输入适配（TouchManager 过检测库）、Overlay 绘制层与图形 API 的协作管理，以及 uinput 设备冲突等常见坑点总结。</div>
+                        <div class="desc">在 Android Root 环境下集成 ImGui 即时模式 UI 框架到 Native 二进制程序的完整方案。OpenGL ES 与 Vulkan 双渲染后端支持、触摸输入适配（TouchManager 过检测库）、Overlay 绘制层与图形 API 的协作管理。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
@@ -191,17 +357,14 @@
             </div>
         </div>
     </div>
+
     <div class="footer">
         <div class="copyright">
             <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
             <span>|</span>
-            <div class="fillings">
-                <a href="./about.html">Ruox</a>
-            </div>
+            <div class="fillings"><a href="./about.html">Ruox</a></div>
             <span>|</span>
-            <div class="friends">
-                <a href="https://github.com/p79463" target="_blank">GitHub</a>
-            </div>
+            <div class="friends"><a href="https://github.com/p79463" target="_blank">GitHub</a></div>
         </div>
     </div>
     <div class="widget">

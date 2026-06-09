@@ -1,0 +1,57 @@
+/* ===== Shared Detail Page Enhancements ===== */
+
+body {
+    background: linear-gradient(160deg, #0a0a12 0%, #10101e 30%, #0c0c18 60%, #0a0a12 100%) !important;
+    min-height: 100vh;
+}
+
+/* Subtle radial glow behind content */
+.work-detail::before,
+.blog-detail::before,
+.detail-page::before {
+    content: '';
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    height: 500px;
+    background: radial-gradient(ellipse at center, rgba(168,154,255,0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* Back link enhancement */
+.back-link {
+    position: relative;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 8px;
+    color: #8888b0 !important;
+    font-size: 13px !important;
+    transition: all 0.25s;
+    margin-bottom: 28px !important;
+}
+.back-link:hover {
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(168,154,255,0.2);
+    color: #c4b8ff !important;
+    transform: translateX(-2px);
+}
+
+/* Section enhancements */
+.work-section,
+.detail-section {
+    background: rgba(255,255,255,0.025) !important;
+    border: 1px solid rgba(255,255,255,0.05) !important;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+}
+.work-section:hover,
+.detail-section:hover {
+    border-color: rgba(255,255,255,0.09) !important;
+}
