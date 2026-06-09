@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruox - Blog & Notes</title>
+    <title>Ruox - 博客</title>
     <link rel="stylesheet" href="./css/style.min.css">
     <link rel="shortcut icon" href="./assets/public/favicon.svg" />
 </head>
@@ -13,20 +13,20 @@
         <div class="main">
             <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
             <div class="menu">
-                <li class="magical btn" onclick="window.location.href='./index.html'">Home</li>
-                <li class="magical btn" onclick="window.location.href='./work.html'">Work</li>
-                <li class="magical btn nav" onclick="window.location.href='./blog.html'">Blog</li>
-                <li class="magical btn" onclick="window.location.href='./about.html'">About</li>
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
             </div>
             <div class="menu" id="menu-expand">
                 <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
             </div>
             <div id="menu-panel">
                 <div class="menu-panel-content">
-                    <li class="magical btn" onclick="window.location.href='./index.html'">Home</li>
-                    <li class="magical btn" onclick="window.location.href='./work.html'">Work</li>
-                    <li class="magical btn nav" onclick="window.location.href='./blog.html'">Blog</li>
-                    <li class="magical btn" onclick="window.location.href='./about.html'">About</li>
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn nav" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
                 </div>
             </div>
         </div>
@@ -38,155 +38,154 @@
         </div>
         <div class="blog-list">
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">AI 私人助理：RAG + Agent + MCP 全栈实践</div>
+                                <div class="name">WSL 交叉编译环境搭建与 Android NDK 配置</div>
                                 <div class="link"> ↗</div>
                             </div>
-                            <div class="tag">✨</div>
+                            <div class="tag">⚙️</div>
                         </div>
-                        <div class="desc">基于 LangChain、FastAPI、FAISS 构建具备知识库检索、工具调用、代码解释器的私人 AI 助理。实现 FAISS + BM25 混合检索，集成 CodeBox 沙箱执行环境，基于 MCP 协议扩展标准化工具链。</div>
+                        <div class="desc">基于 WSL Debian 搭建完整的 Android NDK r28c 交叉编译环境。apt 换源加速、USB 设备挂载、交叉编译工具链配置、防火墙规则设置 —— 从零搭建高效的 WSL 嵌入式开发工作流。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">AI / LLM</div>
+                        <div class="info-time">2026-06-08</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">OLLVM 代码混淆工具：LLVM 14 → 19 移植实战</div>
+                                <div class="name">OLLVM 混淆 Pass 移植 LLVM 19 踩坑记</div>
                                 <div class="link"> ↗</div>
                             </div>
-                            <div class="tag">✨</div>
                         </div>
-                        <div class="desc">基于 OLLVM 开源项目，完成控制流扁平化、虚假控制流、指令替换等 LLVM Pass 从 LLVM 14 到 LLVM 19 的移植适配。集成 Android NDK r28c 交叉编译工具链，实现四级混淆模式的 per-file 精细控制。</div>
+                        <div class="desc">将 OLLVM 从 LLVM 14 移植到 LLVM 19 的过程中遇到的 API 变更与适配记录。涉及 Pass Manager 重构、LegacyPM → NewPM 迁移、LLVM Pass 注册机制变更、以及多层混淆策略（Flattening + BogusControlFlow + Substitution）的集成调试经验。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">LLVM / Obfuscation</div>
+                        <div class="info-time">2026-06-05</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">Boss 直聘自动投递系统：反检测与工程化实践</div>
+                                <div class="name">IAP 在线升级库设计：可移植的嵌入式 OTA 方案</div>
                                 <div class="link"> ↗</div>
                             </div>
                         </div>
-                        <div class="desc">基于 Camoufox 反检测浏览器的多平台自动投递系统。攻克 PUA 字体编码反爬，YAML 配置驱动多维过滤，Cookie 持久化与扫码登录调度，滑动窗口频率控制与指数退避重试，subprocess 隔离架构。</div>
+                        <div class="desc">独立开发的通用 OTA 在线升级可移植库的设计思路与实现细节。Bootloader 与 APP 的内存布局规划、多通信协议（CAN/RS232/以太网）统一升级接口设计、数据校验与断点续传机制、以及跨芯片平台（STM32/HC32/N32）的移植经验。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">Python / Automation</div>
+                        <div class="info-time">2026-05-30</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">Hermes Agent 多智能体协作系统</div>
+                                <div class="name">地铁 PIS 系统通信协议设计：CAN/RS232/RS485 多协议架构实战</div>
                                 <div class="link"> ↗</div>
                             </div>
                         </div>
-                        <div class="desc">基于 Hermes Agent 框架搭建多 Agent 协作系统。MCP Server/Client 开发与工具集成，多 Agent 任务编排与调度，Skill 机制实现 Agent 自学习，Codex/Claude Code 协同开发模式。</div>
+                        <div class="desc">国内外多条地铁线路的乘客信息系统（PIS）通信架构设计经验。如何在同一个系统中整合 CAN 总线、RS232、RS485 三种通信协议，设计统一的数据帧格式与设备寻址方案，以及在多设备协同场景下的中断优先级与实时性平衡实践。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">AI Agent / MCP</div>
+                        <div class="info-time">2026-05-25</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">嵌入式开发笔记索引</div>
+                                <div class="name">Boss 直聘反爬对抗：PUA 字体编码解密实录</div>
                                 <div class="link"> ↗</div>
                             </div>
                         </div>
-                        <div class="desc">多年嵌入式开发积累的技术笔记汇总：STM32 开发技巧、FreeRTOS/LiteOS 实践、IAP 在线升级库设计、Flash 存储与芯片手册、CAN/SPI/UART 通信协议、CubeMX 踩坑记录、Keil 高效开发技巧。</div>
+                        <div class="desc">在开发 JobBot 自动投递系统过程中，攻克 Boss 直聘 PUA 字体编码反爬机制的完整记录。从字体文件提取、字形映射分析、到 DOM 层面解码加密薪资数据的全流程技术复盘，以及 Camoufox 反检测浏览器的 WebGL/Canvas/字体指纹模拟方案。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">Embedded</div>
+                        <div class="info-time">2026-05-20</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">星闪通信系统开发：腕表数据采集与传输</div>
+                                <div class="name">从嵌入式到 AI 应用开发者的学习路线</div>
                                 <div class="link"> ↗</div>
                             </div>
                         </div>
-                        <div class="desc">基于 HC32F460 + RK3588 平台的腕表与平板星闪通信系统。DMA 搬运逻辑优化，环形缓冲区读写机制重构，OTA 升级功能实现，AT 指令集协议设计，数据包中间截断问题修复。</div>
+                        <div class="desc">4 年嵌入式软件工程师向 AI 应用开发者转型的学习路线与心得。从 LLM 基础原理、本地部署（Ollama/vLLM/CUDA）、LangChain 框架、RAG 知识库构建、到 Agent 系统（Hermes Agent/CrewAI）和 MCP 协议实践 —— 覆盖 AI 全栈技术点的学习路径规划。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">Embedded / Wireless</div>
+                        <div class="info-time">2026-05-15</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">Android 内存分析与 ImGui Overlay 开发</div>
+                                <div class="name">嵌入式低功耗优化实战：腕表续航提升 200%</div>
                                 <div class="link"> ↗</div>
                             </div>
                         </div>
-                        <div class="desc">Android Root 环境下的系统级内存分析工具集。Lua → C/C++ 技术演进，ImGui + OpenGL/Vulkan 可视化集成，Linux 内核模块(KO)驱动对接，TouchManager 过检测触摸库设计。</div>
+                        <div class="desc">在某科大腕表运动数据采集终端项目中，通过 400M 射频低功耗模式设计、深度休眠逻辑优化、关机功耗分析与修复、运动定位倒计时漏电问题排查等手段，将设备续航时间延长 200% 的完整优化过程。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">Reverse / Android</div>
+                        <div class="info-time">2026-05-10</div>
                     </div>
                 </a>
                 <div class="content-divider"></div>
             </div>
             <div class="item">
-                <a href="./work.html">
+                <a href="https://www.yuque.com/" target="_blank">
                     <div class="text">
                         <div class="title-area">
                             <div class="title">
-                                <div class="name">地铁 PIS 系统开发：从广播到显示屏的完整方案</div>
+                                <div class="name">ImGui + OpenGL/Vulkan Android 集成实践</div>
                                 <div class="link"> ↗</div>
                             </div>
                         </div>
-                        <div class="desc">多条国内外地铁线路的乘客信息系统(PIS)开发经验。STM32 + FreeRTOS 广播控制，Hi3798 + QT/QML 视频信息显示，STM32 + LWIP LED 屏控制，CAN/RS232/RS485 多协议通信架构。</div>
+                        <div class="desc">在 Android Root 环境下集成 ImGui 即时模式 UI 框架到 Native 二进制程序的完整方案。OpenGL ES 与 Vulkan 双渲染后端支持、触摸输入适配（TouchManager 过检测库）、Overlay 绘制层与图形 API 的协作管理，以及 uinput 设备冲突等常见坑点总结。</div>
                     </div>
                     <div class="info">
                         <div class="info-avatar"><img src="./assets/blog/avatar.svg"></div>
                         <div class="info-name">Ruox</div>
-                        <div class="info-time">Embedded / Railway</div>
+                        <div class="info-time">2026-05-05</div>
                     </div>
                 </a>
             </div>

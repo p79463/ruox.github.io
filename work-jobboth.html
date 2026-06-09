@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - JobBot 智能招聘自动化</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+    <div class="work-detail">
+        <div class="detail-container">
+            <a href="./work.html" class="back-link magical">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                    <path d="M10.5 3.5L6 8L10.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                ← 返回作品集
+            </a>
+
+            <div class="detail-header">
+                <div class="detail-title-area">
+                    <h1 class="detail-title">JobBot 智能招聘自动化</h1>
+                    <span class="detail-tag">Python</span>
+                </div>
+                <p class="detail-subtitle">基于 Python + Camoufox 反检测浏览器的多平台招聘网站自动投递系统，覆盖 Boss直聘和智联招聘，实现多关键词搜索 → 多维过滤 → 无人值守投递全流程自动化。</p>
+            </div>
+
+            <div class="detail-section">
+                <h2 class="section-title">技术栈</h2>
+                <div class="tech-stack">
+                    <span class="tech-item">Python</span>
+                    <span class="tech-item">Camoufox</span>
+                    <span class="tech-item">Playwright</span>
+                    <span class="tech-item">PyYAML</span>
+                    <span class="tech-item">JSON 持久化</span>
+                    <span class="tech-item">subprocess 隔离</span>
+                </div>
+            </div>
+
+            <div class="detail-section">
+                <h2 class="section-title">项目职责</h2>
+                <ul class="detail-list">
+                    <li>设计多平台自动投递引擎核心架构，抽象 PlatformBase 基类统一 Boss直聘与智联招聘的业务差异</li>
+                    <li>集成 Camoufox 反检测浏览器，对抗网站风控系统（WebGL/Canvas/字体指纹模拟）</li>
+                    <li>攻克 Boss直聘 PUA 字体编码反爬机制，实现在 DOM 层面解码薪资等加密数据</li>
+                    <li>设计 YAML 配置驱动的多维过滤系统，支持薪资区间、学历要求等灵活过滤规则</li>
+                    <li>实现 Cookie 持久化机制与扫码登录调度，支持 7 天免登录自动恢复会话</li>
+                    <li>设计滑动窗口频率控制器与指数退避重试机制</li>
+                    <li>实现 CLI 交互菜单 + subprocess 隔离架构</li>
+                    <li>设计数据持久化方案，自动记录已投递岗位、搜索历史、投递结果汇总</li>
+                </ul>
+            </div>
+
+            <div class="detail-section">
+                <h2 class="section-title">项目成果</h2>
+                <ul class="detail-list highlight-list">
+                    <li>实现无人值守的自动投递闭环，显著提升求职效率</li>
+                    <li>掌握反检测浏览器的深度应用与 Web 自动化工程化实践</li>
+                    <li>积累了反爬对抗、Cookie 注入、会话恢复、频率控制等关键经验</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+
+    <style>
+        .work-detail {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 60px 24px 100px;
+            color: #B3B3C1;
+        }
+        .detail-container {
+            position: relative;
+            z-index: 1;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #80808E;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            margin-bottom: 40px;
+            padding: 8px 16px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+        }
+        .back-link:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.06);
+        }
+        .detail-header {
+            margin-bottom: 48px;
+        }
+        .detail-title-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        .detail-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin: 0;
+            line-height: 1.3;
+        }
+        .detail-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(99,102,241,0.15);
+            color: #818cf8;
+            border: 1px solid rgba(99,102,241,0.25);
+        }
+        .detail-subtitle {
+            font-size: 16px;
+            line-height: 1.7;
+            color: #9E9EAF;
+            margin: 0;
+        }
+        .detail-section {
+            margin-bottom: 40px;
+            padding: 28px 32px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            backdrop-filter: blur(4px);
+        }
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #E0E0EC;
+            margin: 0 0 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tech-item {
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            background: rgba(255,255,255,0.05);
+            color: #B3B3C1;
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: all 0.3s;
+        }
+        .tech-item:hover {
+            background: rgba(99,102,241,0.12);
+            border-color: rgba(99,102,241,0.3);
+            color: #818cf8;
+        }
+        .detail-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .detail-list li {
+            position: relative;
+            padding: 10px 0 10px 24px;
+            font-size: 15px;
+            line-height: 1.7;
+            color: #B3B3C1;
+        }
+        .detail-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 18px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(99,102,241,0.5);
+            border: 1px solid rgba(99,102,241,0.3);
+        }
+        .detail-list li + li {
+            border-top: 1px solid rgba(255,255,255,0.04);
+        }
+        .highlight-list li {
+            color: #C8C8D8;
+        }
+        .highlight-list li::before {
+            background: rgba(52,211,153,0.5);
+            border-color: rgba(52,211,153,0.3);
+        }
+        @media (max-width: 640px) {
+            .work-detail {
+                padding: 32px 16px 80px;
+            }
+            .detail-title {
+                font-size: 24px;
+            }
+            .detail-section {
+                padding: 20px 18px;
+            }
+        }
+    </style>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

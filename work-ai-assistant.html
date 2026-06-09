@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - AI 私人助理系统</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ---- work-detail layout ---- */
+        .work-detail {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+        }
+        .work-detail .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b8ba7;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-bottom: 32px;
+        }
+        .work-detail .back-link:hover {
+            color: #E8E8F6;
+        }
+        .work-detail-header {
+            margin-bottom: 40px;
+        }
+        .work-detail-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E8E8F6;
+            margin-bottom: 8px;
+        }
+        .work-detail-header .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .work-detail-header .tag-row .tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            background: rgba(120, 120, 160, 0.15);
+            color: #b0b0cc;
+            border: 1px solid rgba(120, 120, 160, 0.2);
+        }
+        .work-detail-header .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .work-detail-header .tech-stack .tech-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(100, 200, 255, 0.08);
+            color: #7ec8e3;
+            border: 1px solid rgba(100, 200, 255, 0.18);
+        }
+        .work-detail-body {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+        .work-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 28px 32px;
+        }
+        .work-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .work-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #7ec8e3, #5a7dca);
+        }
+        .work-section p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b8b8d0;
+        }
+        .work-section ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .work-section li {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #c4c4dc;
+            padding: 6px 0 6px 20px;
+            position: relative;
+        }
+        .work-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #7ec8e3;
+            font-size: 13px;
+        }
+        .work-section .description-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b8b8d0;
+        }
+        .work-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .work-tech-list .item {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(100, 200, 255, 0.06);
+            color: #8ec8e3;
+            border: 1px solid rgba(100, 200, 255, 0.12);
+        }
+        @media screen and (max-width: 768px) {
+            .work-detail {
+                padding: 0 16px;
+                margin: 24px auto 40px;
+            }
+            .work-detail-header h1 {
+                font-size: 24px;
+            }
+            .work-section {
+                padding: 20px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- Work Detail -->
+    <div class="work-detail">
+        <a href="./work.html" class="back-link">← 返回作品集</a>
+
+        <div class="work-detail-header">
+            <h1>AI 私人助理系统</h1>
+            <div class="tag-row">
+                <span class="tag">AI</span>
+                <span class="tag">LLM</span>
+                <span class="tag">RAG</span>
+                <span class="tag">Agent</span>
+                <span class="tag">MCP</span>
+            </div>
+            <div class="tech-stack">
+                <span class="tech-badge">Python</span>
+                <span class="tech-badge">LangChain</span>
+                <span class="tech-badge">FastAPI</span>
+                <span class="tech-badge">FAISS</span>
+                <span class="tech-badge">硅基流动API</span>
+                <span class="tech-badge">Streamlit</span>
+                <span class="tech-badge">CodeBox</span>
+                <span class="tech-badge">MCP</span>
+            </div>
+        </div>
+
+        <div class="work-detail-body">
+            <!-- 项目简介 -->
+            <div class="work-section">
+                <h2>项目简介</h2>
+                <p>
+                    基于 LangChain 和 FastAPI，搭建具备知识库检索、工具调用、代码解释器、多轮对话能力的私人 AI 助理系统。
+                    通过硅基流动 API 接入大模型，结合 RAG 知识库与混合检索技术，实现高效、精准的智能问答与任务执行。
+                </p>
+            </div>
+
+            <!-- 技术栈 -->
+            <div class="work-section">
+                <h2>技术栈</h2>
+                <div class="work-tech-list">
+                    <span class="item">Python</span>
+                    <span class="item">LangChain</span>
+                    <span class="item">FastAPI</span>
+                    <span class="item">FAISS</span>
+                    <span class="item">硅基流动API</span>
+                    <span class="item">Streamlit</span>
+                    <span class="item">CodeBox</span>
+                    <span class="item">MCP</span>
+                </div>
+            </div>
+
+            <!-- 项目职责 -->
+            <div class="work-section">
+                <h2>项目职责</h2>
+                <ul>
+                    <li>通过硅基流动 API 接入 Qwen2.5-72B-Instruct 大模型，完成推理参数调优</li>
+                    <li>基于 LangChain 构建 ReAct 范式 Agent，集成天气查询、网络搜索、知识库检索、代码解释器</li>
+                    <li>实现 RAG 知识库模块，支持多格式文档加载（PDF/TXT/CSV/MD/DOCX）、文本分割策略、FAISS向量存储与检索</li>
+                    <li>实现 FAISS + BM25 混合检索，中文场景召回准确率提升约 15%</li>
+                    <li>使用 FastAPI 搭建 RESTful 后端服务，实现对话接口与知识库管理</li>
+                    <li>自定义异步回调处理器，实现 LLM 推理结果的流式输出</li>
+                    <li>集成 CodeBox 沙箱实现代码解释器功能，支持 Python 代码安全执行与图片渲染</li>
+                    <li>基于 MCP（Model Context Protocol）扩展 Agent 工具链</li>
+                </ul>
+            </div>
+
+            <!-- 项目成果 -->
+            <div class="work-section">
+                <h2>项目成果</h2>
+                <ul>
+                    <li>成功搭建端到端的 AI 助理系统</li>
+                    <li>掌握大模型应用开发完整技术栈</li>
+                    <li>积累了 FAISS 向量数据库使用经验和混合检索调优实践</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - OLLVM 代码混淆工具链</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ---- work-detail layout ---- */
+        .work-detail {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+        }
+        .work-detail .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b8ba7;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-bottom: 32px;
+        }
+        .work-detail .back-link:hover {
+            color: #E8E8F6;
+        }
+        .work-detail-header {
+            margin-bottom: 40px;
+        }
+        .work-detail-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E8E8F6;
+            margin-bottom: 8px;
+        }
+        .work-detail-header .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .work-detail-header .tag-row .tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            background: rgba(120, 120, 160, 0.15);
+            color: #b0b0cc;
+            border: 1px solid rgba(120, 120, 160, 0.2);
+        }
+        .work-detail-header .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .work-detail-header .tech-stack .tech-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(124, 108, 240, 0.08);
+            color: #a89aff;
+            border: 1px solid rgba(124, 108, 240, 0.18);
+        }
+        .work-detail-body {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+        .work-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 28px 32px;
+        }
+        .work-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .work-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #a89aff, #7c6cf0);
+        }
+        .work-section p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b8b8d0;
+        }
+        .work-section ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .work-section li {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #c4c4dc;
+            padding: 6px 0 6px 20px;
+            position: relative;
+        }
+        .work-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #a89aff;
+            font-size: 13px;
+        }
+        .work-section .description-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b8b8d0;
+        }
+        .work-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .work-tech-list .item {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(124, 108, 240, 0.06);
+            color: #a89aff;
+            border: 1px solid rgba(124, 108, 240, 0.12);
+        }
+        @media screen and (max-width: 768px) {
+            .work-detail {
+                padding: 0 16px;
+                margin: 24px auto 40px;
+            }
+            .work-detail-header h1 {
+                font-size: 24px;
+            }
+            .work-section {
+                padding: 20px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- Work Detail -->
+    <div class="work-detail">
+        <a href="./work.html" class="back-link">← 返回作品集</a>
+
+        <div class="work-detail-header">
+            <h1>OLLVM 代码混淆工具链</h1>
+            <div class="tag-row">
+                <span class="tag">LLVM</span>
+                <span class="tag">混淆</span>
+                <span class="tag">编译器</span>
+                <span class="tag">安全</span>
+                <span class="tag">NDK</span>
+            </div>
+            <div class="tech-stack">
+                <span class="tech-badge">LLVM 19</span>
+                <span class="tech-badge">Clang</span>
+                <span class="tech-badge">C++</span>
+                <span class="tech-badge">CMake</span>
+                <span class="tech-badge">Android NDK r28c</span>
+                <span class="tech-badge">ARM64</span>
+            </div>
+        </div>
+
+        <div class="work-detail-body">
+            <!-- 项目描述 -->
+            <div class="work-section">
+                <h2>项目描述</h2>
+                <p>
+                    基于 OLLVM 开源项目，在 LLVM 19 版本上独立完成代码混淆 Pass 的移植、集成与工程化。
+                    实现<strong>控制流扁平化（Flattening）</strong>、<strong>虚假控制流（BogusControlFlow）</strong>、
+                    <strong>指令替换（Substitution）</strong>等 LLVM Pass，并集成到 Android NDK 交叉编译工具链中。
+                </p>
+            </div>
+
+            <!-- 技术栈 -->
+            <div class="work-section">
+                <h2>技术栈</h2>
+                <div class="work-tech-list">
+                    <span class="item">LLVM 19</span>
+                    <span class="item">Clang</span>
+                    <span class="item">C++</span>
+                    <span class="item">CMake</span>
+                    <span class="item">Android NDK r28c</span>
+                    <span class="item">ARM64 Cross-Compilation</span>
+                </div>
+            </div>
+
+            <!-- 项目职责 -->
+            <div class="work-section">
+                <h2>项目职责</h2>
+                <ul>
+                    <li>完成 OLLVM 混淆 Pass 从 LLVM 14 到 LLVM 19 的移植适配，涉及 API 变更适配、Pass Manager 重构与调试</li>
+                    <li>实现<strong>控制流扁平化 Pass（Flattening）</strong>，将循环+分支结构压平为 switch-case+dispatcher</li>
+                    <li>实现<strong>指令替换 Pass（Substitution）</strong>，将标准算术/逻辑运算替换为等价的复杂指令序列（如 a+b → (a^b)+2*(a&b)）</li>
+                    <li>实现<strong>虚假控制流 Pass（BogusControlFlow）</strong>，在原始控制流中插入不可达基本块增加 CFG 复杂度</li>
+                    <li>设计四级混淆模式（OFF/BASIC/MEDIUM/FULL），通过 CMake per-file 属性精细控制不同源文件的混淆策略</li>
+                    <li>集成分层混淆策略：核心代码全量保护（控制流扁平化+虚假控制流+指令替换），驱动模块仅指令替换</li>
+                    <li>集成<strong>字符串编译期加密</strong>、<strong>反调试</strong>、<strong>ARM64 花指令</strong>、<strong>调用混淆</strong>等多层防护</li>
+                </ul>
+            </div>
+
+            <!-- 项目成果 -->
+            <div class="work-section">
+                <h2>项目成果</h2>
+                <ul>
+                    <li>完成 LLVM 19 版本完整混淆工具链，稳定支撑 Android Native 程序的生产编译</li>
+                    <li>深入了解 LLVM 编译器体系架构、Pass 机制和代码优化/变换原理</li>
+                    <li>掌握 LLVM 新版本（17→19）API 演进与迁移经验，具备编译器工具链工程化能力</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>

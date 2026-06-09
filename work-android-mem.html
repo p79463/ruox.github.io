@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style="color-scheme: dark;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ruox - Android 内存分析与可视化工具</title>
+    <link rel="stylesheet" href="./css/style.min.css">
+    <link rel="shortcut icon" href="./assets/public/favicon.svg"/>
+    <style>
+        /* ---- work-detail layout ---- */
+        .work-detail {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 0 24px;
+        }
+        .work-detail .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: #8b8ba7;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            margin-bottom: 32px;
+        }
+        .work-detail .back-link:hover {
+            color: #E8E8F6;
+        }
+        .work-detail-header {
+            margin-bottom: 40px;
+        }
+        .work-detail-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #E8E8F6;
+            margin-bottom: 8px;
+        }
+        .work-detail-header .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .work-detail-header .tag-row .tag {
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            background: rgba(120, 120, 160, 0.15);
+            color: #b0b0cc;
+            border: 1px solid rgba(120, 120, 160, 0.2);
+        }
+        .work-detail-header .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .work-detail-header .tech-stack .tech-badge {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(100, 200, 255, 0.08);
+            color: #7ec8e3;
+            border: 1px solid rgba(100, 200, 255, 0.18);
+        }
+        .work-detail-body {
+            display: flex;
+            flex-direction: column;
+            gap: 36px;
+        }
+        .work-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
+            padding: 28px 32px;
+        }
+        .work-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #E8E8F6;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .work-section h2::before {
+            content: '';
+            display: inline-block;
+            width: 4px;
+            height: 20px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, #7ec8e3, #5a7dca);
+        }
+        .work-section p {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b8b8d0;
+        }
+        .work-section ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .work-section li {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #c4c4dc;
+            padding: 6px 0 6px 20px;
+            position: relative;
+        }
+        .work-section li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: #7ec8e3;
+            font-size: 13px;
+        }
+        .work-section .description-text {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #b8b8d0;
+        }
+        .work-tech-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        .work-tech-list .item {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(100, 200, 255, 0.06);
+            color: #8ec8e3;
+            border: 1px solid rgba(100, 200, 255, 0.12);
+        }
+        @media screen and (max-width: 768px) {
+            .work-detail {
+                padding: 0 16px;
+                margin: 24px auto 40px;
+            }
+            .work-detail-header h1 {
+                font-size: 24px;
+            }
+            .work-section {
+                padding: 20px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas class="fireworks"></canvas>
+
+    <!-- Header -->
+    <div class="head">
+        <div class="main">
+            <a href="./index.html" class="logo"><img src="./assets/public/logo_text.svg"></a>
+            <div class="menu">
+                <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+            </div>
+            <div class="menu" id="menu-expand">
+                <li class="magical btn skin" id="menu-expand-child"><i class="icon menu-icon"></i></li>
+            </div>
+            <div id="menu-panel">
+                <div class="menu-panel-content">
+                    <li class="magical btn" onclick="window.location.href='./index.html'">首页</li>
+                    <li class="magical btn nav" onclick="window.location.href='./work.html'">作品</li>
+                    <li class="magical btn" onclick="window.location.href='./blog.html'">博客</li>
+                    <li class="magical btn" onclick="window.location.href='./about.html'">关于</li>
+                </div>
+            </div>
+        </div>
+        <blockquote><img src="./assets/public/logo.svg"></blockquote>
+    </div>
+
+    <!-- Work Detail -->
+    <div class="work-detail">
+        <a href="./work.html" class="back-link">← 返回作品集</a>
+
+        <div class="work-detail-header">
+            <h1>Android 内存分析与可视化工具</h1>
+            <div class="tag-row">
+                <span class="tag">Android</span>
+                <span class="tag">Root</span>
+                <span class="tag">系统工具</span>
+                <span class="tag">内核</span>
+                <span class="tag">可视化</span>
+            </div>
+            <div class="tech-stack">
+                <span class="tech-badge">C/C++</span>
+                <span class="tech-badge">Lua</span>
+                <span class="tech-badge">ImGui</span>
+                <span class="tech-badge">OpenGL</span>
+                <span class="tech-badge">Vulkan</span>
+                <span class="tech-badge">Linux内核模块</span>
+            </div>
+        </div>
+
+        <div class="work-detail-body">
+            <!-- 项目简介 -->
+            <div class="work-section">
+                <h2>项目简介</h2>
+                <p>
+                    在 Android Root 环境下，独立开发了集内存分析、数据可视化于一体的系统级工具，
+                    从脚本开发到 Native 二进制程序，逐步深入系统底层技术栈。
+                </p>
+            </div>
+
+            <!-- 技术栈 -->
+            <div class="work-section">
+                <h2>技术栈</h2>
+                <div class="work-tech-list">
+                    <span class="item">C/C++</span>
+                    <span class="item">Lua</span>
+                    <span class="item">ImGui</span>
+                    <span class="item">OpenGL</span>
+                    <span class="item">Vulkan</span>
+                    <span class="item">Linux内核模块</span>
+                </div>
+            </div>
+
+            <!-- 项目职责 -->
+            <div class="work-section">
+                <h2>项目职责</h2>
+                <ul>
+                    <li>使用 Lua 编写内存分析脚本，基于 GG 修改器框架实现进程内存扫描、数据特征识别与批量处理</li>
+                    <li>设计内存读写逻辑，实现数据类型判断、条件过滤、循环遍历等复杂业务逻辑</li>
+                    <li>使用 C/C++ 重构为 Native 二进制程序，脱离第三方工具依赖</li>
+                    <li>集成 ImGui 即时模式 UI 框架，结合 OpenGL/Vulkan 图形 API 实现数据可视化界面</li>
+                    <li>对接 Linux 内核模块(KO)驱动，实现系统级内存读写</li>
+                    <li>设计 TouchManager 过检测触摸库，解决设备触摸事件注入的 uinput 冲突问题</li>
+                </ul>
+            </div>
+
+            <!-- 项目成果 -->
+            <div class="work-section">
+                <h2>项目成果</h2>
+                <ul>
+                    <li>完成了从脚本语言到编译型语言、从依赖工具到独立程序的技术演进</li>
+                    <li>深入理解 Android 系统内存管理机制、进程权限模型和 Root 环境下的系统级操作</li>
+                    <li>掌握了 ImGui 与图形 API 的集成方案，具备跨平台 GUI 开发能力</li>
+                    <li>积累了 Linux 内核模块对接经验</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="copyright">
+            <div>© 2026 Built by <a href="https://www.ruox.cc.cd" target="_blank">Ruox</a></div>
+            <span>|</span>
+            <div class="fillings">
+                <a href="./about.html">Ruox</a>
+            </div>
+            <span>|</span>
+            <div class="friends">
+                <a href="https://github.com/p79463" target="_blank">GitHub</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Widget -->
+    <div class="widget">
+        <div class="shape-light"></div>
+        <div class="shape-star">
+            <div class="rising-stars rising-stars-visible">
+                <div style="height:1px;width:1px"></div>
+                <div style="height:2px;width:2px"></div>
+                <div style="height:1px;width:1px"></div>
+            </div>
+        </div>
+        <div class="shape-earth"></div>
+    </div>
+</body>
+<script>
+    window.addEventListener("mousemove", function (e) {
+        document.querySelectorAll(".magical").forEach(element => {
+            const rect = element.getBoundingClientRect();
+            const offsetX = e.clientX - rect.left;
+            const offsetY = e.clientY - rect.top;
+            element.style.setProperty("--mouse-x", `${offsetX}px`);
+            element.style.setProperty("--mouse-y", `${offsetY}px`);
+        });
+    });
+</script>
+<script src="./js/main.min.js"></script>
+<script src='./js/anime.js'></script>
+<script src='./js/firework.js'></script>
+</html>
