@@ -10,12 +10,12 @@
         "hold_days": 38,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "3.6612",
-        "display_change_pct": "1.42",
+        "display_nav": "3.5846",
+        "display_change_pct": "-0.70",
         "holding_amount": 13023.4,
         "holding_cost_amount": 15000.0000122637,
         "holding_profit_rate": -13.177333322559809,
-        "today_income": 182.34300926838887,
+        "today_income": -91.80644511581067,
         "yesterday_income": 627.7206599999997,
         "weight_pct": 25.785494951262887,
         "change_class": "neutral",
@@ -30,12 +30,12 @@
         "hold_days": 31,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "2.8674",
-        "display_change_pct": "1.67",
+        "display_nav": "2.8127",
+        "display_change_pct": "-0.27",
         "holding_amount": 9464.62,
         "holding_cost_amount": 9999.9999883005,
         "holding_profit_rate": -5.353800006263678,
-        "today_income": 155.46292318284645,
+        "today_income": -25.62365787626592,
         "yesterday_income": 986.9672490000008,
         "weight_pct": 18.739339283568178,
         "change_class": "neutral",
@@ -50,12 +50,12 @@
         "hold_days": 8,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "2.5945",
-        "display_change_pct": "0.18",
+        "display_nav": "2.5704",
+        "display_change_pct": "-0.75",
         "holding_amount": 7335.38,
         "holding_cost_amount": 7802.1700116234,
         "holding_profit_rate": -5.982822718610241,
-        "today_income": 13.179960071870633,
+        "today_income": -55.431083123425694,
         "yesterday_income": 995.5921149999991,
         "weight_pct": 14.523580935515671,
         "change_class": "neutral",
@@ -70,12 +70,12 @@
         "hold_days": 8,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "1.6142",
-        "display_change_pct": "1.87",
+        "display_nav": "1.5860",
+        "display_change_pct": "0.09",
         "holding_amount": 5446.65,
         "holding_cost_amount": 6499.999988948799,
         "holding_profit_rate": -16.205384642936764,
-        "today_income": 99.98267890448611,
+        "today_income": 4.897577180537516,
         "yesterday_income": 512.8362079999999,
         "weight_pct": 10.784016929242442,
         "change_class": "neutral",
@@ -90,12 +90,12 @@
         "hold_days": 27,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "1.8556",
-        "display_change_pct": "2.52",
+        "display_nav": "1.8127",
+        "display_change_pct": "0.15",
         "holding_amount": 4717.84,
         "holding_cost_amount": 5986.289994576599,
         "holding_profit_rate": -21.18925079054269,
-        "today_income": 115.9671946937183,
+        "today_income": 7.066160758861708,
         "yesterday_income": 531.9948139999999,
         "weight_pct": 9.341019971809676,
         "change_class": "neutral",
@@ -110,12 +110,12 @@
         "hold_days": 8,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "3.6762",
-        "display_change_pct": "1.56",
+        "display_nav": "3.5951",
+        "display_change_pct": "-0.68",
         "holding_amount": 4604.69,
         "holding_cost_amount": 5075.2300051584,
         "holding_profit_rate": -9.271303951185446,
-        "today_income": 70.72977944072468,
+        "today_income": -31.52627064035441,
         "yesterday_income": 593.5711920000001,
         "weight_pct": 9.11699024426269,
         "change_class": "neutral",
@@ -130,12 +130,12 @@
         "hold_days": 37,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "1.4402",
-        "display_change_pct": "-0.11",
+        "display_nav": "1.4320",
+        "display_change_pct": "-0.68",
         "holding_amount": 3800.4,
         "holding_cost_amount": 4087.7000000748994,
         "holding_profit_rate": -7.028402279881981,
-        "today_income": -4.185043547902693,
+        "today_income": -26.01965364478454,
         "yesterday_income": 233.801669,
         "weight_pct": 7.524547738131325,
         "change_class": "neutral",
@@ -150,12 +150,12 @@
         "hold_days": 30,
         "quote_status": "intraday_estimate",
         "quote_label": "估值涨跌",
-        "display_nav": "4.2764",
-        "display_change_pct": "2.75",
+        "display_nav": "4.1803",
+        "display_change_pct": "0.44",
         "holding_amount": 2113.71,
         "holding_cost_amount": 2500.0000004542003,
         "holding_profit_rate": -15.451599997192753,
-        "today_income": 56.57131386861314,
+        "today_income": 9.25958183990442,
         "yesterday_income": 181.30601999999988,
         "weight_pct": 4.185009946207126,
         "change_class": "neutral",
@@ -236,6 +236,38 @@
           {
             "time": "09:47:00",
             "rate": 1.14
+          },
+          {
+            "time": "09:48:00",
+            "rate": 1.29
+          },
+          {
+            "time": "09:49:00",
+            "rate": 1.36
+          },
+          {
+            "time": "09:50:00",
+            "rate": 1.12
+          },
+          {
+            "time": "09:51:00",
+            "rate": 1.14
+          },
+          {
+            "time": "09:52:00",
+            "rate": 0.76
+          },
+          {
+            "time": "09:53:00",
+            "rate": 0.61
+          },
+          {
+            "time": "09:54:00",
+            "rate": 0.35
+          },
+          {
+            "time": "09:55:00",
+            "rate": -0.12
           }
         ]
       },
@@ -1051,17 +1083,49 @@
         {
           "time": "09:47:00",
           "rate": 1.14
+        },
+        {
+          "time": "09:48:00",
+          "rate": 1.29
+        },
+        {
+          "time": "09:49:00",
+          "rate": 1.36
+        },
+        {
+          "time": "09:50:00",
+          "rate": 1.12
+        },
+        {
+          "time": "09:51:00",
+          "rate": 1.14
+        },
+        {
+          "time": "09:52:00",
+          "rate": 0.76
+        },
+        {
+          "time": "09:53:00",
+          "rate": 0.61
+        },
+        {
+          "time": "09:54:00",
+          "rate": 0.35
+        },
+        {
+          "time": "09:55:00",
+          "rate": -0.12
         }
       ]
     },
     "account_collect": {
       "assets_collect": 50506.69,
-      "today_income": 702.71,
-      "today_income_rate": 1.39,
-      "hold_income": -5742.26,
-      "hold_income_rate": -10.08
+      "today_income": -207.6,
+      "today_income_rate": -0.41,
+      "hold_income": -6652.76,
+      "hold_income_rate": -11.68
     },
-    "generated_at": "2026-07-22T01:48:32.273381+00:00"
+    "generated_at": "2026-07-22T01:56:28.751500+00:00"
   },
   "source": "yangjibao_default_account_snapshot",
   "warnings": [
