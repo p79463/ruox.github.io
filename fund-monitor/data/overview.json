@@ -1,0 +1,154 @@
+{
+  "data": {
+    "summary": {
+      "current_value": 45842.89,
+      "yesterday_profit": -1377.85,
+      "holding_profit": -11108.5,
+      "implied_cost": 56951.39,
+      "invested_ratio_pct": 90.0,
+      "estimated_total_assets": 50936.54,
+      "estimated_cash": 5093.65,
+      "return_on_implied_cost_pct": -19.51,
+      "weights": {
+        "024246": 7.78,
+        "011172": 27.04,
+        "021528": 4.22,
+        "020357": 8.75,
+        "024975": 13.83,
+        "019427": 18.49,
+        "013470": 10.76,
+        "025500": 9.13
+      },
+      "theme_exposure": {
+        "灵活配置": {
+          "value": 12395.68,
+          "weight_pct": 27.04
+        },
+        "半导体": {
+          "value": 10350.9,
+          "weight_pct": 22.58
+        },
+        "数字经济": {
+          "value": 8477.65,
+          "weight_pct": 18.49
+        },
+        "低碳/成长": {
+          "value": 4933.81,
+          "weight_pct": 10.76
+        },
+        "科技成长": {
+          "value": 4185.84,
+          "weight_pct": 9.13
+        },
+        "AI/科创": {
+          "value": 3566.6,
+          "weight_pct": 7.78
+        },
+        "成长": {
+          "value": 1932.41,
+          "weight_pct": 4.22
+        }
+      },
+      "data_inconsistencies": []
+    },
+    "allocation_advice": {
+      "action": "暂停普遍补仓",
+      "detail": "组合主题和单基金集中度偏高，剩余资金优先保留，不建议八只基金全面摊平。",
+      "cash_available_estimate": 5093.65,
+      "suggested_reserve_pct_of_cash": 50.0,
+      "suggested_first_tranche_pct_of_cash": 10.0,
+      "semiconductor_weight_pct": 22.58,
+      "max_single_fund_weight_pct": 27.04
+    },
+    "holdings": [
+      {
+        "code": "024246",
+        "name": "广发上证科创板人工智能联接C",
+        "current_value": 3566.6,
+        "yesterday_profit": 28.73,
+        "holding_profit": -521.1,
+        "reported_return_pct": -12.748,
+        "theme": "AI/科创"
+      },
+      {
+        "code": "011172",
+        "name": "广发利鑫混合C",
+        "current_value": 12395.68,
+        "yesterday_profit": 129.87,
+        "holding_profit": -2604.32,
+        "reported_return_pct": -17.3621,
+        "theme": "灵活配置"
+      },
+      {
+        "code": "021528",
+        "name": "财通成长优选混合C",
+        "current_value": 1932.41,
+        "yesterday_profit": -191.97,
+        "holding_profit": -567.59,
+        "reported_return_pct": -22.7036,
+        "theme": "成长"
+      },
+      {
+        "code": "020357",
+        "name": "华夏中证半导体材料设备主题ETF发起式联接C",
+        "current_value": 4011.12,
+        "yesterday_profit": -225.67,
+        "holding_profit": -1064.11,
+        "reported_return_pct": -20.9667,
+        "theme": "半导体"
+      },
+      {
+        "code": "024975",
+        "name": "华泰柏瑞上证科创板半导体材料设备主题联接C",
+        "current_value": 6339.78,
+        "yesterday_profit": -435.9,
+        "holding_profit": -1462.39,
+        "reported_return_pct": -18.7434,
+        "theme": "半导体"
+      },
+      {
+        "code": "019427",
+        "name": "中银数字经济混合C",
+        "current_value": 8477.65,
+        "yesterday_profit": -69.13,
+        "holding_profit": -1522.35,
+        "reported_return_pct": -15.2235,
+        "theme": "数字经济"
+      },
+      {
+        "code": "013470",
+        "name": "泰信低碳经济混合发起式C",
+        "current_value": 4933.81,
+        "yesterday_profit": -317.94,
+        "holding_profit": -1566.19,
+        "reported_return_pct": -24.0952,
+        "theme": "低碳/成长"
+      },
+      {
+        "code": "025500",
+        "name": "东方阿尔法科技智选C",
+        "current_value": 4185.84,
+        "yesterday_profit": -295.84,
+        "holding_profit": -1800.45,
+        "reported_return_pct": -30.0762,
+        "theme": "科技成长"
+      }
+    ],
+    "watchlist": [
+      {
+        "code": "017175",
+        "name": "天弘国证绿色电力指数C",
+        "theme": "绿色电力"
+      },
+      {
+        "code": "020137",
+        "name": "平安医疗健康混合C",
+        "theme": "医疗健康"
+      }
+    ]
+  },
+  "source": "config_portfolio",
+  "warnings": [
+    "持仓表来自最近保存的配置；盘中行情和官方净值需要单独查询。"
+  ]
+}

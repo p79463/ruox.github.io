@@ -1,0 +1,79 @@
+{
+  "data": {
+    "items": [
+      {
+        "code": "017175",
+        "name": "天弘国证绿色电力指数C",
+        "theme": "绿色电力",
+        "metrics": {
+          "observations": 60,
+          "latest_nav": 1.0976,
+          "return_1d_pct": -0.2,
+          "return_5d_pct": 4.5831,
+          "return_20d_pct": -1.3216,
+          "return_total_pct": -7.1797,
+          "max_drawdown_pct": -17.2537,
+          "volatility_annualized_pct": 24.1503
+        },
+        "signal": {
+          "action": "hold",
+          "score": 73.0,
+          "risk_level": "medium_high",
+          "confidence": "medium",
+          "reasons": [
+            "短中期趋势偏强",
+            "当前最大回撤 -17.25%，风险需要控制"
+          ],
+          "components": {
+            "trend": 84.02,
+            "drawdown_recovery": 100.0,
+            "valuation_position": 37.29,
+            "risk": 51.7,
+            "portfolio_weight": 100.0
+          }
+        },
+        "latest_nav_date": "2026-07-21"
+      },
+      {
+        "code": "020137",
+        "name": "平安医疗健康混合C",
+        "theme": "医疗健康",
+        "metrics": {
+          "observations": 60,
+          "latest_nav": 2.3113,
+          "return_1d_pct": 1.5822,
+          "return_5d_pct": 0.8201,
+          "return_20d_pct": 19.9865,
+          "return_total_pct": -0.3191,
+          "max_drawdown_pct": -23.462,
+          "volatility_annualized_pct": 46.3448
+        },
+        "signal": {
+          "action": "hold",
+          "score": 63.81,
+          "risk_level": "high",
+          "confidence": "medium",
+          "reasons": [
+            "短中期趋势偏强",
+            "当前最大回撤 -23.46%，风险需要控制",
+            "年化波动率约 46.34%，波动较高"
+          ],
+          "components": {
+            "trend": 96.53,
+            "drawdown_recovery": 100.0,
+            "valuation_position": 16.95,
+            "risk": 7.31,
+            "portfolio_weight": 100.0
+          }
+        },
+        "latest_nav_date": "2026-07-21"
+      }
+    ],
+    "failures": [],
+    "warnings": [
+      "关注列表基金当前没有计入持仓组合。",
+      "建立观察仓前仍需结合基金规模、费率、持仓和你的风险承受能力。"
+    ]
+  },
+  "source": "eastmoney_public_api"
+}
