@@ -1,0 +1,10 @@
+{
+  "data": {
+    "status": "no_data",
+    "points": [],
+    "by_fund": [],
+    "warnings": [
+      "暂无已公布官方净值的审计样本；官方净值公布后运行 audit 才会生成曲线。"
+    ]
+  }
+}
