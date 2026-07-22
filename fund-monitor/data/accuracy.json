@@ -4,31 +4,11 @@
     "points": [
       {
         "date": "2026-07-21",
-        "fund_count": 30,
-        "avg_error_pct": -3.408433,
-        "avg_abs_error_pct": 3.408433,
-        "max_abs_error_pct": 6.591629,
+        "fund_count": 10,
+        "avg_error_pct": -2.446595,
+        "avg_abs_error_pct": 2.446595,
+        "max_abs_error_pct": 3.912171,
         "funds": [
-          {
-            "code": "011172",
-            "estimated_nav": 3.4799808,
-            "official_nav": 3.61,
-            "error_pct": -3.6016398891966763,
-            "abs_error_pct": 3.6016398891966763,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:28.650589+08:00"
-          },
-          {
-            "code": "011172",
-            "estimated_nav": 3.5363312,
-            "official_nav": 3.61,
-            "error_pct": -2.0406869806094208,
-            "abs_error_pct": 2.0406869806094208,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:43.311576+08:00"
-          },
           {
             "code": "011172",
             "estimated_nav": 3.5401108,
@@ -37,27 +17,8 @@
             "abs_error_pct": 1.9359889196675897,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:58.051263+08:00"
-          },
-          {
-            "code": "013470",
-            "estimated_nav": 1.4883662599999998,
-            "official_nav": 1.5846,
-            "error_pct": -6.073061971475462,
-            "abs_error_pct": 6.073061971475462,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:36.080534+08:00"
-          },
-          {
-            "code": "013470",
-            "estimated_nav": 1.5129116,
-            "official_nav": 1.5846,
-            "error_pct": -4.5240691657200545,
-            "abs_error_pct": 4.5240691657200545,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:50.504834+08:00"
+            "audited_at": "2026-07-22T09:55:58.051263+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "013470",
@@ -67,27 +28,8 @@
             "abs_error_pct": 3.636342294585378,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:05.108350+08:00"
-          },
-          {
-            "code": "017175",
-            "estimated_nav": 1.088059635,
-            "official_nav": 1.0976,
-            "error_pct": -0.8692023505830799,
-            "abs_error_pct": 0.8692023505830799,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:39.178268+08:00"
-          },
-          {
-            "code": "017175",
-            "estimated_nav": 1.0930978188,
-            "official_nav": 1.0976,
-            "error_pct": -0.4101841472303116,
-            "abs_error_pct": 0.4101841472303116,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:53.940258+08:00"
+            "audited_at": "2026-07-22T09:56:05.108350+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "017175",
@@ -97,27 +39,8 @@
             "abs_error_pct": 0.46609599125362317,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:07.584894+08:00"
-          },
-          {
-            "code": "019427",
-            "estimated_nav": 2.6429104399999996,
-            "official_nav": 2.8203,
-            "error_pct": -6.289740807715505,
-            "abs_error_pct": 6.289740807715505,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:34.788053+08:00"
-          },
-          {
-            "code": "019427",
-            "estimated_nav": 2.6929292,
-            "official_nav": 2.8203,
-            "error_pct": -4.516214587100664,
-            "abs_error_pct": 4.516214587100664,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:48.985921+08:00"
+            "audited_at": "2026-07-22T09:56:07.584894+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "019427",
@@ -127,27 +50,8 @@
             "abs_error_pct": 3.763809523809525,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:03.762677+08:00"
-          },
-          {
-            "code": "020137",
-            "estimated_nav": 2.24162556,
-            "official_nav": 2.3113,
-            "error_pct": -3.0145130446069315,
-            "abs_error_pct": 3.0145130446069315,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:40.788630+08:00"
-          },
-          {
-            "code": "020137",
-            "estimated_nav": 2.2607380800000003,
-            "official_nav": 2.3113,
-            "error_pct": -2.1875965906632553,
-            "abs_error_pct": 2.1875965906632553,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:55.250027+08:00"
+            "audited_at": "2026-07-22T09:56:03.762677+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "020137",
@@ -157,27 +61,8 @@
             "abs_error_pct": 1.2720819452256382,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:08.847133+08:00"
-          },
-          {
-            "code": "020357",
-            "estimated_nav": 3.4469689199999998,
-            "official_nav": 3.6197,
-            "error_pct": -4.771972262894719,
-            "abs_error_pct": 4.771972262894719,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:31.635184+08:00"
-          },
-          {
-            "code": "020357",
-            "estimated_nav": 3.4760405019999996,
-            "official_nav": 3.6197,
-            "error_pct": -3.968823327900112,
-            "abs_error_pct": 3.968823327900112,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:46.376204+08:00"
+            "audited_at": "2026-07-22T09:56:08.847133+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "020357",
@@ -187,27 +72,8 @@
             "abs_error_pct": 2.383257502002931,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:00.851608+08:00"
-          },
-          {
-            "code": "021528",
-            "estimated_nav": 3.9488290000000004,
-            "official_nav": 4.162,
-            "error_pct": -5.121840461316664,
-            "abs_error_pct": 5.121840461316664,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:30.351830+08:00"
-          },
-          {
-            "code": "021528",
-            "estimated_nav": 4.0100895,
-            "official_nav": 4.162,
-            "error_pct": -3.6499399327246427,
-            "abs_error_pct": 3.6499399327246427,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:45.112850+08:00"
+            "audited_at": "2026-07-22T09:56:00.851608+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "021528",
@@ -217,27 +83,8 @@
             "abs_error_pct": 2.6534358481499276,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:59.517508+08:00"
-          },
-          {
-            "code": "024246",
-            "estimated_nav": 1.3967658901,
-            "official_nav": 1.4418,
-            "error_pct": -3.123464412539881,
-            "abs_error_pct": 3.123464412539881,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:27.350109+08:00"
-          },
-          {
-            "code": "024246",
-            "estimated_nav": 1.4107258228000001,
-            "official_nav": 1.4418,
-            "error_pct": -2.1552349285615087,
-            "abs_error_pct": 2.1552349285615087,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:42.059814+08:00"
+            "audited_at": "2026-07-22T09:55:59.517508+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "024246",
@@ -247,27 +94,8 @@
             "abs_error_pct": 1.6183307046747204,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:56.801078+08:00"
-          },
-          {
-            "code": "024975",
-            "estimated_nav": 2.4411750354,
-            "official_nav": 2.5898,
-            "error_pct": -5.738858776739507,
-            "abs_error_pct": 5.738858776739507,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:32.948894+08:00"
-          },
-          {
-            "code": "024975",
-            "estimated_nav": 2.4709959063,
-            "official_nav": 2.5898,
-            "error_pct": -4.587384883002535,
-            "abs_error_pct": 4.587384883002535,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:47.694951+08:00"
+            "audited_at": "2026-07-22T09:55:56.801078+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "024975",
@@ -277,27 +105,8 @@
             "abs_error_pct": 2.824436261487353,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:02.126689+08:00"
-          },
-          {
-            "code": "025500",
-            "estimated_nav": 1.6906915200000001,
-            "official_nav": 1.81,
-            "error_pct": -6.591628729281765,
-            "abs_error_pct": 6.591628729281765,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:37.612205+08:00"
-          },
-          {
-            "code": "025500",
-            "estimated_nav": 1.7276272200000002,
-            "official_nav": 1.81,
-            "error_pct": -4.550982320441978,
-            "abs_error_pct": 4.550982320441978,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:52.196721+08:00"
+            "audited_at": "2026-07-22T09:56:02.126689+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           },
           {
             "code": "025500",
@@ -307,7 +116,8 @@
             "abs_error_pct": 3.9121712707182317,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:06.342100+08:00"
+            "audited_at": "2026-07-22T09:56:06.342100+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       }
@@ -315,32 +125,10 @@
     "by_fund": [
       {
         "code": "011172",
-        "samples": 3,
-        "avg_abs_error_pct": 2.526105,
-        "max_abs_error_pct": 3.60164,
+        "samples": 1,
+        "avg_abs_error_pct": 1.935989,
+        "max_abs_error_pct": 1.935989,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "011172",
-            "estimated_nav": 3.4799808,
-            "official_nav": 3.61,
-            "error_pct": -3.6016398891966763,
-            "abs_error_pct": 3.6016398891966763,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:28.650589+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "011172",
-            "estimated_nav": 3.5363312,
-            "official_nav": 3.61,
-            "error_pct": -2.0406869806094208,
-            "abs_error_pct": 2.0406869806094208,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:43.311576+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "011172",
@@ -350,38 +138,17 @@
             "abs_error_pct": 1.9359889196675897,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:58.051263+08:00"
+            "audited_at": "2026-07-22T09:55:58.051263+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "013470",
-        "samples": 3,
-        "avg_abs_error_pct": 4.744491,
-        "max_abs_error_pct": 6.073062,
+        "samples": 1,
+        "avg_abs_error_pct": 3.636342,
+        "max_abs_error_pct": 3.636342,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "013470",
-            "estimated_nav": 1.4883662599999998,
-            "official_nav": 1.5846,
-            "error_pct": -6.073061971475462,
-            "abs_error_pct": 6.073061971475462,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:36.080534+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "013470",
-            "estimated_nav": 1.5129116,
-            "official_nav": 1.5846,
-            "error_pct": -4.5240691657200545,
-            "abs_error_pct": 4.5240691657200545,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:50.504834+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "013470",
@@ -391,38 +158,17 @@
             "abs_error_pct": 3.636342294585378,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:05.108350+08:00"
+            "audited_at": "2026-07-22T09:56:05.108350+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "017175",
-        "samples": 3,
-        "avg_abs_error_pct": 0.581827,
-        "max_abs_error_pct": 0.869202,
+        "samples": 1,
+        "avg_abs_error_pct": 0.466096,
+        "max_abs_error_pct": 0.466096,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "017175",
-            "estimated_nav": 1.088059635,
-            "official_nav": 1.0976,
-            "error_pct": -0.8692023505830799,
-            "abs_error_pct": 0.8692023505830799,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:39.178268+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "017175",
-            "estimated_nav": 1.0930978188,
-            "official_nav": 1.0976,
-            "error_pct": -0.4101841472303116,
-            "abs_error_pct": 0.4101841472303116,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:53.940258+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "017175",
@@ -432,38 +178,17 @@
             "abs_error_pct": 0.46609599125362317,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:07.584894+08:00"
+            "audited_at": "2026-07-22T09:56:07.584894+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "019427",
-        "samples": 3,
-        "avg_abs_error_pct": 4.856588,
-        "max_abs_error_pct": 6.289741,
+        "samples": 1,
+        "avg_abs_error_pct": 3.76381,
+        "max_abs_error_pct": 3.76381,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "019427",
-            "estimated_nav": 2.6429104399999996,
-            "official_nav": 2.8203,
-            "error_pct": -6.289740807715505,
-            "abs_error_pct": 6.289740807715505,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:34.788053+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "019427",
-            "estimated_nav": 2.6929292,
-            "official_nav": 2.8203,
-            "error_pct": -4.516214587100664,
-            "abs_error_pct": 4.516214587100664,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:48.985921+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "019427",
@@ -473,38 +198,17 @@
             "abs_error_pct": 3.763809523809525,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:03.762677+08:00"
+            "audited_at": "2026-07-22T09:56:03.762677+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "020137",
-        "samples": 3,
-        "avg_abs_error_pct": 2.158064,
-        "max_abs_error_pct": 3.014513,
+        "samples": 1,
+        "avg_abs_error_pct": 1.272082,
+        "max_abs_error_pct": 1.272082,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "020137",
-            "estimated_nav": 2.24162556,
-            "official_nav": 2.3113,
-            "error_pct": -3.0145130446069315,
-            "abs_error_pct": 3.0145130446069315,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:40.788630+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "020137",
-            "estimated_nav": 2.2607380800000003,
-            "official_nav": 2.3113,
-            "error_pct": -2.1875965906632553,
-            "abs_error_pct": 2.1875965906632553,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:55.250027+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "020137",
@@ -514,38 +218,17 @@
             "abs_error_pct": 1.2720819452256382,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:08.847133+08:00"
+            "audited_at": "2026-07-22T09:56:08.847133+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "020357",
-        "samples": 3,
-        "avg_abs_error_pct": 3.708018,
-        "max_abs_error_pct": 4.771972,
+        "samples": 1,
+        "avg_abs_error_pct": 2.383258,
+        "max_abs_error_pct": 2.383258,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "020357",
-            "estimated_nav": 3.4469689199999998,
-            "official_nav": 3.6197,
-            "error_pct": -4.771972262894719,
-            "abs_error_pct": 4.771972262894719,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:31.635184+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "020357",
-            "estimated_nav": 3.4760405019999996,
-            "official_nav": 3.6197,
-            "error_pct": -3.968823327900112,
-            "abs_error_pct": 3.968823327900112,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:46.376204+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "020357",
@@ -555,38 +238,17 @@
             "abs_error_pct": 2.383257502002931,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:00.851608+08:00"
+            "audited_at": "2026-07-22T09:56:00.851608+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "021528",
-        "samples": 3,
-        "avg_abs_error_pct": 3.808405,
-        "max_abs_error_pct": 5.12184,
+        "samples": 1,
+        "avg_abs_error_pct": 2.653436,
+        "max_abs_error_pct": 2.653436,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "021528",
-            "estimated_nav": 3.9488290000000004,
-            "official_nav": 4.162,
-            "error_pct": -5.121840461316664,
-            "abs_error_pct": 5.121840461316664,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:30.351830+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "021528",
-            "estimated_nav": 4.0100895,
-            "official_nav": 4.162,
-            "error_pct": -3.6499399327246427,
-            "abs_error_pct": 3.6499399327246427,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:45.112850+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "021528",
@@ -596,38 +258,17 @@
             "abs_error_pct": 2.6534358481499276,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:59.517508+08:00"
+            "audited_at": "2026-07-22T09:55:59.517508+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "024246",
-        "samples": 3,
-        "avg_abs_error_pct": 2.29901,
-        "max_abs_error_pct": 3.123464,
+        "samples": 1,
+        "avg_abs_error_pct": 1.618331,
+        "max_abs_error_pct": 1.618331,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "024246",
-            "estimated_nav": 1.3967658901,
-            "official_nav": 1.4418,
-            "error_pct": -3.123464412539881,
-            "abs_error_pct": 3.123464412539881,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:27.350109+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "024246",
-            "estimated_nav": 1.4107258228000001,
-            "official_nav": 1.4418,
-            "error_pct": -2.1552349285615087,
-            "abs_error_pct": 2.1552349285615087,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:42.059814+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "024246",
@@ -637,38 +278,17 @@
             "abs_error_pct": 1.6183307046747204,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:56.801078+08:00"
+            "audited_at": "2026-07-22T09:55:56.801078+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "024975",
-        "samples": 3,
-        "avg_abs_error_pct": 4.38356,
-        "max_abs_error_pct": 5.738859,
+        "samples": 1,
+        "avg_abs_error_pct": 2.824436,
+        "max_abs_error_pct": 2.824436,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "024975",
-            "estimated_nav": 2.4411750354,
-            "official_nav": 2.5898,
-            "error_pct": -5.738858776739507,
-            "abs_error_pct": 5.738858776739507,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:32.948894+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "024975",
-            "estimated_nav": 2.4709959063,
-            "official_nav": 2.5898,
-            "error_pct": -4.587384883002535,
-            "abs_error_pct": 4.587384883002535,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:47.694951+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "024975",
@@ -678,38 +298,17 @@
             "abs_error_pct": 2.824436261487353,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:02.126689+08:00"
+            "audited_at": "2026-07-22T09:56:02.126689+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       },
       {
         "code": "025500",
-        "samples": 3,
-        "avg_abs_error_pct": 5.018261,
-        "max_abs_error_pct": 6.591629,
+        "samples": 1,
+        "avg_abs_error_pct": 3.912171,
+        "max_abs_error_pct": 3.912171,
         "points": [
-          {
-            "date": "2026-07-21",
-            "code": "025500",
-            "estimated_nav": 1.6906915200000001,
-            "official_nav": 1.81,
-            "error_pct": -6.591628729281765,
-            "abs_error_pct": 6.591628729281765,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:37.612205+08:00"
-          },
-          {
-            "date": "2026-07-21",
-            "code": "025500",
-            "estimated_nav": 1.7276272200000002,
-            "official_nav": 1.81,
-            "error_pct": -4.550982320441978,
-            "abs_error_pct": 4.550982320441978,
-            "estimate_status": "intraday_proxy",
-            "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:55:52.196721+08:00"
-          },
           {
             "date": "2026-07-21",
             "code": "025500",
@@ -719,7 +318,8 @@
             "abs_error_pct": 3.9121712707182317,
             "estimate_status": "intraday_proxy",
             "source": "xiaobeiyangji",
-            "audited_at": "2026-07-22T09:56:06.342100+08:00"
+            "audited_at": "2026-07-22T09:56:06.342100+08:00",
+            "observed_at": "2026-07-21T14:00:12.848789+08:00"
           }
         ]
       }
